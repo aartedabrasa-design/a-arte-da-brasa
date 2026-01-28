@@ -1,167 +1,229 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>A Arte da Brasa | Pedidos</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #18181b;
-      color: #fff;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      background: #18181b;
-      border-bottom: 1px solid #ea580c55;
-      padding: 16px;
-      z-index: 10;
-    }
-    header h1 {
-      margin: 0;
-      color: #f97316;
-      font-size: 18px;
-      text-transform: uppercase;
-    }
-    main {
-      padding: 16px;
-      max-width: 480px;
-      margin: auto;
-      padding-bottom: 140px;
-    }
-    h2 {
-      color: #f97316;
-      border-bottom: 1px solid #f9731633;
-      padding-bottom: 4px;
-    }
-    .item {
-      background: #27272a;
-      border: 1px solid #3f3f46;
-      border-radius: 10px;
-      padding: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .item button {
-      background: #18181b;
-      border: 1px solid #3f3f46;
-      color: #f97316;
-      border-radius: 50%;
-      width: 42px;
-      height: 42px;
-      font-size: 20px;
-    }
-    .cart {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: #09090b;
-      border-top: 1px solid #3f3f46;
-      padding: 16px;
-    }
-    .cart button {
-      width: 100%;
-      padding: 16px;
-      font-size: 18px;
-      background: #16a34a;
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-weight: bold;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      border: 1px solid #3f3f46;
-      background: #18181b;
-      color: #fff;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Arte da Brasa | Pedidos</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #18181b;
+  color: #fff;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background: #18181b;
+  border-bottom: 1px solid #ea580c55;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+header img {
+  width: 48px;
+}
+
+header h1 {
+  margin: 0;
+  color: #f97316;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+header small {
+  color: #aaa;
+  font-size: 12px;
+}
+
+main {
+  padding: 16px;
+  max-width: 480px;
+  margin: auto;
+  padding-bottom: 140px;
+}
+
+h2 {
+  color: #f97316;
+  border-bottom: 1px solid #f9731633;
+  padding-bottom: 4px;
+  margin-top: 32px;
+}
+
+.item {
+  background: #27272a;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.item strong {
+  display: block;
+}
+
+button {
+  margin-top: 8px;
+  width: 100%;
+  padding: 10px;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+select, input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+  padding: 16px;
+}
+</style>
 </head>
+
 <body>
 
 <header>
-  <h1>A Arte da Brasa</h1>
+  <img src="IMG_0558.png" alt="A Arte da Brasa">
+  <div>
+    <h1>A Arte da Brasa</h1>
+    <small>Parrilla & Burgers</small>
+  </div>
 </header>
 
 <main>
-  <h2>🍔 Hambúrgueres</h2>
-  <div class="item">
-    <div>Brasa Original (Boi)<br>R$ 29,90</div>
-    <button onclick="add('Brasa Original (Boi)', 29.9)">+</button>
-  </div>
-  <div class="item">
-    <div>Pig Defumado (Porco)<br>R$ 26,90</div>
-    <button onclick="add('Pig Defumado (Porco)', 26.9)">+</button>
-  </div>
-  <div class="item">
-    <div>Frango da Brasa<br>R$ 24,90</div>
-    <button onclick="add('Frango da Brasa', 24.9)">+</button>
-  </div>
 
-  <h2>🥤 Bebidas</h2>
-  <div class="item">
-    <div>Coca-Cola 2L<br>R$ 14,00</div>
-    <button onclick="add('Coca-Cola 2L', 14)">+</button>
-  </div>
+<h2>🍔 Hambúrgueres (160g)</h2>
 
-  <h2>📋 Seus dados</h2>
-  <input id="nome" placeholder="Seu nome">
-  <input id="endereco" placeholder="Endereço completo">
-  <input id="bairro" placeholder="Bairro">
-  <select id="pagamento">
-    <option value="PIX">PIX</option>
-    <option value="Dinheiro">Dinheiro</option>
-    <option value="Cartão">Cartão</option>
-  </select>
-  <textarea id="obs" placeholder="Observações"></textarea>
-</main>
-
-<div class="cart">
-  <button onclick="send()">Enviar pedido pelo WhatsApp</button>
+<div class="item">
+  <strong>Brasa Original — R$ 29,90</strong>
+  Blend bovino, queijo prato, bacon e maionese de alho.
+  <button onclick="add('Brasa Original',29.9)">Adicionar</button>
 </div>
 
+<div class="item">
+  <strong>Pig Defumado — R$ 26,90</strong>
+  Burger suíno, mussarela, cebola caramelizada e barbecue.
+  <button onclick="add('Pig Defumado',26.9)">Adicionar</button>
+</div>
+
+<div class="item">
+  <strong>Frango da Brasa — R$ 24,90</strong>
+  Sobrecoxa grelhada, cream cheese e maionese verde.
+  <button onclick="add('Frango da Brasa',24.9)">Adicionar</button>
+</div>
+
+<div class="item">
+  <strong>Brasa Leve (Fit) — R$ 27,90</strong>
+  Zero pão, burger de frango ou boi, queijo coalho e legumes.
+  <button onclick="add('Brasa Leve Fit',27.9)">Adicionar</button>
+</div>
+
+<h2>🥩 Box Domingo</h2>
+
+<div class="item">
+  <strong>Box Casal (2 pessoas) — R$ 79,90</strong>
+  2 pedaços fraldinha ou alcatra<br>
+  2 sobrecoxas desossadas<br>
+  2 gomos de linguiça<br>
+  2 pães de alho
+  <button onclick="add('Box Casal',79.9)">Adicionar</button>
+</div>
+
+<div class="item">
+  <strong>Box Família (4 pessoas) — R$ 149,90</strong>
+  4 pedaços fraldinha ou alcatra<br>
+  4 sobrecoxas desossadas<br>
+  4 gomos de linguiça<br>
+  4 pães de alho
+  <button onclick="add('Box Família',149.9)">Adicionar</button>
+</div>
+
+<h2>🥤 Bebidas</h2>
+
+<div class="item">
+  <strong>Coca / Guaraná (Lata) — R$ 6,00</strong>
+  <select onchange="add('Refrigerante Lata - ' + this.value,6)">
+    <option value="">Escolher</option>
+    <option value="Normal">Normal</option>
+    <option value="Zero">Zero</option>
+  </select>
+</div>
+
+<div class="item">
+  <strong>Coca-Cola 2L — R$ 14,00</strong>
+  <select onchange="add('Coca 2L - ' + this.value,14)">
+    <option value="">Escolher</option>
+    <option value="Normal">Normal</option>
+    <option value="Zero">Zero</option>
+  </select>
+</div>
+
+<div class="item">
+  <strong>Cerveja Long Neck — R$ 10,00</strong>
+  <button onclick="add('Cerveja Long Neck',10)">Adicionar</button>
+</div>
+
+<div class="item">
+  <strong>Água Mineral — R$ 4,00</strong>
+  <button onclick="add('Água Mineral',4)">Adicionar</button>
+</div>
+
+<h2>🧾 Seus dados</h2>
+
+<input id="nome" placeholder="Seu nome">
+<input id="endereco" placeholder="Endereço completo">
+
+</main>
+
+<footer>
+  <button onclick="send()">Enviar pedido pelo WhatsApp</button>
+</footer>
+
 <script>
-  const cart = [];
-  const WHATSAPP = "5543981119765"; // <<< TROQUE PELO SEU NÚMERO
+let cart = [];
 
-  function add(name, price) {
-    cart.push({ name, price });
-    alert(name + " adicionado!");
+function add(item, price) {
+  if (!item) return;
+  cart.push(item + ' - R$ ' + price.toFixed(2));
+  alert(item + ' adicionado!');
+}
+
+function send() {
+  if (!cart.length) {
+    alert('Adicione itens ao pedido.');
+    return;
   }
 
-  function send() {
-    const nome = document.getElementById("nome").value;
-    const endereco = document.getElementById("endereco").value;
-    const bairro = document.getElementById("bairro").value;
-    const pagamento = document.getElementById("pagamento").value;
-    const obs = document.getElementById("obs").value;
+  const nome = document.getElementById('nome').value;
+  const endereco = document.getElementById('endereco').value;
 
-    if (!nome || !endereco) {
-      alert("Preencha nome e endereço");
-      return;
-    }
+  let msg = `🍔 *Pedido - A Arte da Brasa*%0A%0A`;
+  cart.forEach(i => msg += `• ${i}%0A`);
+  msg += `%0A👤 ${nome}%0A📍 ${endereco}`;
 
-    let msg = `🔥 *PEDIDO - A ARTE DA BRASA*%0A`;
-    msg += `👤 ${nome}%0A📍 ${endereco} - ${bairro}%0A💳 ${pagamento}%0A%0A🍔 *ITENS:*%0A`;
-
-    let total = 0;
-    cart.forEach(i => {
-      msg += `• ${i.name} - R$ ${i.price.toFixed(2)}%0A`;
-      total += i.price;
-    });
-
-    msg += `%0A💰 *TOTAL: R$ ${total.toFixed(2)}*`;
-    if (obs) msg += `%0A📝 ${obs}`;
-
-    window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
-  }
+  window.open(
+    `https://wa.me/5543981119765?text=${msg}`,
+    '_blank'
+  );
+}
 </script>
 
 </body>
