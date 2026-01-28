@@ -1,109 +1,112 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Arte da Brasa | Pedidos</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A Arte da Brasa – Pedidos Online</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #121212;
-  color: #fff;
-}
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0f0f0f;
+    color: #fff;
+  }
 
-header {
-  text-align: center;
-  padding: 16px;
-  border-bottom: 2px solid #ff6a00;
-}
+  header {
+    text-align: center;
+    padding: 20px;
+    background: #111;
+  }
 
-header img {
-  max-width: 140px;
-}
+  header img {
+    max-width: 160px;
+    margin-bottom: 10px;
+  }
 
-h1 {
-  color: #ff6a00;
-  font-size: 18px;
-}
+  h1 {
+    color: #ff6a00;
+    margin: 5px 0;
+  }
 
-main {
-  max-width: 480px;
-  margin: auto;
-  padding: 16px;
-}
+  section {
+    padding: 15px;
+  }
 
-h2 {
-  color: #ff6a00;
-  border-bottom: 1px solid #ff6a0044;
-  padding-bottom: 6px;
-}
+  .category {
+    margin-top: 25px;
+    border-bottom: 2px solid #ff6a00;
+    padding-bottom: 5px;
+    color: #ff6a00;
+    font-size: 20px;
+  }
 
-.item {
-  background: #1c1c1c;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
+  .item {
+    background: #1a1a1a;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+  }
 
-.desc {
-  font-size: 14px;
-  color: #bbb;
-  margin-top: 6px;
-}
+  .item strong {
+    font-size: 16px;
+  }
 
-.price {
-  font-weight: bold;
-  margin-top: 6px;
-}
+  .desc {
+    font-size: 13px;
+    color: #ccc;
+    margin: 6px 0;
+  }
 
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background: #ff6a00;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: bold;
-}
+  button {
+    background: #ff6a00;
+    color: #000;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-button:active { opacity: 0.8; }
+  button:hover {
+    opacity: 0.9;
+  }
 
-select, input, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  border-radius: 6px;
-  border: none;
-}
+  .cart {
+    background: #111;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 10px;
+  }
 
-.cart {
-  margin-top: 32px;
-  border-top: 2px solid #ff6a00;
-  padding-top: 16px;
-}
+  .cart h2 {
+    color: #ff6a00;
+  }
 
-.send {
-  background: #1db954;
-  font-size: 16px;
-}
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: none;
+  }
 
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1db954;
-  color: #fff;
-  padding: 12px 18px;
-  border-radius: 20px;
-  font-size: 14px;
-  display: none;
-  z-index: 999;
-}
+  textarea {
+    resize: none;
+  }
+
+  .total {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .success {
+    color: #4caf50;
+    font-size: 13px;
+    margin-top: 5px;
+  }
 </style>
 </head>
 
@@ -114,7 +117,7 @@ select, input, textarea {
   <h1>Pedidos Online</h1>
 </header>
 
-<main id="menu"></main>
+<section id="menu"></section>
 
 <div class="cart">
   <h2>🛒 Carrinho</h2>
@@ -122,52 +125,37 @@ select, input, textarea {
 
   <p>Subtotal: R$ <span id="subtotal">0.00</span></p>
   <p>Taxa de entrega: R$ 1.00</p>
-  <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
+  <p class="total">Total: R$ <span id="total">0.00</span></p>
 
   <input id="name" placeholder="Nome">
   <input id="address" placeholder="Endereço">
 
   <select id="payment">
     <option>PIX</option>
-    <option>Cartão</option>
-    <option>Dinheiro</option>
+    <option>Cartão de Crédito</option>
+    <option>Cartão de Débito</option>
   </select>
 
   <textarea id="obs" placeholder="Observações (ex: sem cebola, ponto da carne...)"></textarea>
 
-  <button class="send" onclick="sendOrder()">Enviar pedido no WhatsApp</button>
+  <button onclick="sendOrder()">Enviar pedido no WhatsApp</button>
 </div>
-
-<div class="toast" id="toast">✔ Item adicionado ao carrinho</div>
 
 <script>
 const WHATSAPP = "5543981119765";
-const TAXA = 1;
+const TAXA = 1.0;
 
-const MENU = {
+const menu = {
   "🍔 Lanches": [
-    { name: "🥩 Brasa Original", price: 29.9, desc: "Carne bovina, queijo, alface, tomate e molho da casa" },
-    { name: "🐷 Pig Defumado", price: 26.9, desc: "Carne suína defumada, queijo e molho especial" },
-    { name: "🐔 Frango da Brasa", price: 24.9, desc: "Frango grelhado, queijo e molho da casa" },
-    { name: "💪 Brasa Leve (Fit)", price: 27.9, desc: "Carne magra, pão integral e salada" }
+    { name: "🥩 Brasa Original", price: 29.9, desc: "Blend bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado." },
+    { name: "🐷 Pig Defumado", price: 26.9, desc: "Burger suíno defumado, mussarela, cebola caramelizada e barbecue de goiabada." },
+    { name: "🍗 Frango da Brasa", price: 24.9, desc: "Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim." },
+    { name: "🥗 Brasa Leve (Fit)", price: 27.9, desc: "Zero pão! Burger de frango ou boi, queijo coalho grelhado, servido com salada, abobrinha na brasa e chimichurri." }
   ],
-
-  "📦 Boxes": [
-    {
-      name: "📦 Box Casal (2 pessoas)",
-      price: 79.9,
-      desc: "2 pedaços Fraldinha ou Alcatra\n2 Sobrecoxas desossadas\n2 Linguiças artesanais\n2 Pães de alho"
-    },
-    {
-      name: "📦 Box Família (4 pessoas)",
-      price: 149.9,
-      desc: "4 pedaços Fraldinha ou Alcatra\n4 Sobrecoxas desossadas\n4 Linguiças artesanais\n4 Pães de alho"
-    }
-  ],
-
   "🥤 Bebidas": [
-    { name: "🥤 Coca-Cola Lata", price: 6, soda: true },
-    { name: "🥤 Coca-Cola 2L", price: 14, soda: true },
+    { name: "🥤 Refrigerante Lata (Normal)", price: 6 },
+    { name: "🥤 Refrigerante Lata (Zero)", price: 6 },
+    { name: "🥤 Refrigerante 2L", price: 14 },
     { name: "🍺 Cerveja Long Neck", price: 10 },
     { name: "💧 Água Mineral", price: 4 }
   ]
@@ -176,44 +164,33 @@ const MENU = {
 let cart = [];
 
 function renderMenu() {
-  const menu = document.getElementById("menu");
-  for (const cat in MENU) {
-    menu.innerHTML += `<h2>${cat}</h2>`;
-    MENU[cat].forEach(item => {
-      menu.innerHTML += `
+  const menuDiv = document.getElementById("menu");
+  for (let cat in menu) {
+    menuDiv.innerHTML += `<div class="category">${cat}</div>`;
+    menu[cat].forEach(item => {
+      menuDiv.innerHTML += `
         <div class="item">
-          <strong>${item.name}</strong>
-          ${item.desc ? `<div class="desc">${item.desc.replaceAll("\n","<br>")}</div>` : ""}
-          <div class="price">R$ ${item.price.toFixed(2)}</div>
-          ${item.soda ? `
-            <select id="opt-${item.name}">
-              <option>Normal</option>
-              <option>Zero</option>
-            </select>` : ""}
-          <button onclick="addItem('${item.name}', ${item.price}, ${item.soda ? `'opt-${item.name}'` : 'null'})">
-            Adicionar
-          </button>
+          <strong>${item.name} — R$ ${item.price.toFixed(2)}</strong>
+          ${item.desc ? `<div class="desc">${item.desc}</div>` : ""}
+          <button onclick='addItem(${JSON.stringify(item)})'>Adicionar</button>
         </div>
       `;
     });
   }
 }
 
-function addItem(name, price, optId) {
-  let opt = optId ? document.getElementById(optId).value : "";
-  let label = opt ? `${name} (${opt})` : name;
-
-  let found = cart.find(i => i.name === label);
+function addItem(item) {
+  const found = cart.find(i => i.name === item.name);
   if (found) found.qty++;
-  else cart.push({ name: label, price, qty: 1 });
+  else cart.push({ ...item, qty: 1 });
 
-  updateCart();
-  showToast();
+  alert("Item adicionado ao carrinho ✅");
+  renderCart();
 }
 
-function updateCart() {
-  let subtotal = 0;
+function renderCart() {
   const div = document.getElementById("cartItems");
+  let subtotal = 0;
   div.innerHTML = "";
   cart.forEach(i => {
     subtotal += i.price * i.qty;
@@ -223,31 +200,27 @@ function updateCart() {
   document.getElementById("total").innerText = (subtotal + TAXA).toFixed(2);
 }
 
-function showToast() {
-  const t = document.getElementById("toast");
-  t.style.display = "block";
-  setTimeout(() => t.style.display = "none", 2000);
-}
-
 function sendOrder() {
+  if (!cart.length) return alert("Carrinho vazio");
   const name = document.getElementById("name").value;
   const address = document.getElementById("address").value;
-  const payment = document.getElementById("payment").value;
-  const obs = document.getElementById("obs").value;
+  if (!name || !address) return alert("Preencha nome e endereço");
 
-  if (!name || !address || cart.length === 0) {
-    alert("Preencha nome, endereço e escolha os itens.");
-    return;
-  }
-
+  let subtotal = 0;
   let msg = `🔥 *PEDIDO – A ARTE DA BRASA* 🔥\n\n`;
-  msg += `👤 ${name}\n📍 ${address}\n💳 ${payment}\n\n`;
-  cart.forEach(i => msg += `• ${i.qty}x ${i.name}\n`);
-  msg += `\n🚚 Taxa: R$ 1,00`;
-  msg += `\n💰 Total: R$ ${document.getElementById("total").innerText}`;
-  if (obs) msg += `\n\n📝 Obs: ${obs}`;
+  msg += `👤 ${name}\n📍 ${address}\n💳 ${payment.value}\n\n🛒 *ITENS:*\n`;
 
-  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+  cart.forEach(i => {
+    subtotal += i.price * i.qty;
+    msg += `• ${i.qty}x ${i.name} — R$ ${i.price.toFixed(2)}\n`;
+  });
+
+  msg += `\n🚚 Taxa de entrega: R$ 1,00`;
+  msg += `\n💰 *TOTAL FINAL: R$ ${(subtotal + TAXA).toFixed(2)}*`;
+
+  if (obs.value) msg += `\n\n📝 Obs: ${obs.value}`;
+
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`);
 }
 
 renderMenu();
