@@ -26,7 +26,6 @@ header img {
 h1 {
   color: #ff6a00;
   font-size: 18px;
-  margin-top: 6px;
 }
 
 main {
@@ -51,18 +50,18 @@ h2 {
 .desc {
   font-size: 14px;
   color: #bbb;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .price {
-  margin-top: 6px;
   font-weight: bold;
+  margin-top: 6px;
 }
 
 button {
   width: 100%;
-  margin-top: 10px;
   padding: 12px;
+  margin-top: 10px;
   background: #ff6a00;
   color: #fff;
   border: none;
@@ -71,9 +70,7 @@ button {
   font-weight: bold;
 }
 
-button:active {
-  opacity: 0.8;
-}
+button:active { opacity: 0.8; }
 
 select, input, textarea {
   width: 100%;
@@ -84,14 +81,13 @@ select, input, textarea {
 }
 
 .cart {
-  margin-top: 30px;
+  margin-top: 32px;
   border-top: 2px solid #ff6a00;
   padding-top: 16px;
 }
 
 .send {
   background: #1db954;
-  color: #fff;
   font-size: 16px;
 }
 
@@ -114,7 +110,7 @@ select, input, textarea {
 <body>
 
 <header>
-  <img src="IMG_0558.png">
+  <img src="IMG_0558.png" alt="A Arte da Brasa">
   <h1>Pedidos Online</h1>
 </header>
 
@@ -137,7 +133,7 @@ select, input, textarea {
     <option>Dinheiro</option>
   </select>
 
-  <textarea id="obs" placeholder="Observações (ex: sem cebola...)"></textarea>
+  <textarea id="obs" placeholder="Observações (ex: sem cebola, ponto da carne...)"></textarea>
 
   <button class="send" onclick="sendOrder()">Enviar pedido no WhatsApp</button>
 </div>
@@ -148,7 +144,27 @@ select, input, textarea {
 const WHATSAPP = "5543981119765";
 const TAXA = 1;
 
-const menuData = {
+const MENU = {
+  "🍔 Lanches": [
+    { name: "🥩 Brasa Original", price: 29.9, desc: "Carne bovina, queijo, alface, tomate e molho da casa" },
+    { name: "🐷 Pig Defumado", price: 26.9, desc: "Carne suína defumada, queijo e molho especial" },
+    { name: "🐔 Frango da Brasa", price: 24.9, desc: "Frango grelhado, queijo e molho da casa" },
+    { name: "💪 Brasa Leve (Fit)", price: 27.9, desc: "Carne magra, pão integral e salada" }
+  ],
+
+  "📦 Boxes": [
+    {
+      name: "📦 Box Casal (2 pessoas)",
+      price: 79.9,
+      desc: "2 pedaços Fraldinha ou Alcatra\n2 Sobrecoxas desossadas\n2 Linguiças artesanais\n2 Pães de alho"
+    },
+    {
+      name: "📦 Box Família (4 pessoas)",
+      price: 149.9,
+      desc: "4 pedaços Fraldinha ou Alcatra\n4 Sobrecoxas desossadas\n4 Linguiças artesanais\n4 Pães de alho"
+    }
+  ],
+
   "🥤 Bebidas": [
     { name: "🥤 Coca-Cola Lata", price: 6, soda: true },
     { name: "🥤 Coca-Cola 2L", price: 14, soda: true },
@@ -161,19 +177,19 @@ let cart = [];
 
 function renderMenu() {
   const menu = document.getElementById("menu");
-  for (const cat in menuData) {
+  for (const cat in MENU) {
     menu.innerHTML += `<h2>${cat}</h2>`;
-    menuData[cat].forEach(item => {
+    MENU[cat].forEach(item => {
       menu.innerHTML += `
         <div class="item">
           <strong>${item.name}</strong>
+          ${item.desc ? `<div class="desc">${item.desc.replaceAll("\n","<br>")}</div>` : ""}
           <div class="price">R$ ${item.price.toFixed(2)}</div>
           ${item.soda ? `
             <select id="opt-${item.name}">
               <option>Normal</option>
               <option>Zero</option>
-            </select>
-          ` : ""}
+            </select>` : ""}
           <button onclick="addItem('${item.name}', ${item.price}, ${item.soda ? `'opt-${item.name}'` : 'null'})">
             Adicionar
           </button>
@@ -184,12 +200,10 @@ function renderMenu() {
 }
 
 function addItem(name, price, optId) {
-  let opt = "";
-  if (optId) opt = document.getElementById(optId).value;
+  let opt = optId ? document.getElementById(optId).value : "";
+  let label = opt ? `${name} (${opt})` : name;
 
-  const label = opt ? `${name} (${opt})` : name;
-
-  const found = cart.find(i => i.name === label);
+  let found = cart.find(i => i.name === label);
   if (found) found.qty++;
   else cart.push({ name: label, price, qty: 1 });
 
@@ -201,20 +215,18 @@ function updateCart() {
   let subtotal = 0;
   const div = document.getElementById("cartItems");
   div.innerHTML = "";
-
   cart.forEach(i => {
     subtotal += i.price * i.qty;
     div.innerHTML += `<p>${i.qty}x ${i.name}</p>`;
   });
-
   document.getElementById("subtotal").innerText = subtotal.toFixed(2);
   document.getElementById("total").innerText = (subtotal + TAXA).toFixed(2);
 }
 
 function showToast() {
-  const toast = document.getElementById("toast");
-  toast.style.display = "block";
-  setTimeout(() => toast.style.display = "none", 2000);
+  const t = document.getElementById("toast");
+  t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 2000);
 }
 
 function sendOrder() {
@@ -230,14 +242,9 @@ function sendOrder() {
 
   let msg = `🔥 *PEDIDO – A ARTE DA BRASA* 🔥\n\n`;
   msg += `👤 ${name}\n📍 ${address}\n💳 ${payment}\n\n`;
-
-  cart.forEach(i => {
-    msg += `• ${i.qty}x ${i.name}\n`;
-  });
-
+  cart.forEach(i => msg += `• ${i.qty}x ${i.name}\n`);
   msg += `\n🚚 Taxa: R$ 1,00`;
   msg += `\n💰 Total: R$ ${document.getElementById("total").innerText}`;
-
   if (obs) msg += `\n\n📝 Obs: ${obs}`;
 
   window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
