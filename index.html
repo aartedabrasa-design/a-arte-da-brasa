@@ -5,8 +5,8 @@
   <title>A Arte da Brasa – Pedidos</title>
 
   <!-- LOGO / ÍCONE -->
-  <link rel="icon" type="IMG_0558.png" href="logo.png">
-  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="icon" type="image/png" href="IMG_0558.png">
+  <link rel="apple-touch-icon" href="IMG_0558.png">
   <meta name="theme-color" content="#ff6a00">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,7 +46,6 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* CONTEÚDO */
     .container {
       max-width: 600px;
       margin: auto;
@@ -68,7 +67,7 @@
     .item {
       background: #1c1c1c;
       padding: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       border-radius: 8px;
     }
 
@@ -76,11 +75,12 @@
       background: #ff6a00;
       color: #000;
       border: none;
-      padding: 8px 12px;
+      padding: 10px;
       border-radius: 6px;
       font-weight: bold;
       margin-top: 8px;
       width: 100%;
+      cursor: pointer;
     }
 
     select, input, textarea {
@@ -109,6 +109,7 @@
       border-radius: 20px;
       font-weight: bold;
       display: none;
+      z-index: 999;
     }
   </style>
 </head>
@@ -124,38 +125,55 @@
 
 <h1>🔥 A Arte da Brasa</h1>
 
-<!-- CARDÁPIO -->
+<!-- LANCHES -->
 <div class="item">
   <h3>🥩 Brasa Original (Boi) – R$ 29,90</h3>
   <p>Pão brioche, carne bovina, queijo, alface, tomate e molho da casa</p>
-  <button onclick="addItem('Brasa Original', 29.9)">Adicionar</button>
+  <button onclick="addItem('🥩 Brasa Original (Boi)', 29.9)">Adicionar</button>
 </div>
 
 <div class="item">
   <h3>🐷 Pig Defumado – R$ 26,90</h3>
   <p>Pão brioche, carne suína defumada, queijo e molho especial</p>
-  <button onclick="addItem('Pig Defumado', 26.9)">Adicionar</button>
+  <button onclick="addItem('🐷 Pig Defumado', 26.9)">Adicionar</button>
 </div>
 
 <div class="item">
   <h3>🍗 Frango da Brasa – R$ 24,90</h3>
   <p>Frango grelhado, queijo, salada e molho</p>
-  <button onclick="addItem('Frango da Brasa', 24.9)">Adicionar</button>
+  <button onclick="addItem('🍗 Frango da Brasa', 24.9)">Adicionar</button>
 </div>
 
 <div class="item">
   <h3>💪 Brasa Leve (Fit) – R$ 27,90</h3>
-  <p>Frango, pão integral e salada</p>
-  <button onclick="addItem('Brasa Leve', 27.9)">Adicionar</button>
+  <p>Frango grelhado, pão integral e salada</p>
+  <button onclick="addItem('💪 Brasa Leve (Fit)', 27.9)">Adicionar</button>
+</div>
+
+<!-- BEBIDAS -->
+<h2>🥤 Bebidas</h2>
+
+<div class="item">
+  <h3>🥤 Refrigerante Lata – R$ 6,00</h3>
+  <select id="lataTipo">
+    <option value="Normal">Normal</option>
+    <option value="Zero">Zero</option>
+  </select>
+  <button onclick="addBebida('Refrigerante Lata', 6, 'lataTipo')">Adicionar</button>
 </div>
 
 <div class="item">
   <h3>🥤 Refrigerante 2L – R$ 14,00</h3>
-  <select id="refriTipo">
+  <select id="refri2lTipo">
     <option value="Normal">Normal</option>
     <option value="Zero">Zero</option>
   </select>
-  <button onclick="addItem('Refrigerante 2L', 14)">Adicionar</button>
+  <button onclick="addBebida('Refrigerante 2L', 14, 'refri2lTipo')">Adicionar</button>
+</div>
+
+<div class="item">
+  <h3>💧 Água Mineral – R$ 4,00</h3>
+  <button onclick="addItem('💧 Água Mineral', 4)">Adicionar</button>
 </div>
 
 <!-- DADOS -->
@@ -192,6 +210,13 @@ function addItem(nome, preco) {
   mostrarToast();
 }
 
+function addBebida(nome, preco, selectId) {
+  const tipo = document.getElementById(selectId).value;
+  carrinho.push({ nome: `${nome} (${tipo})`, preco });
+  atualizarCarrinho();
+  mostrarToast();
+}
+
 function atualizarCarrinho() {
   let html = "<h3>🛒 Carrinho</h3>";
   let total = 0;
@@ -201,8 +226,8 @@ function atualizarCarrinho() {
     html += `<p>${i.nome} – R$ ${i.preco.toFixed(2)}</p>`;
   });
 
-  html += `<p>Taxa de entrega: R$ ${taxa.toFixed(2)}</p>`;
-  html += `<strong>Total: R$ ${(total + taxa).toFixed(2)}</strong>`;
+  html += `<p>🚚 Taxa de entrega: R$ ${taxa.toFixed(2)}</p>`;
+  html += `<strong>💰 Total: R$ ${(total + taxa).toFixed(2)}</strong>`;
 
   document.getElementById("cart").innerHTML = html;
 }
@@ -210,12 +235,12 @@ function atualizarCarrinho() {
 function mostrarToast() {
   const t = document.getElementById("toast");
   t.style.display = "block";
-  setTimeout(() => t.style.display = "none", 2000);
+  setTimeout(() => t.style.display = "none", 1800);
 }
 
 function finalizarPedido() {
-  const nome = document.getElementById("nome").value;
-  const endereco = document.getElementById("endereco").value;
+  const nome = document.getElementById("nome").value.trim();
+  const endereco = document.getElementById("endereco").value.trim();
   const pagamento = document.getElementById("pagamento").value;
   const obs = document.getElementById("obs").value;
 
@@ -224,7 +249,7 @@ function finalizarPedido() {
     return;
   }
 
-  let msg = `🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nome}\n📍 ${endereco}\n💳 ${pagamento}\n\n🍔 Itens:\n`;
+  let msg = `🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nome}\n📍 ${endereco}\n💳 ${pagamento}\n\n🍔 *Itens:*\n`;
   let total = 0;
 
   carrinho.forEach(i => {
@@ -232,10 +257,10 @@ function finalizarPedido() {
     msg += `• ${i.nome} – R$ ${i.preco.toFixed(2)}\n`;
   });
 
-  msg += `\n🚚 Taxa: R$ ${taxa.toFixed(2)}\n💰 TOTAL: R$ ${(total + taxa).toFixed(2)}`;
+  msg += `\n🚚 Taxa: R$ ${taxa.toFixed(2)}\n💰 *TOTAL: R$ ${(total + taxa).toFixed(2)}*`;
   if (obs) msg += `\n📝 Obs: ${obs}`;
 
-  window.open("https://wa.me/5543981119765?text=" + encodeURIComponent(msg));
+  window.open("https://wa.me/5543981119765?text=" + encodeURIComponent(msg), "_blank");
 }
 </script>
 
