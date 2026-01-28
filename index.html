@@ -1,230 +1,166 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+import React, { useState } from "react";
 
-<title>A Arte da Brasa | Pedidos</title>
+const WHATSAPP = "5511999999999"; // SEU NÚMERO
+const TAXA_ENTREGA = 1.0;
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #18181b;
-  color: #fff;
-}
+const MENU = {
+  burgers: [
+    { id: 1, name: "🥩 Brasa Original (Boi)", price: 29.9 },
+    { id: 2, name: "🐷 Pig Defumado", price: 26.9 },
+    { id: 3, name: "🐔 Frango da Brasa", price: 24.9 },
+    { id: 4, name: "💪 Brasa Leve (Fit)", price: 27.9 },
+  ],
+  box: [
+    {
+      id: 5,
+      name: "📦 Box Casal (2 pessoas)",
+      price: 79.9,
+      desc:
+        "2 pedaços Fraldinha ou Alcatra\n2 Sobrecoxas desossadas\n2 Linguiças artesanais\n2 Pães de alho",
+    },
+    {
+      id: 6,
+      name: "📦 Box Família (4 pessoas)",
+      price: 149.9,
+      desc:
+        "4 pedaços Fraldinha ou Alcatra\n4 Sobrecoxas desossadas\n4 Linguiças artesanais\n4 Pães de alho",
+    },
+  ],
+  drinks: [
+    { id: 7, name: "🥤 Refrigerante Lata", price: 6 },
+    { id: 8, name: "🥤 Refrigerante 2L", price: 14 },
+    { id: 9, name: "🍺 Cerveja Long Neck", price: 10 },
+    { id: 10, name: "💧 Água Mineral", price: 4 },
+    { id: 11, name: "🥤 Refrigerante Zero", price: 6 },
+  ],
+};
 
-header {
-  position: sticky;
-  top: 0;
-  background: #18181b;
-  border-bottom: 1px solid #ea580c55;
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 10;
-}
+export default function App() {
+  const [cart, setCart] = useState([]);
+  const [customer, setCustomer] = useState({
+    name: "",
+    address: "",
+    payment: "PIX",
+    obs: "",
+  });
 
-header img {
-  width: 48px;
-}
-
-header h1 {
-  margin: 0;
-  color: #f97316;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-
-header small {
-  color: #aaa;
-  font-size: 12px;
-}
-
-main {
-  padding: 16px;
-  max-width: 480px;
-  margin: auto;
-  padding-bottom: 140px;
-}
-
-h2 {
-  color: #f97316;
-  border-bottom: 1px solid #f9731633;
-  padding-bottom: 4px;
-  margin-top: 32px;
-}
-
-.item {
-  background: #27272a;
-  border-radius: 8px;
-  padding: 12px;
-  margin-top: 12px;
-}
-
-.item strong {
-  display: block;
-}
-
-button {
-  margin-top: 8px;
-  width: 100%;
-  padding: 10px;
-  background: #22c55e;
-  border: none;
-  border-radius: 6px;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-select, input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  border-radius: 6px;
-  border: none;
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #000;
-  padding: 16px;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <img src="IMG_0558.png" alt="A Arte da Brasa">
-  <div>
-    <h1>A Arte da Brasa</h1>
-    <small>Parrilla & Burgers</small>
-  </div>
-</header>
-
-<main>
-
-<h2>🍔 Hambúrgueres (160g)</h2>
-
-<div class="item">
-  <strong>Brasa Original — R$ 29,90</strong>
-  Blend bovino, queijo prato, bacon e maionese de alho.
-  <button onclick="add('Brasa Original',29.9)">Adicionar</button>
-</div>
-
-<div class="item">
-  <strong>Pig Defumado — R$ 26,90</strong>
-  Burger suíno, mussarela, cebola caramelizada e barbecue.
-  <button onclick="add('Pig Defumado',26.9)">Adicionar</button>
-</div>
-
-<div class="item">
-  <strong>Frango da Brasa — R$ 24,90</strong>
-  Sobrecoxa grelhada, cream cheese e maionese verde.
-  <button onclick="add('Frango da Brasa',24.9)">Adicionar</button>
-</div>
-
-<div class="item">
-  <strong>Brasa Leve (Fit) — R$ 27,90</strong>
-  Zero pão, burger de frango ou boi, queijo coalho e legumes.
-  <button onclick="add('Brasa Leve Fit',27.9)">Adicionar</button>
-</div>
-
-<h2>🥩 Box Domingo</h2>
-
-<div class="item">
-  <strong>Box Casal (2 pessoas) — R$ 79,90</strong>
-  2 pedaços fraldinha ou alcatra<br>
-  2 sobrecoxas desossadas<br>
-  2 gomos de linguiça<br>
-  2 pães de alho
-  <button onclick="add('Box Casal',79.9)">Adicionar</button>
-</div>
-
-<div class="item">
-  <strong>Box Família (4 pessoas) — R$ 149,90</strong>
-  4 pedaços fraldinha ou alcatra<br>
-  4 sobrecoxas desossadas<br>
-  4 gomos de linguiça<br>
-  4 pães de alho
-  <button onclick="add('Box Família',149.9)">Adicionar</button>
-</div>
-
-<h2>🥤 Bebidas</h2>
-
-<div class="item">
-  <strong>Coca / Guaraná (Lata) — R$ 6,00</strong>
-  <select onchange="add('Refrigerante Lata - ' + this.value,6)">
-    <option value="">Escolher</option>
-    <option value="Normal">Normal</option>
-    <option value="Zero">Zero</option>
-  </select>
-</div>
-
-<div class="item">
-  <strong>Coca-Cola 2L — R$ 14,00</strong>
-  <select onchange="add('Coca 2L - ' + this.value,14)">
-    <option value="">Escolher</option>
-    <option value="Normal">Normal</option>
-    <option value="Zero">Zero</option>
-  </select>
-</div>
-
-<div class="item">
-  <strong>Cerveja Long Neck — R$ 10,00</strong>
-  <button onclick="add('Cerveja Long Neck',10)">Adicionar</button>
-</div>
-
-<div class="item">
-  <strong>Água Mineral — R$ 4,00</strong>
-  <button onclick="add('Água Mineral',4)">Adicionar</button>
-</div>
-
-<h2>🧾 Seus dados</h2>
-
-<input id="nome" placeholder="Seu nome">
-<input id="endereco" placeholder="Endereço completo">
-
-</main>
-
-<footer>
-  <button onclick="send()">Enviar pedido pelo WhatsApp</button>
-</footer>
-
-<script>
-let cart = [];
-
-function add(item, price) {
-  if (!item) return;
-  cart.push(item + ' - R$ ' + price.toFixed(2));
-  alert(item + ' adicionado!');
-}
-
-function send() {
-  if (!cart.length) {
-    alert('Adicione itens ao pedido.');
-    return;
+  function addItem(item) {
+    const found = cart.find((i) => i.id === item.id);
+    if (found) {
+      setCart(
+        cart.map((i) =>
+          i.id === item.id ? { ...i, qty: i.qty + 1 } : i
+        )
+      );
+    } else {
+      setCart([...cart, { ...item, qty: 1 }]);
+    }
   }
 
-  const nome = document.getElementById('nome').value;
-  const endereco = document.getElementById('endereco').value;
+  function subtotal() {
+    return cart.reduce((acc, i) => acc + i.price * i.qty, 0);
+  }
 
-  let msg = `🍔 *Pedido - A Arte da Brasa*%0A%0A`;
-  cart.forEach(i => msg += `• ${i}%0A`);
-  msg += `%0A👤 ${nome}%0A📍 ${endereco}`;
+  function total() {
+    return subtotal() + TAXA_ENTREGA;
+  }
 
-  window.open(
-    `https://wa.me/5543981119765?text=${msg}`,
-    '_blank'
+  function sendOrder() {
+    if (!customer.name || !customer.address) {
+      alert("Preencha nome e endereço");
+      return;
+    }
+
+    let msg = `🔥 *PEDIDO - A ARTE DA BRASA*\n\n`;
+    msg += `👤 *Cliente:* ${customer.name}\n`;
+    msg += `📍 *Endereço:* ${customer.address}\n`;
+    msg += `💳 *Pagamento:* ${customer.payment}\n\n`;
+    msg += `🍔 *ITENS:*\n`;
+
+    cart.forEach((i) => {
+      msg += `• ${i.qty}x ${i.name} — R$ ${(i.price * i.qty)
+        .toFixed(2)
+        .replace(".", ",")}\n`;
+    });
+
+    msg += `\n💵 *Subtotal:* R$ ${subtotal()
+      .toFixed(2)
+      .replace(".", ",")}\n`;
+    msg += `🚚 *Taxa de entrega:* R$ ${TAXA_ENTREGA.toFixed(2).replace(
+      ".",
+      ","
+    )}\n`;
+    msg += `💰 *TOTAL:* R$ ${total().toFixed(2).replace(".", ",")}\n`;
+
+    if (customer.obs) {
+      msg += `\n📝 *Obs:* ${customer.obs}\n`;
+    }
+
+    window.open(
+      `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,
+      "_blank"
+    );
+  }
+
+  return (
+    <div style={{ padding: 20, maxWidth: 500, margin: "auto" }}>
+      <h1>🔥 A Arte da Brasa</h1>
+
+      {Object.entries(MENU).map(([cat, items]) => (
+        <div key={cat}>
+          <h3>{cat.toUpperCase()}</h3>
+          {items.map((item) => (
+            <div key={item.id} style={{ marginBottom: 10 }}>
+              <b>{item.name}</b> — R$ {item.price.toFixed(2)}
+              {item.desc && <pre>{item.desc}</pre>}
+              <button onClick={() => addItem(item)}>Adicionar</button>
+            </div>
+          ))}
+        </div>
+      ))}
+
+      <hr />
+
+      <h3>🛒 Carrinho</h3>
+      {cart.map((i) => (
+        <div key={i.id}>
+          {i.qty}x {i.name}
+        </div>
+      ))}
+
+      <p>Subtotal: R$ {subtotal().toFixed(2)}</p>
+      <p>Taxa entrega: R$ {TAXA_ENTREGA.toFixed(2)}</p>
+      <b>Total: R$ {total().toFixed(2)}</b>
+
+      <hr />
+
+      <input
+        placeholder="Nome"
+        onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
+      />
+      <input
+        placeholder="Endereço"
+        onChange={(e) =>
+          setCustomer({ ...customer, address: e.target.value })
+        }
+      />
+
+      <select
+        onChange={(e) =>
+          setCustomer({ ...customer, payment: e.target.value })
+        }
+      >
+        <option>PIX</option>
+        <option>Dinheiro</option>
+        <option>Cartão</option>
+      </select>
+
+      <textarea
+        placeholder="Observações"
+        onChange={(e) => setCustomer({ ...customer, obs: e.target.value })}
+      />
+
+      <button onClick={sendOrder}>📲 Enviar Pedido</button>
+    </div>
   );
 }
-</script>
-
-</body>
-</html>
