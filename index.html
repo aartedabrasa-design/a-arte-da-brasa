@@ -9,27 +9,24 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #18181b;
+  background: #121212;
   color: #fff;
 }
 
 header {
-  background: #18181b;
-  border-bottom: 2px solid #f97316;
-  padding: 14px;
   text-align: center;
+  padding: 16px;
+  border-bottom: 2px solid #ff6a00;
 }
 
 header img {
-  max-width: 150px;
-  margin-bottom: 8px;
+  max-width: 140px;
 }
 
 h1 {
-  margin: 0;
-  color: #f97316;
+  color: #ff6a00;
   font-size: 18px;
-  text-transform: uppercase;
+  margin-top: 6px;
 }
 
 main {
@@ -39,48 +36,77 @@ main {
 }
 
 h2 {
-  color: #f97316;
-  border-bottom: 1px solid #f9731666;
-  padding-bottom: 4px;
+  color: #ff6a00;
+  border-bottom: 1px solid #ff6a0044;
+  padding-bottom: 6px;
 }
 
 .item {
-  margin-bottom: 16px;
+  background: #1c1c1c;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
 .desc {
   font-size: 14px;
-  color: #ccc;
+  color: #bbb;
+  margin-top: 4px;
+}
+
+.price {
+  margin-top: 6px;
+  font-weight: bold;
 }
 
 button {
-  margin-top: 6px;
-  padding: 6px 10px;
-  background: #f97316;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background: #ff6a00;
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 15px;
   font-weight: bold;
-  cursor: pointer;
+}
+
+button:active {
+  opacity: 0.8;
+}
+
+select, input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: none;
 }
 
 .cart {
   margin-top: 30px;
-  padding-top: 20px;
-  border-top: 2px solid #f97316;
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 10px;
-  margin: 6px 0;
-  border-radius: 4px;
-  border: none;
+  border-top: 2px solid #ff6a00;
+  padding-top: 16px;
 }
 
 .send {
-  background: #25d366;
+  background: #1db954;
+  color: #fff;
   font-size: 16px;
-  font-weight: bold;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1db954;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  display: none;
+  z-index: 999;
 }
 </style>
 </head>
@@ -88,18 +114,18 @@ input, textarea, select {
 <body>
 
 <header>
-  <img src="IMG_0558.png" alt="A Arte da Brasa">
+  <img src="IMG_0558.png">
   <h1>Pedidos Online</h1>
 </header>
 
 <main id="menu"></main>
 
-<div class="cart" id="cartSection">
+<div class="cart">
   <h2>🛒 Carrinho</h2>
   <div id="cartItems"></div>
 
   <p>Subtotal: R$ <span id="subtotal">0.00</span></p>
-  <p>Taxa de entrega: R$ <span id="taxa">1.00</span></p>
+  <p>Taxa de entrega: R$ 1.00</p>
   <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
 
   <input id="name" placeholder="Nome">
@@ -111,55 +137,23 @@ input, textarea, select {
     <option>Dinheiro</option>
   </select>
 
-  <textarea id="obs" placeholder="Observações (ex: sem cebola, ponto da carne...)"></textarea>
+  <textarea id="obs" placeholder="Observações (ex: sem cebola...)"></textarea>
 
   <button class="send" onclick="sendOrder()">Enviar pedido no WhatsApp</button>
 </div>
 
+<div class="toast" id="toast">✔ Item adicionado ao carrinho</div>
+
 <script>
 const WHATSAPP = "5543981119765";
-const TAXA_ENTREGA = 1.00;
+const TAXA = 1;
 
 const menuData = {
-  "🍔 Lanches": [
-    {
-      name: "🐷 Pig Defumado",
-      price: 26.9,
-      desc: "Carne suína defumada, pão artesanal, queijo e molho especial"
-    },
-    {
-      name: "🥩 Brasa Original",
-      price: 29.9,
-      desc: "Hambúrguer bovino na brasa, queijo, pão artesanal e molho da casa"
-    },
-    {
-      name: "🐔 Brasa Frango",
-      price: 24.9,
-      desc: "Frango grelhado, queijo, alface e pão artesanal"
-    },
-    {
-      name: "💪 Brasa Leve",
-      price: 27.9,
-      desc: "Carne magra, pão integral e acompanhamentos leves"
-    }
-  ],
-  "📦 Boxes": [
-    {
-      name: "📦 Box Casal (2 pessoas)",
-      price: 79.9,
-      desc: "2 carnes + acompanhamentos + pães artesanais"
-    },
-    {
-      name: "📦 Box Família (4 pessoas)",
-      price: 149.9,
-      desc: "4 carnes + acompanhamentos + pães artesanais"
-    }
-  ],
   "🥤 Bebidas": [
-    { name: "🥤 Refrigerante Lata", price: 6, desc: "" },
-    { name: "🥤 Refrigerante 2L", price: 14, desc: "" },
-    { name: "🍺 Cerveja Long Neck", price: 10, desc: "" },
-    { name: "💧 Água Mineral", price: 4, desc: "" }
+    { name: "🥤 Coca-Cola Lata", price: 6, soda: true },
+    { name: "🥤 Coca-Cola 2L", price: 14, soda: true },
+    { name: "🍺 Cerveja Long Neck", price: 10 },
+    { name: "💧 Água Mineral", price: 4 }
   ]
 };
 
@@ -167,39 +161,60 @@ let cart = [];
 
 function renderMenu() {
   const menu = document.getElementById("menu");
-  for (const category in menuData) {
-    menu.innerHTML += `<h2>${category}</h2>`;
-    menuData[category].forEach(item => {
+  for (const cat in menuData) {
+    menu.innerHTML += `<h2>${cat}</h2>`;
+    menuData[cat].forEach(item => {
       menu.innerHTML += `
         <div class="item">
-          <strong>${item.name}</strong> — R$ ${item.price.toFixed(2)}
-          ${item.desc ? `<div class="desc">${item.desc}</div>` : ""}
-          <button onclick="addItem('${item.name}', ${item.price})">Adicionar</button>
+          <strong>${item.name}</strong>
+          <div class="price">R$ ${item.price.toFixed(2)}</div>
+          ${item.soda ? `
+            <select id="opt-${item.name}">
+              <option>Normal</option>
+              <option>Zero</option>
+            </select>
+          ` : ""}
+          <button onclick="addItem('${item.name}', ${item.price}, ${item.soda ? `'opt-${item.name}'` : 'null'})">
+            Adicionar
+          </button>
         </div>
       `;
     });
   }
 }
 
-function addItem(name, price) {
-  const found = cart.find(i => i.name === name);
+function addItem(name, price, optId) {
+  let opt = "";
+  if (optId) opt = document.getElementById(optId).value;
+
+  const label = opt ? `${name} (${opt})` : name;
+
+  const found = cart.find(i => i.name === label);
   if (found) found.qty++;
-  else cart.push({ name, price, qty: 1 });
+  else cart.push({ name: label, price, qty: 1 });
+
   updateCart();
+  showToast();
 }
 
 function updateCart() {
   let subtotal = 0;
-  const cartDiv = document.getElementById("cartItems");
-  cartDiv.innerHTML = "";
+  const div = document.getElementById("cartItems");
+  div.innerHTML = "";
 
   cart.forEach(i => {
     subtotal += i.price * i.qty;
-    cartDiv.innerHTML += `<p>${i.qty}x ${i.name}</p>`;
+    div.innerHTML += `<p>${i.qty}x ${i.name}</p>`;
   });
 
   document.getElementById("subtotal").innerText = subtotal.toFixed(2);
-  document.getElementById("total").innerText = (subtotal + TAXA_ENTREGA).toFixed(2);
+  document.getElementById("total").innerText = (subtotal + TAXA).toFixed(2);
+}
+
+function showToast() {
+  const toast = document.getElementById("toast");
+  toast.style.display = "block";
+  setTimeout(() => toast.style.display = "none", 2000);
 }
 
 function sendOrder() {
@@ -214,15 +229,14 @@ function sendOrder() {
   }
 
   let msg = `🔥 *PEDIDO – A ARTE DA BRASA* 🔥\n\n`;
-  msg += `👤 Cliente: ${name}\n📍 Endereço: ${address}\n💳 Pagamento: ${payment}\n\n🍔 ITENS:\n`;
+  msg += `👤 ${name}\n📍 ${address}\n💳 ${payment}\n\n`;
 
   cart.forEach(i => {
-    msg += `• ${i.qty}x ${i.name} — R$ ${(i.price*i.qty).toFixed(2)}\n`;
+    msg += `• ${i.qty}x ${i.name}\n`;
   });
 
-  msg += `\n💰 Subtotal: R$ ${document.getElementById("subtotal").innerText}`;
-  msg += `\n🚚 Taxa: R$ ${TAXA_ENTREGA.toFixed(2)}`;
-  msg += `\n🧾 TOTAL: R$ ${document.getElementById("total").innerText}`;
+  msg += `\n🚚 Taxa: R$ 1,00`;
+  msg += `\n💰 Total: R$ ${document.getElementById("total").innerText}`;
 
   if (obs) msg += `\n\n📝 Obs: ${obs}`;
 
