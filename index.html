@@ -17,16 +17,13 @@ header{
   padding:20px;
   background:#111;
 }
-header img{
-  max-width:150px;
-}
-h1{color:#ff6a00;margin:10px 0;}
-section{padding:15px;}
+header img{max-width:150px}
+h1{color:#ff6a00}
+section{padding:15px}
 .category{
   margin-top:25px;
   color:#ff6a00;
   border-bottom:2px solid #ff6a00;
-  padding-bottom:5px;
   font-size:20px;
 }
 .item{
@@ -35,7 +32,7 @@ section{padding:15px;}
   border-radius:8px;
   margin-top:12px;
 }
-.desc{font-size:13px;color:#ccc;margin:6px 0;}
+.desc{font-size:13px;color:#ccc;margin:6px 0}
 button{
   background:#ff6a00;
   color:#000;
@@ -51,7 +48,6 @@ button{
   padding:15px;
   border-radius:10px;
 }
-.cart h2{color:#ff6a00;}
 input,select,textarea{
   width:100%;
   padding:10px;
@@ -59,10 +55,7 @@ input,select,textarea{
   border-radius:6px;
   border:none;
 }
-textarea{resize:none}
 .total{font-size:18px;font-weight:bold}
-
-/* Toast estilo iFood */
 .toast{
   position:fixed;
   bottom:20px;
@@ -99,9 +92,9 @@ textarea{resize:none}
   <input id="address" placeholder="Endereço">
 
   <select id="payment">
-    <option value="PIX">PIX</option>
-    <option value="Cartão">Cartão</option>
-    <option value="Dinheiro">Dinheiro</option>
+    <option>PIX</option>
+    <option>Cartão</option>
+    <option>Dinheiro</option>
   </select>
 
   <textarea id="obs" placeholder="Observações (ex: sem cebola...)"></textarea>
@@ -124,7 +117,7 @@ const menu={
  ],
  "🥤 Bebidas":[
   {name:"🥤 Refrigerante Lata",price:6,option:true},
-  {name:"🥤 Refrigerante 2L",price:14},
+  {name:"🥤 Refrigerante 2L",price:14,option:true},
   {name:"🍺 Cerveja Long Neck",price:10},
   {name:"💧 Água Mineral",price:4}
  ]
@@ -164,8 +157,8 @@ function addItem(item){
   const opt=document.getElementById(`opt-${item.name}`).value;
   name+=` (${opt})`;
  }
- const found=cart.find(i=>i.name===name);
- if(found)found.qty++;
+ const f=cart.find(i=>i.name===name);
+ if(f)f.qty++;
  else cart.push({name,price:item.price,qty:1});
  renderCart();
  showToast();
@@ -184,17 +177,22 @@ function renderCart(){
 }
 
 function sendOrder(){
- if(!cart.length)return alert("Carrinho vazio");
- const n=name.value,a=address.value;
- if(!n||!a)return alert("Preencha nome e endereço");
+ const nameInput=document.getElementById("name").value.trim();
+ const addressInput=document.getElementById("address").value.trim();
+ const payment=document.getElementById("payment").value;
+ const obs=document.getElementById("obs").value;
+
+ if(!cart.length){alert("Carrinho vazio");return;}
+ if(!nameInput||!addressInput){alert("Preencha nome e endereço");return;}
+
  let sub=0;
- let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${n}\n📍 ${a}\n💳 ${payment.value}\n\n🛒 *ITENS:*\n`;
+ let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nameInput}\n📍 ${addressInput}\n💳 ${payment}\n\n🛒 *ITENS:*\n`;
  cart.forEach(i=>{
   sub+=i.price*i.qty;
   msg+=`• ${i.qty}x ${i.name} — R$ ${i.price.toFixed(2)}\n`;
  });
  msg+=`\n🚚 Taxa: R$ 1,00\n💰 *TOTAL: R$ ${(sub+TAXA).toFixed(2)}*`;
- if(obs.value)msg+=`\n\n📝 Obs: ${obs.value}`;
+ if(obs)msg+=`\n\n📝 Obs: ${obs}`;
  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`);
 }
 
