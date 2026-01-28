@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A Arte da Brasa | Pedidos</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #18181b;
+      color: #fff;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: #18181b;
+      border-bottom: 1px solid #ea580c55;
+      padding: 16px;
+      z-index: 10;
+    }
+    header h1 {
+      margin: 0;
+      color: #f97316;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+    main {
+      padding: 16px;
+      max-width: 480px;
+      margin: auto;
+      padding-bottom: 140px;
+    }
+    h2 {
+      color: #f97316;
+      border-bottom: 1px solid #f9731633;
+      padding-bottom: 4px;
+    }
+    .item {
+      background: #27272a;
+      border: 1px solid #3f3f46;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .item button {
+      background: #18181b;
+      border: 1px solid #3f3f46;
+      color: #f97316;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      font-size: 20px;
+    }
+    .cart {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #09090b;
+      border-top: 1px solid #3f3f46;
+      padding: 16px;
+    }
+    .cart button {
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
+      background: #16a34a;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #3f3f46;
+      background: #18181b;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>A Arte da Brasa</h1>
+</header>
+
+<main>
+  <h2>🍔 Hambúrgueres</h2>
+  <div class="item">
+    <div>Brasa Original (Boi)<br>R$ 29,90</div>
+    <button onclick="add('Brasa Original (Boi)', 29.9)">+</button>
+  </div>
+  <div class="item">
+    <div>Pig Defumado (Porco)<br>R$ 26,90</div>
+    <button onclick="add('Pig Defumado (Porco)', 26.9)">+</button>
+  </div>
+  <div class="item">
+    <div>Frango da Brasa<br>R$ 24,90</div>
+    <button onclick="add('Frango da Brasa', 24.9)">+</button>
+  </div>
+
+  <h2>🥤 Bebidas</h2>
+  <div class="item">
+    <div>Coca-Cola 2L<br>R$ 14,00</div>
+    <button onclick="add('Coca-Cola 2L', 14)">+</button>
+  </div>
+
+  <h2>📋 Seus dados</h2>
+  <input id="nome" placeholder="Seu nome">
+  <input id="endereco" placeholder="Endereço completo">
+  <input id="bairro" placeholder="Bairro">
+  <select id="pagamento">
+    <option value="PIX">PIX</option>
+    <option value="Dinheiro">Dinheiro</option>
+    <option value="Cartão">Cartão</option>
+  </select>
+  <textarea id="obs" placeholder="Observações"></textarea>
+</main>
+
+<div class="cart">
+  <button onclick="send()">Enviar pedido pelo WhatsApp</button>
+</div>
+
+<script>
+  const cart = [];
+  const WHATSAPP = "5543981119765"; // <<< TROQUE PELO SEU NÚMERO
+
+  function add(name, price) {
+    cart.push({ name, price });
+    alert(name + " adicionado!");
+  }
+
+  function send() {
+    const nome = document.getElementById("nome").value;
+    const endereco = document.getElementById("endereco").value;
+    const bairro = document.getElementById("bairro").value;
+    const pagamento = document.getElementById("pagamento").value;
+    const obs = document.getElementById("obs").value;
+
+    if (!nome || !endereco) {
+      alert("Preencha nome e endereço");
+      return;
+    }
+
+    let msg = `🔥 *PEDIDO - A ARTE DA BRASA*%0A`;
+    msg += `👤 ${nome}%0A📍 ${endereco} - ${bairro}%0A💳 ${pagamento}%0A%0A🍔 *ITENS:*%0A`;
+
+    let total = 0;
+    cart.forEach(i => {
+      msg += `• ${i.name} - R$ ${i.price.toFixed(2)}%0A`;
+      total += i.price;
+    });
+
+    msg += `%0A💰 *TOTAL: R$ ${total.toFixed(2)}*`;
+    if (obs) msg += `%0A📝 ${obs}`;
+
+    window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
+  }
+</script>
+
+</body>
+</html>
