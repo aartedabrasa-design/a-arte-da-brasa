@@ -3,71 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Arte da Brasa – Pedidos</title>
+
+<title>A Arte da Brasa 🔥</title>
+
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="/logo.png">
 <meta name="theme-color" content="#ff6a00">
+
 <style>
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Arial, sans-serif;
+  background:#f5f5f5;
+}
+
+/* SPLASH */
+#splash{
+  position:fixed;
+  inset:0;
   background:#0f0f0f;
-  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
+#splash img{
+  width:200px;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+/* HEADER */
 header{
+  background:#ff6a00;
+  color:#fff;
+  padding:15px;
   text-align:center;
-  padding:20px;
-  background:#111;
 }
-header img{max-width:150px}
-h1{color:#ff6a00}
-section{padding:15px}
-.category{
-  margin-top:25px;
-  color:#ff6a00;
-  border-bottom:2px solid #ff6a00;
-  font-size:20px;
+header img{
+  width:120px;
 }
+
+/* MENU */
+section{
+  padding:15px;
+}
+h2{
+  margin-top:30px;
+  color:#333;
+}
+
 .item{
-  background:#1a1a1a;
+  background:#fff;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:12px;
+}
+.item button{
+  background:#ff6a00;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+/* CART */
+#cart{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  border-top:2px solid #ff6a00;
+  padding:10px;
+}
+#cart button{
+  width:100%;
+  background:#ff6a00;
+  color:#fff;
+  border:none;
   padding:12px;
   border-radius:8px;
-  margin-top:12px;
+  font-size:16px;
 }
-.desc{font-size:13px;color:#ccc;margin:6px 0}
-button{
-  background:#ff6a00;
-  color:#000;
-  border:none;
-  padding:10px;
-  width:100%;
-  border-radius:6px;
-  font-weight:bold;
-}
-.cart{
-  background:#111;
-  margin:15px;
-  padding:15px;
-  border-radius:10px;
-}
-input,select,textarea{
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-  border-radius:6px;
-  border:none;
-}
-.total{font-size:18px;font-weight:bold}
-.toast{
+
+/* MSG */
+#msg{
   position:fixed;
-  bottom:20px;
+  bottom:90px;
   left:50%;
   transform:translateX(-50%);
-  background:#2ecc71;
-  color:#000;
-  padding:10px 20px;
-  border-radius:20px;
-  font-weight:bold;
+  background:#000;
+  color:#fff;
+  padding:10px 15px;
+  border-radius:8px;
   display:none;
 }
 </style>
@@ -75,127 +109,100 @@ input,select,textarea{
 
 <body>
 
+<!-- SPLASH -->
+<div id="splash">
+  <img src="IMG_0558.png" alt="A Arte da Brasa">
+</div>
+
 <header>
-  <img src="IMG_0558.png">
-  <h1>Pedidos Online</h1>
+  <img src="IMG_0558.png"><br>
+  <strong>Pedidos Online</strong>
 </header>
 
 <section id="menu"></section>
 
-<div class="cart">
-  <h2>🛒 Carrinho</h2>
-  <div id="cartItems"></div>
-
-  <p>Subtotal: R$ <span id="subtotal">0.00</span></p>
-  <p>Taxa de entrega: R$ 1.00</p>
-  <p class="total">Total: R$ <span id="total">0.00</span></p>
-
-  <input id="name" placeholder="Nome">
-  <input id="address" placeholder="Endereço">
-
-  <select id="payment">
-    <option>PIX</option>
-    <option>Cartão</option>
-    <option>Dinheiro</option>
-  </select>
-
-  <textarea id="obs" placeholder="Observações (ex: sem cebola...)"></textarea>
-
+<div id="cart">
+  <strong>Total: R$ <span id="total">0.00</span></strong>
   <button onclick="sendOrder()">Enviar pedido no WhatsApp</button>
 </div>
 
-<div id="toast" class="toast">Item adicionado ao carrinho ✅</div>
+<div id="msg">Item adicionado ao carrinho ✅</div>
 
 <script>
-const WHATSAPP="5543981119765";
-const TAXA=1.0;
+const taxaEntrega = 1.00;
+const cart = [];
 
-const menu={
- "🍔 Lanches":[
-  {name:"🥩 Brasa Original",price:29.9,desc:"Blend bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado."},
-  {name:"🐷 Pig Defumado",price:26.9,desc:"Burger suíno defumado, mussarela, cebola caramelizada e barbecue de goiabada."},
-  {name:"🍗 Frango da Brasa",price:24.9,desc:"Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim."},
-  {name:"🥗 Brasa Leve (Fit)",price:27.9,desc:"Zero pão! Burger de frango ou boi, queijo coalho grelhado, servido com salada, abobrinha na brasa e chimichurri."}
- ],
- "🥤 Bebidas":[
-  {name:"🥤 Refrigerante Lata",price:6,option:true},
-  {name:"🥤 Refrigerante 2L",price:14,option:true},
-  {name:"🍺 Cerveja Long Neck",price:10},
-  {name:"💧 Água Mineral",price:4}
- ]
-};
+const menu = [
+  {cat:"Lanches", name:"🐷 Pig Defumado", price:28, desc:"Pão brioche, carne suína defumada, queijo, molho especial"},
+  {cat:"Lanches", name:"🥩 Brasa Original", price:30, desc:"Pão brioche, carne bovina, queijo, alface, tomate"},
+  {cat:"Lanches", name:"🐔 Brasa Frango", price:27, desc:"Pão brioche, frango grelhado, queijo, molho"},
+  {cat:"Lanches", name:"🥗 Brasa Leve", price:26, desc:"Pão integral, frango grelhado, salada fresca"},
 
-let cart=[];
+  {cat:"Boxes", name:"📦 Box Casal", price:79.9, desc:"2 carnes, 2 sobrecoxas, 2 linguiças, 2 pães de alho"},
+  {cat:"Boxes", name:"📦 Box Família", price:149.9, desc:"4 carnes, 4 sobrecoxas, 4 linguiças, 4 pães de alho"},
+
+  {cat:"Bebidas", name:"🥤 Coca-Cola Lata", price:6},
+  {cat:"Bebidas", name:"🥤 Coca-Cola 2L", price:12}
+];
 
 function renderMenu(){
- const m=document.getElementById("menu");
- for(let cat in menu){
-  m.innerHTML+=`<div class="category">${cat}</div>`;
-  menu[cat].forEach(i=>{
-   m.innerHTML+=`
+  const container=document.getElementById("menu");
+  let lastCat="";
+  menu.forEach((i)=>{
+    if(i.cat!==lastCat){
+      container.innerHTML+=`<h2>${i.cat}</h2>`;
+      lastCat=i.cat;
+    }
+    container.innerHTML+=`
     <div class="item">
-     <strong>${i.name} — R$ ${i.price.toFixed(2)}</strong>
-     ${i.desc?`<div class="desc">${i.desc}</div>`:""}
-     ${i.option?`
-      <select id="opt-${i.name}">
-       <option>Normal</option>
-       <option>Zero</option>
-      </select>`:""}
-     <button onclick='addItem(${JSON.stringify(i)})'>Adicionar</button>
+      <strong>${i.name}</strong><br>
+      ${i.desc||""}<br>
+      R$ ${i.price.toFixed(2)}<br>
+      ${i.cat==="Bebidas" ? `
+        <select id="tipo-${i.name}">
+          <option>Normal</option>
+          <option>Zero</option>
+        </select>` : ""}
+      <br><button onclick="addItem('${i.name}',${i.price})">Adicionar</button>
     </div>`;
   });
- }
 }
 
-function showToast(){
- const t=document.getElementById("toast");
- t.style.display="block";
- setTimeout(()=>t.style.display="none",2000);
+function addItem(name,price){
+  cart.push({name,price});
+  updateTotal();
+  showMsg();
 }
 
-function addItem(item){
- let name=item.name;
- if(item.option){
-  const opt=document.getElementById(`opt-${item.name}`).value;
-  name+=` (${opt})`;
- }
- const f=cart.find(i=>i.name===name);
- if(f)f.qty++;
- else cart.push({name,price:item.price,qty:1});
- renderCart();
- showToast();
+function updateTotal(){
+  let total = cart.reduce((s,i)=>s+i.price,0)+taxaEntrega;
+  document.getElementById("total").innerText=total.toFixed(2);
 }
 
-function renderCart(){
- const d=document.getElementById("cartItems");
- let sub=0;
- d.innerHTML="";
- cart.forEach(i=>{
-  sub+=i.price*i.qty;
-  d.innerHTML+=`<p>${i.qty}x ${i.name}</p>`;
- });
- document.getElementById("subtotal").innerText=sub.toFixed(2);
- document.getElementById("total").innerText=(sub+TAXA).toFixed(2);
+function showMsg(){
+  const m=document.getElementById("msg");
+  m.style.display="block";
+  setTimeout(()=>m.style.display="none",1500);
 }
 
 function sendOrder(){
- const nameInput=document.getElementById("name").value.trim();
- const addressInput=document.getElementById("address").value.trim();
- const payment=document.getElementById("payment").value;
- const obs=document.getElementById("obs").value;
+  let text="🔥 *Pedido – A Arte da Brasa* %0A%0A";
+  let subtotal=0;
+  cart.forEach(i=>{
+    text+=`• ${i.name} – R$ ${i.price.toFixed(2)}%0A`;
+    subtotal+=i.price;
+  });
+  text+=`%0ASubtotal: R$ ${subtotal.toFixed(2)}%0A`;
+  text+=`Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}%0A`;
+  text+=`*Total: R$ ${(subtotal+taxaEntrega).toFixed(2)}*`;
+  window.open(`https://wa.me/5543981119765?text=${text}`);
+}
 
- if(!cart.length){alert("Carrinho vazio");return;}
- if(!nameInput||!addressInput){alert("Preencha nome e endereço");return;}
-
- let sub=0;
- let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nameInput}\n📍 ${addressInput}\n💳 ${payment}\n\n🛒 *ITENS:*\n`;
- cart.forEach(i=>{
-  sub+=i.price*i.qty;
-  msg+=`• ${i.qty}x ${i.name} — R$ ${i.price.toFixed(2)}\n`;
- });
- msg+=`\n🚚 Taxa: R$ 1,00\n💰 *TOTAL: R$ ${(sub+TAXA).toFixed(2)}*`;
- if(obs)msg+=`\n\n📝 Obs: ${obs}`;
- window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`);
+/* SPLASH */
+window.onload=()=>{
+  setTimeout(()=>{
+    document.getElementById("splash").style.display="none";
+  },2000);
 }
 
 renderMenu();
