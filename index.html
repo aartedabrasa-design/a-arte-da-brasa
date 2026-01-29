@@ -114,7 +114,7 @@ select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 <h2>📦 Box Domingo</h2>
 
 <div class="item">
-<h3>📦 Box Casal (2 pessoas) – R$ 79,90</h3>
+<h3>📦 Box Casal – R$ 79,90</h3>
 <p>
 • 2 pedaços cortados de Fraldinha ou Alcatra<br>
 • 2 Sobrecoxas desossadas<br>
@@ -125,7 +125,7 @@ select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 </div>
 
 <div class="item">
-<h3>📦 Box Família (4 pessoas) – R$ 149,90</h3>
+<h3>📦 Box Família – R$ 149,90</h3>
 <p>
 • 4 pedaços cortados de Fraldinha ou Alcatra<br>
 • 4 Sobrecoxas desossadas<br>
@@ -135,9 +135,131 @@ select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 <button onclick="addItem('📦 Box Família (4 pessoas)',149.9)">Adicionar</button>
 </div>
 
-<!-- RESTO DO CÓDIGO (bebidas, carrinho, JS) PERMANECE IGUAL AO ANTERIOR -->
+<h2>🥤 Bebidas</h2>
+
+<div class="item">
+<h3>🥤 Refrigerante Lata – R$ 6,00</h3>
+<select id="marcaLata">
+<option>Coca-Cola</option>
+<option>Guaraná</option>
+</select>
+<select id="tipoLata">
+<option>Normal</option>
+<option>Zero</option>
+</select>
+<button onclick="addRefri('Refrigerante Lata',6,'marcaLata','tipoLata')">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>🥤 Refrigerante 2L – R$ 14,00</h3>
+<select id="marca2L">
+<option>Coca-Cola</option>
+<option>Guaraná</option>
+</select>
+<select id="tipo2L">
+<option>Normal</option>
+<option>Zero</option>
+</select>
+<button onclick="addRefri('Refrigerante 2L',14,'marca2L','tipo2L')">Adicionar</button>
+</div>
+
+<h2>🛒 Carrinho</h2>
+<div class="cart" id="cart"></div>
+
+<input id="nome" placeholder="Nome">
+<input id="endereco" placeholder="Endereço">
+
+<select id="pagamento">
+<option>PIX</option>
+<option>Cartão</option>
+<option>Dinheiro</option>
+</select>
+
+<textarea id="obs" placeholder="Observações"></textarea>
+
+<button onclick="finalizar()" style="width:100%;margin-top:15px;padding:14px;background:#00c853;font-weight:bold">
+Enviar Pedido
+</button>
 
 </div>
+
+<div class="toast" id="toast">Item adicionado ao carrinho</div>
+
+<div class="confirm" id="confirm">
+<div class="confirm-box">
+<p>Remover item do carrinho?</p>
+<button onclick="confirmarRemocao()">Sim</button>
+<button onclick="fecharConfirm()">Cancelar</button>
+</div>
+</div>
+
+<script>
+let carrinho=[], removerIndex=null;
+const taxa=1;
+
+function addItem(nome,preco){
+let i=carrinho.find(x=>x.nome==nome);
+i?i.qtd++:carrinho.push({nome,preco,qtd:1});
+update();toast();
+}
+
+function addRefri(nome,preco,marcaId,tipoId){
+let marca=document.getElementById(marcaId).value;
+let tipo=document.getElementById(tipoId).value;
+let nomeFinal=`${nome} – ${marca} ${tipo}`;
+let i=carrinho.find(x=>x.nome==nomeFinal);
+i?i.qtd++:carrinho.push({nome:nomeFinal,preco,qtd:1});
+update();toast();
+}
+
+function update(){
+let html='',total=0;
+carrinho.forEach((i,idx)=>{
+total+=i.preco*i.qtd;
+html+=`
+<div class="cart-item">
+<span>${i.nome}<br>R$ ${i.preco.toFixed(2)}</span>
+<div class="qty">
+<button onclick="iQtd(${idx},-1)">➖</button>
+<span>${i.qtd}</span>
+<button onclick="iQtd(${idx},1)">➕</button>
+<span class="trash" onclick="askRemove(${idx})">🗑️</span>
+</div>
+</div>`;
+});
+html+=`<hr><p>🚚 Taxa de entrega: R$ 1,00</p><strong>Total: R$ ${(total+taxa).toFixed(2)}</strong>`;
+cart.innerHTML=html;
+}
+
+function iQtd(i,v){
+carrinho[i].qtd+=v;
+if(carrinho[i].qtd<=0)askRemove(i);
+update();
+}
+
+function askRemove(i){removerIndex=i;confirm.style.display='flex'}
+function confirmarRemocao(){carrinho.splice(removerIndex,1);confirm.style.display='none';update()}
+function fecharConfirm(){confirm.style.display='none'}
+
+function toast(){
+toastEl.style.display='block';
+setTimeout(()=>toastEl.style.display='none',1500)
+}
+const toastEl=document.getElementById("toast");
+
+function finalizar(){
+if(!nome.value||!endereco.value)return alert("Preencha nome e endereço");
+let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nome.value}\n📍 ${endereco.value}\n💳 ${pagamento.value}\n\n🍔 Itens:\n`;
+let total=0;
+carrinho.forEach(i=>{
+msg+=`• ${i.qtd}x ${i.nome} – R$ ${(i.preco*i.qtd).toFixed(2)}\n`;
+total+=i.preco*i.qtd;
+});
+msg+=`\n🚚 Taxa: R$ 1,00\n💰 *TOTAL: R$ ${(total+taxa).toFixed(2)}*`;
+if(obs.value)msg+=`\n📝 ${obs.value}`;
+window.open(`https://wa.me/5543981119765?text=${encodeURIComponent(msg)}`);
+}
+</script>
 
 </body>
 </html>
