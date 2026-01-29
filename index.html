@@ -8,6 +8,7 @@
 
 <link rel="icon" href="IMG_0558.png">
 <link rel="apple-touch-icon" href="IMG_0558.png">
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ff6a00">
 
 <style>
@@ -19,10 +20,14 @@ body{margin:0;font-family:Arial;background:#111;color:#fff}
 .container{max-width:600px;margin:auto;padding:16px;opacity:0;animation:show 1s forwards;animation-delay:2.3s}
 @keyframes show{to{opacity:1}}
 
-h1,h2{text-align:center;color:#ff6a00}
+.logo-top{text-align:center;margin-bottom:10px}
+.logo-top img{width:140px}
+
+h1,h2{color:#ff6a00;text-align:center}
 
 .item{background:#1c1c1c;padding:12px;border-radius:8px;margin-bottom:12px}
-.item button{width:100%;padding:10px;background:#ff6a00;border:none;border-radius:6px;font-weight:bold}
+.item p{font-size:14px;color:#ccc}
+.item button{width:100%;padding:10px;background:#ff6a00;border:none;border-radius:6px;font-weight:bold;margin-top:6px}
 
 select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:none}
 
@@ -48,6 +53,11 @@ select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 <div id="splash"><img src="IMG_0558.png"></div>
 
 <div class="container">
+
+<div class="logo-top">
+<img src="IMG_0558.png" alt="A Arte da Brasa">
+</div>
+
 <h1>🔥 A Arte da Brasa</h1>
 
 <h2>🍔 Lanches</h2>
@@ -79,29 +89,53 @@ select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 <h2>📦 Box Domingo</h2>
 
 <div class="item">
-<h3>📦 Box Casal – R$ 79,90</h3>
-<p>2 carnes, 2 sobrecoxas, 2 linguiças e 2 pães de alho</p>
-<button onclick="addItem('📦 Box Casal',79.9)">Adicionar</button>
+<h3>📦 Box Casal (2 pessoas) – R$ 79,90</h3>
+<p>
+• 2 pedaços cortados de Fraldinha ou Alcatra<br>
+• 2 Sobrecoxas desossadas<br>
+• 2 gomos de Linguiça artesanal<br>
+• 2 Pães de alho
+</p>
+<button onclick="addItem('📦 Box Casal (2 pessoas)',79.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>📦 Box Família – R$ 149,90</h3>
-<p>4 carnes, 4 sobrecoxas, 4 linguiças e 4 pães de alho</p>
-<button onclick="addItem('📦 Box Família',149.9)">Adicionar</button>
+<h3>📦 Box Família (4 pessoas) – R$ 149,90</h3>
+<p>
+• 4 pedaços cortados de Fraldinha ou Alcatra<br>
+• 4 Sobrecoxas desossadas<br>
+• 4 gomos de Linguiça artesanal<br>
+• 4 Pães de alho
+</p>
+<button onclick="addItem('📦 Box Família (4 pessoas)',149.9)">Adicionar</button>
 </div>
 
 <h2>🥤 Bebidas</h2>
 
 <div class="item">
 <h3>🥤 Refrigerante Lata – R$ 6,00</h3>
-<select id="lata"><option>Normal</option><option>Zero</option></select>
-<button onclick="addBebida('Refrigerante Lata',6,'lata')">Adicionar</button>
+<select id="marcaLata">
+<option>Coca-Cola</option>
+<option>Guaraná</option>
+</select>
+<select id="tipoLata">
+<option>Normal</option>
+<option>Zero</option>
+</select>
+<button onclick="addRefri('Refrigerante Lata',6,'marcaLata','tipoLata')">Adicionar</button>
 </div>
 
 <div class="item">
 <h3>🥤 Refrigerante 2L – R$ 14,00</h3>
-<select id="ref2l"><option>Normal</option><option>Zero</option></select>
-<button onclick="addBebida('Refrigerante 2L',14,'ref2l')">Adicionar</button>
+<select id="marca2L">
+<option>Coca-Cola</option>
+<option>Guaraná</option>
+</select>
+<select id="tipo2L">
+<option>Normal</option>
+<option>Zero</option>
+</select>
+<button onclick="addRefri('Refrigerante 2L',14,'marca2L','tipo2L')">Adicionar</button>
 </div>
 
 <h2>🛒 Carrinho</h2>
@@ -121,11 +155,11 @@ select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 <button onclick="finalizar()" style="width:100%;margin-top:15px;padding:14px;background:#00c853;font-weight:bold">Enviar Pedido</button>
 </div>
 
-<div class="toast" id="toast">Item adicionado</div>
+<div class="toast" id="toast">Item adicionado ao carrinho</div>
 
 <div class="confirm" id="confirm">
 <div class="confirm-box">
-<p>Remover item?</p>
+<p>Remover item do carrinho?</p>
 <button onclick="confirmarRemocao()">Sim</button>
 <button onclick="fecharConfirm()">Cancelar</button>
 </div>
@@ -141,9 +175,10 @@ i?i.qtd++:carrinho.push({nome,preco,qtd:1});
 update();toast();
 }
 
-function addBebida(nome,preco,id){
-let tipo=document.getElementById(id).value;
-let nomeFinal=`${nome} (${tipo})`;
+function addRefri(nome,preco,marcaId,tipoId){
+let marca=document.getElementById(marcaId).value;
+let tipo=document.getElementById(tipoId).value;
+let nomeFinal=`${nome} – ${marca} ${tipo}`;
 let i=carrinho.find(x=>x.nome==nomeFinal);
 i?i.qtd++:carrinho.push({nome:nomeFinal,preco,qtd:1});
 update();toast();
@@ -164,24 +199,34 @@ html+=`
 </div>
 </div>`;
 });
-html+=`<hr><p>🚚 Taxa: R$ 1,00</p><strong>Total: R$ ${(total+taxa).toFixed(2)}</strong>`;
+html+=`<hr><p>🚚 Taxa de entrega: R$ 1,00</p><strong>Total: R$ ${(total+taxa).toFixed(2)}</strong>`;
 cart.innerHTML=html;
 }
 
-function iQtd(i,v){carrinho[i].qtd+=v;if(carrinho[i].qtd<=0)askRemove(i);update()}
+function iQtd(i,v){
+carrinho[i].qtd+=v;
+if(carrinho[i].qtd<=0)askRemove(i);
+update();
+}
 
 function askRemove(i){removerIndex=i;confirm.style.display='flex'}
 function confirmarRemocao(){carrinho.splice(removerIndex,1);confirm.style.display='none';update()}
 function fecharConfirm(){confirm.style.display='none'}
 
-function toast(){toastEl.style.display='block';setTimeout(()=>toastEl.style.display='none',1500)}
+function toast(){
+toastEl.style.display='block';
+setTimeout(()=>toastEl.style.display='none',1500)
+}
 const toastEl=document.getElementById("toast");
 
 function finalizar(){
 if(!nome.value||!endereco.value)return alert("Preencha nome e endereço");
 let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nome.value}\n📍 ${endereco.value}\n💳 ${pagamento.value}\n\n🍔 Itens:\n`;
 let total=0;
-carrinho.forEach(i=>{msg+=`• ${i.qtd}x ${i.nome} – R$ ${(i.preco*i.qtd).toFixed(2)}\n`;total+=i.preco*i.qtd});
+carrinho.forEach(i=>{
+msg+=`• ${i.qtd}x ${i.nome} – R$ ${(i.preco*i.qtd).toFixed(2)}\n`;
+total+=i.preco*i.qtd;
+});
 msg+=`\n🚚 Taxa: R$ 1,00\n💰 *TOTAL: R$ ${(total+taxa).toFixed(2)}*`;
 if(obs.value)msg+=`\n📝 ${obs.value}`;
 window.open(`https://wa.me/5543981119765?text=${encodeURIComponent(msg)}`);
