@@ -1,164 +1,292 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>A Arte da Brasa</title>
+<meta charset="UTF-8">
+<title>A Arte da Brasa</title>
 
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#f97316">
-  <link rel="icon" href="IMG_0558.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f0f0f;
-      color: #fff;
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-      border-bottom: 2px solid #f97316;
-    }
-    header img {
-      width: 120px;
-      margin-bottom: 10px;
-    }
-    h2 {
-      color: #f97316;
-      margin-top: 30px;
-    }
-    .item {
-      background: #1c1c1c;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-    }
-    .item button {
-      background: #f97316;
-      color: #000;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .desc {
-      font-size: 14px;
-      color: #ccc;
-      margin-top: 6px;
-      white-space: pre-line;
-    }
-    #cart {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: #111;
-      padding: 15px;
-      border-top: 2px solid #f97316;
-    }
-  </style>
+<link rel="icon" href="IMG_0558.png">
+<link rel="apple-touch-icon" href="IMG_0558.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff6a00">
+
+<style>
+body{margin:0;font-family:Arial;background:#111;color:#fff}
+#splash{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;animation:fade 1s forwards;animation-delay:2s}
+#splash img{width:200px}
+@keyframes fade{to{opacity:0;visibility:hidden}}
+
+.container{max-width:600px;margin:auto;padding:16px;opacity:0;animation:show 1s forwards;animation-delay:2.3s}
+@keyframes show{to{opacity:1}}
+
+.logo-top{text-align:center;margin-bottom:10px}
+.logo-top img{width:140px}
+
+h1,h2{color:#ff6a00;text-align:center}
+
+.item{background:#1c1c1c;padding:12px;border-radius:8px;margin-bottom:12px}
+.item p{font-size:14px;color:#ccc;line-height:1.4}
+
+.item button{
+  width:100%;
+  padding:10px;
+  background:#ff6a00;
+  color:#000;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  margin-top:6px
+}
+
+select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:none}
+
+.cart{background:#000;padding:12px;border-radius:8px}
+
+.cart-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{padding:4px 8px;font-weight:bold}
+
+.trash{cursor:pointer}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ff6a00;color:#000;padding:10px 16px;border-radius:20px;font-weight:bold;display:none}
+
+.confirm{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
+.confirm-box{background:#222;padding:20px;border-radius:10px;text-align:center}
+.confirm-box button{margin:6px;padding:8px 14px;font-weight:bold}
+</style>
 </head>
 
 <body>
 
-<header>
-  <img src="IMG_0558.png" alt="A Arte da Brasa">
-  <h1>A Arte da Brasa</h1>
-</header>
+<div id="splash"><img src="IMG_0558.png"></div>
 
 <div class="container">
 
-  <h2>🍔 Hambúrgueres Sexta e Sábado</h2>
+<div class="logo-top">
+<img src="IMG_0558.png">
+</div>
 
-  <div class="item">
-    <strong>🥩 Brasa Original (Boi) – R$ 29,90</strong>
-    <div class="desc">
-Pão brioche, hambúrguer artesanal bovino, queijo muçarela, alface, tomate e maionese da casa.
-    </div>
-    <button onclick="addItem('Brasa Original (Boi)',29.9)">Adicionar</button>
-  </div>
+<h1>🔥 A Arte da Brasa</h1>
 
-  <div class="item">
-    <strong>🐷 Pig Defumado – R$ 26,90</strong>
-    <div class="desc">
-Pão brioche, carne suína defumada, queijo muçarela, alface, tomate e molho especial.
-    </div>
-    <button onclick="addItem('Pig Defumado',26.9)">Adicionar</button>
-  </div>
+<h2>🍔 Lanches Sexta e Sábado</h2>
 
-  <div class="item">
-    <strong>🍗 Frango da Brasa – R$ 24,90</strong>
-    <div class="desc">
-Pão brioche, frango grelhado na brasa, queijo muçarela, alface, tomate e maionese.
-    </div>
-    <button onclick="addItem('Frango da Brasa',24.9)">Adicionar</button>
-  </div>
+<div class="item">
+<h3>🥩 Brasa Original – R$ 29,90</h3>
+<p>
+• Blend bovino selado na brasa<br>
+• Queijo prato<br>
+• Bacon crocante<br>
+• Maionese de alho assado
+</p>
+<button onclick="addItem('🥩 Brasa Original',29.9)">Adicionar</button>
+</div>
 
-  <div class="item">
-    <strong>💪 Brasa Leve (Fit) – R$ 27,90</strong>
-    <div class="desc">
-Pão integral, hambúrguer artesanal bovino, queijo muçarela, alface, tomate e maionese leve.
-    </div>
-    <button onclick="addItem('Brasa Leve (Fit)',27.9)">Adicionar</button>
-  </div>
+<div class="item">
+<h3>🐷 Pig Defumado – R$ 26,90</h3>
+<p>
+• Burger suíno defumado<br>
+• Queijo mussarela<br>
+• Cebola caramelizada<br>
+• Barbecue de goiabada
+</p>
+<button onclick="addItem('🐷 Pig Defumado',26.9)">Adicionar</button>
+</div>
 
-  <h2>📦 Boxes de Domingo</h2>
+<div class="item">
+<h3>🍗 Frango da Brasa – R$ 24,90</h3>
+<p>
+• Burger de sobrecoxa grelhada<br>
+• Cream cheese<br>
+• Alface<br>
+• Tomate<br>
+• Maionese verde<br>
+• Pão de gergelim
+</p>
+<button onclick="addItem('🍗 Frango da Brasa',24.9)">Adicionar</button>
+</div>
 
-  <div class="item">
-    <strong>📦 Box Casal – R$ 79,90</strong>
-    <div class="desc">
-• 2 pedaços cortados de Fraldinha ou Alcatra  
-• 2 sobrecoxas desossadas  
-• 2 gomos de linguiça artesanal  
-• 2 pães de alho
-    </div>
-    <button onclick="addItem('Box Casal',79.9)">Adicionar</button>
-  </div>
+<div class="item">
+<h3>💪 Brasa Leve (Fit) – R$ 27,90</h3>
+<p>
+• ❌ ZERO PÃO<br>
+• Queijo coalho grelhado<br>
+• Salada fresca<br>
+• Abobrinha na brasa<br>
+• Chimichurri
+</p>
 
-  <div class="item">
-    <strong>📦 Box Família – R$ 149,90</strong>
-    <div class="desc">
-• 4 pedaços cortados de Fraldinha ou Alcatra  
-• 4 sobrecoxas desossadas  
-• 4 gomos de linguiça artesanal  
-• 4 pães de alho
-    </div>
-    <button onclick="addItem('Box Família',149.9)">Adicionar</button>
-  </div>
+<select id="brasaLeveProteina">
+<option>Frango</option>
+<option>Boi</option>
+</select>
+
+<button onclick="addBrasaLeve()">Adicionar</button>
+</div>
+
+<h2>📦 Box Domingo</h2>
+
+<p style="text-align:center;color:#ccc;font-size:14px">
+Todos os boxes acompanham:<br>
+Arroz branco, maionese da casa, farofa crocante e vinagrete
+</p>
+
+<div class="item">
+<h3>📦 Box Casal – R$ 79,90</h3>
+<p>
+• Fraldinha ou Alcatra na parrilla<br>
+• Sobrecoxa desossada<br>
+• Linguiça artesanal<br>
+• 2 pães de alho cremosos
+</p>
+<button onclick="addItem('📦 Box Casal (2 pessoas)',79.9)">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>📦 Box Família – R$ 149,90</h3>
+<p>
+• Fraldinha ou Alcatra na parrilla<br>
+• Sobrecoxa desossada<br>
+• Linguiça artesanal<br>
+• 4 pães de alho cremosos
+</p>
+<button onclick="addItem('📦 Box Família (4 pessoas)',149.9)">Adicionar</button>
+</div>
+
+<h2>🥤 Bebidas</h2>
+
+<div class="item">
+<h3>🥤 Refrigerante Lata – R$ 6,00</h3>
+<select id="marcaLata">
+<option>Coca-Cola</option>
+<option>Guaraná</option>
+</select>
+<select id="tipoLata">
+<option>Normal</option>
+<option>Zero</option>
+</select>
+<button onclick="addRefri('Refrigerante Lata',6,'marcaLata','tipoLata')">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>🥤 Refrigerante 2L – R$ 14,00</h3>
+<select id="marca2L">
+<option>Coca-Cola</option>
+<option>Guaraná</option>
+</select>
+<select id="tipo2L">
+<option>Normal</option>
+<option>Zero</option>
+</select>
+<button onclick="addRefri('Refrigerante 2L',14,'marca2L','tipo2L')">Adicionar</button>
+</div>
+
+<h2>🛒 Carrinho</h2>
+<div class="cart" id="cart"></div>
+
+<input id="nome" placeholder="Nome">
+<input id="endereco" placeholder="Endereço">
+
+<select id="pagamento">
+<option>PIX</option>
+<option>Cartão</option>
+<option>Dinheiro</option>
+</select>
+
+<textarea id="obs" placeholder="Observações"></textarea>
+
+<button onclick="finalizar()" style="width:100%;margin-top:15px;padding:14px;background:#00c853;font-weight:bold">
+Enviar Pedido
+</button>
 
 </div>
 
-<div id="cart">
-  <strong>Total: R$ <span id="total">0.00</span></strong>
-  <button onclick="finishOrder()">Finalizar Pedido</button>
+<div class="toast" id="toast">Item adicionado ao carrinho</div>
+
+<div class="confirm" id="confirm">
+<div class="confirm-box">
+<p>Remover item do carrinho?</p>
+<button onclick="confirmarRemocao()">Sim</button>
+<button onclick="fecharConfirm()">Cancelar</button>
+</div>
 </div>
 
 <script>
-  let total = 0;
-  let items = [];
+let carrinho=[], removerIndex=null;
+const taxa=1;
 
-  function addItem(name, price) {
-    items.push({name, price});
-    total += price;
-    document.getElementById('total').innerText = total.toFixed(2);
-  }
+function addItem(nome,preco){
+let i=carrinho.find(x=>x.nome==nome);
+i?i.qtd++:carrinho.push({nome,preco,qtd:1});
+update();toast();
+}
 
-  function finishOrder() {
-    let msg = "🔥 PEDIDO - A ARTE DA BRASA\n\n";
-    items.forEach(i => {
-      msg += `• ${i.name} - R$ ${i.price.toFixed(2)}\n`;
-    });
-    msg += `\n💰 TOTAL: R$ ${total.toFixed(2)}`;
+function addBrasaLeve(){
+let prot=document.getElementById("brasaLeveProteina").value;
+let nome=`💪 Brasa Leve (${prot})`;
+let preco=27.9;
+let i=carrinho.find(x=>x.nome==nome);
+i?i.qtd++:carrinho.push({nome,preco,qtd:1});
+update();toast();
+}
 
-    window.open(
-      `https://wa.me/5543981119765?text=${encodeURIComponent(msg)}`,
-      "_blank"
-    );
-  }
+function addRefri(nome,preco,marcaId,tipoId){
+let marca=document.getElementById(marcaId).value;
+let tipo=document.getElementById(tipoId).value;
+let nomeFinal=`${nome} – ${marca} ${tipo}`;
+let i=carrinho.find(x=>x.nome==nomeFinal);
+i?i.qtd++:carrinho.push({nome:nomeFinal,preco,qtd:1});
+update();toast();
+}
+
+function update(){
+let html='',total=0;
+carrinho.forEach((i,idx)=>{
+total+=i.preco*i.qtd;
+html+=`
+<div class="cart-item">
+<span>${i.nome}<br>R$ ${i.preco.toFixed(2)}</span>
+<div class="qty">
+<button onclick="iQtd(${idx},-1)">➖</button>
+<span>${i.qtd}</span>
+<button onclick="iQtd(${idx},1)">➕</button>
+<span class="trash" onclick="askRemove(${idx})">🗑️</span>
+</div>
+</div>`;
+});
+html+=`<hr><p>🚚 Taxa de entrega: R$ 1,00</p><strong>Total: R$ ${(total+taxa).toFixed(2)}</strong>`;
+cart.innerHTML=html;
+}
+
+function iQtd(i,v){
+carrinho[i].qtd+=v;
+if(carrinho[i].qtd<=0)askRemove(i);
+update();
+}
+
+function askRemove(i){removerIndex=i;confirm.style.display='flex'}
+function confirmarRemocao(){carrinho.splice(removerIndex,1);confirm.style.display='none';update()}
+function fecharConfirm(){confirm.style.display='none'}
+
+function toast(){
+toastEl.style.display='block';
+setTimeout(()=>toastEl.style.display='none',1500)
+}
+const toastEl=document.getElementById("toast");
+
+function finalizar(){
+if(!nome.value||!endereco.value)return alert("Preencha nome e endereço");
+let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nome.value}\n📍 ${endereco.value}\n💳 ${pagamento.value}\n\n🍔 Itens:\n`;
+let total=0;
+carrinho.forEach(i=>{
+msg+=`• ${i.qtd}x ${i.nome} – R$ ${(i.preco*i.qtd).toFixed(2)}\n`;
+total+=i.preco*i.qtd;
+});
+msg+=`\n🚚 Taxa: R$ 1,00\n💰 *TOTAL: R$ ${(total+taxa).toFixed(2)}*`;
+if(obs.value)msg+=`\n📝 ${obs.value}`;
+window.open(`https://wa.me/5543981119765?text=${encodeURIComponent(msg)}`);
+}
 </script>
 
 </body>
