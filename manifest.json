@@ -1,22 +1,273 @@
-{
-  "name": "A Arte da Brasa",
-  "short_name": "Brasa",
-  "description": "Cardápio online – A Arte da Brasa",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#0f0f0f",
-  "theme_color": "#f97316",
-  "orientation": "portrait",
-  "icons": [
-    {
-      "src": "/IMG_0558.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/IMG_0558.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Arte da Brasa</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#d35400">
+<link rel="apple-touch-icon" href="IMG_0558.png">
+<link rel="icon" href="IMG_0558.png">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background:#fffaf5;
+  margin:0;
+  padding:0;
 }
+
+header {
+  text-align:center;
+  padding:15px;
+  background:#fff;
+}
+
+header img {
+  width:140px;
+}
+
+section {
+  padding:15px;
+}
+
+.item {
+  background:#fff;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.item h3 {
+  margin:0;
+}
+
+.desc {
+  font-size:14px;
+  color:#555;
+}
+
+.price {
+  font-weight:bold;
+  margin:5px 0;
+}
+
+button {
+  background:#f39c12;
+  color:#000;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.cart {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  border-top:2px solid #f39c12;
+  padding:10px;
+}
+
+.cart-item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:5px;
+}
+
+.qty button {
+  padding:3px 8px;
+}
+
+input, select, textarea {
+  width:100%;
+  padding:6px;
+  margin-bottom:6px;
+}
+
+#installBtn {
+  margin:10px auto;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="IMG_0558.png" alt="A Arte da Brasa">
+  <button id="installBtn">📲 Instalar App</button>
+</header>
+
+<section>
+<h2>🍔 Lanches</h2>
+
+<div class="item">
+<h3>🐷 Pig Defumado</h3>
+<p class="desc">Pão brioche, carne suína defumada, queijo, molho especial</p>
+<p class="price">R$ 25,00</p>
+<button onclick="addItem('Pig Defumado',25)">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>🥩 Brasa Original</h3>
+<p class="desc">Pão brioche, hambúrguer bovino, queijo, salada e molho</p>
+<p class="price">R$ 23,00</p>
+<button onclick="addItem('Brasa Original',23)">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>🐔 Brasa Frango</h3>
+<p class="desc">Pão brioche, frango grelhado, queijo, salada</p>
+<p class="price">R$ 22,00</p>
+<button onclick="addItem('Brasa Frango',22)">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>🥗 Brasa Leve</h3>
+<p class="desc">Pão integral, frango, salada, molho leve</p>
+<p class="price">R$ 20,00</p>
+<button onclick="addItem('Brasa Leve',20)">Adicionar</button>
+</div>
+
+<h2>📦 Boxes Domingo</h2>
+
+<div class="item">
+<h3>📦 Box Casal</h3>
+<p class="desc">
+2 pedaços de fraldinha ou alcatra<br>
+2 sobrecoxas desossadas<br>
+2 gomos de linguiça<br>
+2 pães de alho
+</p>
+<p class="price">R$ 79,90</p>
+<button onclick="addItem('Box Casal',79.9)">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>📦 Box Família</h3>
+<p class="desc">
+4 pedaços de fraldinha ou alcatra<br>
+4 sobrecoxas desossadas<br>
+4 gomos de linguiça<br>
+4 pães de alho
+</p>
+<p class="price">R$ 149,90</p>
+<button onclick="addItem('Box Família',149.9)">Adicionar</button>
+</div>
+
+<h2>🥤 Bebidas</h2>
+
+<div class="item">
+<h3>Refrigerante Lata</h3>
+<select onchange="this.dataset.tipo=this.value">
+<option value="">Escolha</option>
+<option value="Coca Normal">Coca Normal</option>
+<option value="Coca Zero">Coca Zero</option>
+<option value="Guaraná Normal">Guaraná Normal</option>
+<option value="Guaraná Zero">Guaraná Zero</option>
+</select>
+<p class="price">R$ 6,00</p>
+<button onclick="addDrink(this,6)">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>Refrigerante 2L</h3>
+<select onchange="this.dataset.tipo=this.value">
+<option value="">Escolha</option>
+<option value="Coca Normal 2L">Coca Normal</option>
+<option value="Coca Zero 2L">Coca Zero</option>
+<option value="Guaraná Normal 2L">Guaraná Normal</option>
+<option value="Guaraná Zero 2L">Guaraná Zero</option>
+</select>
+<p class="price">R$ 10,00</p>
+<button onclick="addDrink(this,10)">Adicionar</button>
+</div>
+</section>
+
+<div class="cart">
+<h3>🛒 Carrinho</h3>
+<div id="cartItems"></div>
+<p><strong>Taxa entrega:</strong> R$ 1,00</p>
+<p><strong>Total:</strong> R$ <span id="total">0.00</span></p>
+
+<input id="nome" placeholder="Seu nome">
+<input id="endereco" placeholder="Endereço">
+<select id="pagamento">
+<option>Pix</option>
+<option>Cartão</option>
+<option>Dinheiro</option>
+</select>
+<textarea id="obs" placeholder="Observações"></textarea>
+
+<button onclick="finalizar()">Enviar Pedido</button>
+</div>
+
+<script>
+let cart=[];
+
+function addItem(nome,valor){
+  let item=cart.find(i=>i.nome===nome);
+  if(item){ item.qtd++; }
+  else{ cart.push({nome,valor,qtd:1}); }
+  render();
+}
+
+function addDrink(btn,valor){
+  let select=btn.previousElementSibling;
+  if(!select.dataset.tipo) return alert("Escolha o tipo");
+  addItem(select.dataset.tipo,valor);
+}
+
+function render(){
+  let html='';
+  let total=1;
+  cart.forEach((i,idx)=>{
+    total+=i.valor*i.qtd;
+    html+=`
+    <div class="cart-item">
+      ${i.nome} (R$${i.valor}) x ${i.qtd}
+      <span class="qty">
+        <button onclick="i.qtd>1?(i.qtd--):(null);render()">-</button>
+        <button onclick="i.qtd++;render()">+</button>
+      </span>
+    </div>`;
+  });
+  document.getElementById('cartItems').innerHTML=html;
+  document.getElementById('total').innerText=total.toFixed(2);
+}
+
+function finalizar(){
+  if(!nome.value||!endereco.value) return alert("Preencha nome e endereço");
+  let msg=`Pedido:%0A`;
+  cart.forEach(i=>{
+    msg+=`${i.nome} - ${i.qtd}x R$${i.valor}%0A`;
+  });
+  msg+=`Taxa: R$1,00%0ATotal: R$${total.innerText}%0A`;
+  msg+=`Pagamento: ${pagamento.value}%0AObs: ${obs.value}`;
+  window.open(`https://wa.me/5543981119765?text=${msg}`);
+}
+
+// PWA install
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  installBtn.style.display='block';
+});
+installBtn.onclick=()=>{
+  deferredPrompt.prompt();
+  deferredPrompt=null;
+};
+</script>
+
+</body>
+</html>
