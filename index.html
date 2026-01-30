@@ -3,64 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <title>A Arte da Brasa</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="icon" href="IMG_0558.png">
 <link rel="apple-touch-icon" href="IMG_0558.png">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff6a00">
 
 <style>
 body{margin:0;font-family:Arial;background:#111;color:#fff}
-#splash{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;animation:fade 1s forwards;animation-delay:2s}
-#splash img{width:200px}
-@keyframes fade{to{opacity:0;visibility:hidden}}
-
-.container{max-width:600px;margin:auto;padding:16px;opacity:0;animation:show 1s forwards;animation-delay:2.3s}
-@keyframes show{to{opacity:1}}
-
-.logo-top{text-align:center;margin-bottom:10px}
-.logo-top img{width:140px}
-
 h1,h2{color:#ff6a00;text-align:center}
+.container{max-width:600px;margin:auto;padding:16px}
+.logo{text-align:center}
+.logo img{width:140px}
 
-.item{background:#1c1c1c;padding:12px;border-radius:8px;margin-bottom:12px}
-.item p{font-size:14px;color:#ccc;line-height:1.4}
+.item{background:#1c1c1c;padding:14px;border-radius:10px;margin-bottom:14px}
+.item p{color:#ccc;font-size:14px;line-height:1.4}
 
-.blur-price{filter:blur(5px)}
-
-.item button{
-  width:100%;
-  padding:10px;
-  background:#ff6a00;
-  color:#000;
-  border:none;
-  border-radius:6px;
-  font-weight:bold;
-  margin-top:6px
+button{
+width:100%;
+padding:12px;
+background:#ff6a00;
+color:#000;
+border:none;
+border-radius:8px;
+font-weight:bold;
+margin-top:8px
 }
 
-select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:none}
+select,input,textarea{
+width:100%;
+padding:10px;
+margin-top:6px;
+border-radius:6px;
+border:none
+}
 
-.cart{background:#000;padding:12px;border-radius:8px}
+.cart{background:#000;padding:14px;border-radius:10px}
+.cart-item{margin-bottom:10px;border-bottom:1px solid #333;padding-bottom:6px}
 
-.cart-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-
-.qty{display:flex;align-items:center;gap:6px}
-.qty button{padding:4px 8px;font-weight:bold}
-
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ff6a00;color:#000;padding:10px 16px;border-radius:20px;font-weight:bold;display:none}
+.toast{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#ff6a00;
+color:#000;
+padding:10px 18px;
+border-radius:20px;
+font-weight:bold;
+display:none;
+z-index:999
+}
 </style>
 </head>
 
 <body>
 
-<div id="splash"><img src="IMG_0558.png"></div>
-
 <div class="container">
 
-<div class="logo-top">
+<div class="logo">
 <img src="IMG_0558.png">
 </div>
 
@@ -69,78 +69,58 @@ select,input,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 <h2>🍔 Lanches Sexta e Sábado</h2>
 
 <div class="item">
-<h3>🥩 Brasa Original <span class="blur-price">R$ 00,00</span></h3>
+<h3>🥩 Brasa Original (Boi)</h3>
 <p>
-Hambúrguer bovino selado na brasa,  
-queijo prato,  
-bacon crocante  
-e maionese de alho assado.
+Hambúrguer bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado.
 </p>
-<button onclick="addItem('🥩 Brasa Original',29.9)">Adicionar</button>
+<button onclick="addItem('🥩 Brasa Original (Boi)',29.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🐷 Pig Defumado <span class="blur-price">R$ 00,00</span></h3>
+<h3>🐷 Pig Defumado (Porco)</h3>
 <p>
-Burger suíno defumado,  
-mussarela,  
-cebola caramelizada  
-e barbecue de goiabada.
+Burger suíno defumado, mussarela, cebola caramelizada e barbecue de goiabada.
 </p>
 <button onclick="addItem('🐷 Pig Defumado',26.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🍗 Frango da Brasa <span class="blur-price">R$ 00,00</span></h3>
+<h3>🍗 Frango da Brasa</h3>
 <p>
-Burger de sobrecoxa grelhada,  
-cream cheese,  
-alface, tomate  
-e maionese verde  
-no pão de gergelim.
+Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.
 </p>
 <button onclick="addItem('🍗 Frango da Brasa',24.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>💪 Brasa Leve (Fit) <span class="blur-price">R$ 00,00</span></h3>
-
-<select id="proteinaFit">
+<h3>💪 Brasa Leve (Fit)</h3>
+<p>
+<strong>Zero pão!</strong> Burger de frango ou boi, queijo coalho grelhado, servido com salada, abobrinha na brasa e chimichurri.
+</p>
+<select id="fitProteina">
 <option value="Frango">Frango</option>
 <option value="Boi">Boi</option>
 </select>
-
-<p>
-<strong>Zero pão!</strong><br>
-Burger de frango ou boi,  
-queijo coalho grelhado,  
-servido com salada,  
-abobrinha na brasa  
-e chimichurri.
-</p>
-
 <button onclick="addFit()">Adicionar</button>
 </div>
 
-<h2>📦 Box Domingo</h2>
+<h2>📦 Boxes de Domingo</h2>
 
 <div class="item">
-<h3>📦 Box Casal <span class="blur-price">R$ 00,00</span></h3>
+<h3>📦 Box Casal</h3>
 <p>
 2 pedaços cortados de fraldinha ou alcatra na parrilla<br>
-2 peças de sobrecoxa desossada<br>
-2 gomos de linguiça artesanal<br>
+2 peças de sobrecoxa desossada e 2 gomos de linguiça artesanal<br>
 2 pães de alho cremosos
 </p>
 <button onclick="addItem('📦 Box Casal',79.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>📦 Box Família <span class="blur-price">R$ 00,00</span></h3>
+<h3>📦 Box Família</h3>
 <p>
 4 pedaços cortados de fraldinha ou alcatra na parrilla<br>
-4 peças de sobrecoxa desossada<br>
-4 gomos de linguiça artesanal<br>
+4 peças de sobrecoxa desossada e 4 gomos de linguiça artesanal<br>
 4 pães de alho cremosos
 </p>
 <button onclick="addItem('📦 Box Família',149.9)">Adicionar</button>
@@ -149,7 +129,7 @@ e chimichurri.
 <h2>🥤 Bebidas</h2>
 
 <div class="item">
-<h3>🥤 Refrigerante Lata <span class="blur-price">R$ 00,00</span></h3>
+<h3>🥤 Refrigerante Lata</h3>
 <select id="marcaLata">
 <option>Coca-Cola</option>
 <option>Guaraná</option>
@@ -158,11 +138,11 @@ e chimichurri.
 <option>Normal</option>
 <option>Zero</option>
 </select>
-<button onclick="addRefri('Refrigerante Lata',6,'marcaLata','tipoLata')">Adicionar</button>
+<button onclick="addRefri('🥤 Refrigerante Lata',6,'marcaLata','tipoLata')">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🥤 Refrigerante 2L <span class="blur-price">R$ 00,00</span></h3>
+<h3>🥤 Refrigerante 2L</h3>
 <select id="marca2L">
 <option>Coca-Cola</option>
 <option>Guaraná</option>
@@ -171,7 +151,7 @@ e chimichurri.
 <option>Normal</option>
 <option>Zero</option>
 </select>
-<button onclick="addRefri('Refrigerante 2L',14,'marca2L','tipo2L')">Adicionar</button>
+<button onclick="addRefri('🥤 Refrigerante 2L',14,'marca2L','tipo2L')">Adicionar</button>
 </div>
 
 <h2>🛒 Carrinho</h2>
@@ -188,59 +168,68 @@ e chimichurri.
 
 <textarea id="obs" placeholder="Observações"></textarea>
 
-<button onclick="finalizar()" style="width:100%;margin-top:15px;padding:14px;background:#00c853;font-weight:bold">
-Enviar Pedido
-</button>
+<button onclick="finalizar()">Enviar Pedido</button>
 
 </div>
 
 <div class="toast" id="toast">Item adicionado ao carrinho</div>
 
 <script>
-let carrinho=[], taxa=1;
+let carrinho=[];
+const taxa=1;
+const toast=document.getElementById("toast");
+
+function showToast(){
+toast.style.display="block";
+setTimeout(()=>toast.style.display="none",1500);
+}
 
 function addItem(nome,preco){
-let i=carrinho.find(x=>x.nome==nome);
+let i=carrinho.find(x=>x.nome===nome);
 i?i.qtd++:carrinho.push({nome,preco,qtd:1});
-update();toast();
+update();showToast();
 }
 
 function addFit(){
-let p=document.getElementById("proteinaFit").value;
-let nome=`💪 Brasa Leve (${p})`;
-let preco=27.9;
-let i=carrinho.find(x=>x.nome==nome);
-i?i.qtd++:carrinho.push({nome,preco,qtd:1});
-update();toast();
+let p=document.getElementById("fitProteina").value;
+addItem(`💪 Brasa Leve (${p})`,27.9);
 }
 
 function addRefri(nome,preco,m,t){
-let n=`${nome} – ${document.getElementById(m).value} ${document.getElementById(t).value}`;
-let i=carrinho.find(x=>x.nome==n);
-i?i.qtd++:carrinho.push({nome:n,preco,qtd:1});
-update();toast();
+let marca=document.getElementById(m).value;
+let tipo=document.getElementById(t).value;
+addItem(`${nome} – ${marca} ${tipo}`,preco);
 }
 
 function update(){
-let html='',total=0;
+let html="",total=0;
 carrinho.forEach(i=>{
-total+=i.preco*i.qtd;
-html+=`<div>${i.qtd}x ${i.nome}</div>`;
+let sub=i.preco*i.qtd;
+total+=sub;
+html+=`
+<div class="cart-item">
+${i.qtd}x ${i.nome}<br>
+R$ ${i.preco.toFixed(2)} = <strong>R$ ${sub.toFixed(2)}</strong>
+</div>`;
 });
 html+=`<hr>🚚 Taxa: R$ 1,00<br><strong>Total: R$ ${(total+taxa).toFixed(2)}</strong>`;
 cart.innerHTML=html;
 }
 
-function toast(){
-toast.style.display='block';
-setTimeout(()=>toast.style.display='none',1200);
-}
-
 function finalizar(){
-if(carrinho.length==0)return alert("Carrinho vazio");
+if(carrinho.length===0)return alert("Carrinho vazio");
 if(!nome.value||!endereco.value)return alert("Preencha nome e endereço");
-let msg=`🔥 PEDIDO A ARTE DA BRASA\n\n`;
-carrinho.forEach(i=>msg+=`${i.qtd}x ${i.nome}\n`);
+
+let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nome.value}\n📍 ${endereco.value}\n💳 ${pagamento.value}\n\n🍔 Itens:\n`;
+let total=0;
+carrinho.forEach(i=>{
+let sub=i.preco*i.qtd;
+total+=sub;
+msg+=`• ${i.qtd}x ${i.nome}\nR$ ${i.preco.toFixed(2)} = R$ ${sub.toFixed(2)}\n`;
+});
+msg+=`\n🚚 Taxa: R$ 1,00\n💰 *TOTAL: R$ ${(total+taxa).toFixed(2)}*`;
+if(obs.value)msg+=`\n📝 ${obs.value}`;
+
 window.open(`https://wa.me/5543996795964?text=${encodeURIComponent(msg)}`);
 }
 </script>
