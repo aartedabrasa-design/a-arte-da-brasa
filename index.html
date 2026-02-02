@@ -3,20 +3,15 @@
 <head>
 <meta charset="UTF-8">
 
-<!-- FULLSCREEN + SEM ZOOM -->
-<meta name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-
+<!-- modo app / sem zoom -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <title>A Arte da Brasa</title>
 
 <link rel="icon" href="IMG_0558.png">
 <link rel="apple-touch-icon" href="IMG_0558.png">
-
-<meta name="theme-color" content="#111">
 
 <style>
 body{
@@ -27,27 +22,12 @@ color:#fff;
 touch-action:manipulation;
 }
 
-/* SPLASH */
-#splash{
-position:fixed;
-inset:0;
-background:#000;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:9999;
-animation:fade 1s forwards;
-animation-delay:2s
-}
-#splash img{width:200px}
-@keyframes fade{to{opacity:0;visibility:hidden}}
-
 .container{max-width:600px;margin:auto;padding:16px}
 
 h1,h2{color:#ff6a00;text-align:center}
 
-.logo{text-align:center;margin-bottom:10px}
-.logo img{width:140px}
+.logo{text-align:center;margin-bottom:12px}
+.logo img{width:150px}
 
 /* CARDS */
 .item{
@@ -63,15 +43,13 @@ font-size:14px;
 line-height:1.4
 }
 
-/* PREÇOS */
 .price{
-font-weight:bold;
-color:#ff6a00
+color:#ff6a00;
+font-weight:bold
 }
 
-/* BLUR ATIVO */
 .blur{
-filter:blur(6px);
+filter:blur(6px)
 }
 
 /* BOTÃO */
@@ -94,6 +72,7 @@ border-radius:6px;
 border:none
 }
 
+/* CARRINHO */
 .cart{
 background:#000;
 padding:14px;
@@ -101,9 +80,9 @@ border-radius:10px
 }
 
 .cart-item{
-margin-bottom:10px;
 border-bottom:1px solid #333;
-padding-bottom:6px
+padding-bottom:6px;
+margin-bottom:6px
 }
 
 /* TOAST */
@@ -125,11 +104,6 @@ z-index:999
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-<img src="IMG_0558.png">
-</div>
-
 <div class="container">
 
 <div class="logo">
@@ -138,36 +112,90 @@ z-index:999
 
 <h1>🔥 A Arte da Brasa</h1>
 
+<!-- LANCHES -->
 <h2>🍔 Lanches</h2>
 
 <div class="item">
-<h3>🥩 Brasa Original – <span class="price">R$ 29,90</span></h3>
+<h3>🥩 Brasa Original — <span class="price">R$ 29,90</span></h3>
 <p>Hambúrguer bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado.</p>
 <button onclick="addItem('🥩 Brasa Original',29.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🐷 Pig Defumado – <span class="price">R$ 26,90</span></h3>
+<h3>🐷 Pig Defumado — <span class="price">R$ 26,90</span></h3>
 <p>Burger suíno defumado, mussarela, cebola caramelizada e barbecue de goiabada.</p>
 <button onclick="addItem('🐷 Pig Defumado',26.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🍗 Frango da Brasa – <span class="price">R$ 24,90</span></h3>
+<h3>🍗 Frango da Brasa — <span class="price">R$ 24,90</span></h3>
 <p>Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
 <button onclick="addItem('🍗 Frango da Brasa',24.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>💪 Brasa Leve – <span class="price">R$ 27,90</span></h3>
-<p><b>Zero pão!</b> Burger de frango ou boi, queijo coalho grelhado, salada, abobrinha na brasa e chimichurri.</p>
-<select id="fit">
+<h3>💪 Brasa Leve — <span class="price">R$ 27,90</span></h3>
+<p><b>Zero pão!</b> Burger de Frango ou Boi, queijo coalho grelhado, servido com salada, abobrinha na brasa e chimichurri.</p>
+<select id="fitProteina">
 <option>Frango</option>
 <option>Boi</option>
 </select>
 <button onclick="addFit()">Adicionar</button>
 </div>
 
+<!-- BOXES -->
+<h2>📦 Boxes Domingo</h2>
+
+<div class="item">
+<h3>📦 Box — <span class="price">R$ 79,90</span></h3>
+<p>
+2 pedaços de fraldinha ou alcatra na parrilla<br>
+2 sobrecoxas desossadas + 2 linguiças artesanais<br>
+2 pães de alho cremosos
+</p>
+<button onclick="addItem('📦 Box 2 pessoas',79.9)">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>📦 Box — <span class="price">R$ 149,90</span></h3>
+<p>
+4 pedaços de fraldinha ou alcatra na parrilla<br>
+4 sobrecoxas desossadas + 4 linguiças artesanais<br>
+4 pães de alho cremosos
+</p>
+<button onclick="addItem('📦 Box 4 pessoas',149.9)">Adicionar</button>
+</div>
+
+<!-- BEBIDAS -->
+<h2>🥤 Bebidas</h2>
+
+<div class="item">
+<h3>🥤 Refrigerante Lata — <span class="price">R$ 6,00</span></h3>
+<select id="marcaLata">
+<option>Coca-Cola</option>
+<option>Guaraná</option>
+</select>
+<select id="tipoLata">
+<option>Normal</option>
+<option>Zero</option>
+</select>
+<button onclick="addRefri('🥤 Lata',6,'marcaLata','tipoLata')">Adicionar</button>
+</div>
+
+<div class="item">
+<h3>🥤 Refrigerante 2L — <span class="price">R$ 14,00</span></h3>
+<select id="marca2L">
+<option>Coca-Cola</option>
+<option>Guaraná</option>
+</select>
+<select id="tipo2L">
+<option>Normal</option>
+<option>Zero</option>
+</select>
+<button onclick="addRefri('🥤 2L',14,'marca2L','tipo2L')">Adicionar</button>
+</div>
+
+<!-- CARRINHO -->
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart"></div>
 
@@ -186,11 +214,11 @@ z-index:999
 
 </div>
 
-<div class="toast" id="toast">Item adicionado ao carrinho</div>
+<div class="toast" id="toast">Item adicionado</div>
 
 <script>
 
-/* 🔥 MODO DEMONSTRAÇÃO (TRUE = preços borrados) */
+/* 🔥 TRUE = preços desfocados */
 const DEMO_MODE = true;
 
 let carrinho=[];
@@ -210,8 +238,14 @@ showToast();
 }
 
 function addFit(){
-let p=document.getElementById("fit").value;
+let p=document.getElementById("fitProteina").value;
 addItem(`💪 Brasa Leve (${p})`,27.9);
+}
+
+function addRefri(nome,preco,m,t){
+let marca=document.getElementById(m).value;
+let tipo=document.getElementById(t).value;
+addItem(`${nome} ${marca} ${tipo}`,preco);
 }
 
 function update(){
@@ -260,10 +294,6 @@ if(obs.value) msg+=`\nObs: ${obs.value}`;
 window.open(`https://wa.me/5543996795964?text=${encodeURIComponent(msg)}`);
 }
 
-/* aplica blur inicial */
-if(DEMO_MODE){
-document.querySelectorAll(".price").forEach(p=>p.classList.add("blur"));
-}
 </script>
 
 </body>
