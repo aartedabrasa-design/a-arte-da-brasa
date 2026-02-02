@@ -1,50 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
+
+<!-- FULLSCREEN + SEM ZOOM -->
+<meta name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <title>A Arte da Brasa</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="icon" href="IMG_0558.png">
 <link rel="apple-touch-icon" href="IMG_0558.png">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#111">
 
 <style>
-body{margin:0;font-family:Arial;background:#111;color:#fff}
+body{
+margin:0;
+font-family:Arial;
+background:#111;
+color:#fff;
+-webkit-user-select:none;
+touch-action:manipulation;
+}
 
 /* SPLASH */
 #splash{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  animation:fadeOut 1s forwards;
-  animation-delay:2s;
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+animation:fade 1s forwards;
+animation-delay:2s
 }
 #splash img{width:200px}
-@keyframes fadeOut{
-  to{opacity:0;visibility:hidden}
-}
+@keyframes fade{to{opacity:0;visibility:hidden}}
 
-h1,h2{color:#ff6a00;text-align:center}
 .container{
-  max-width:600px;
-  margin:auto;
-  padding:16px;
-  opacity:0;
-  animation:show 1s forwards;
-  animation-delay:2.2s
+max-width:600px;
+margin:auto;
+padding:16px
 }
-@keyframes show{to{opacity:1}}
 
-.logo{text-align:center}
+h1,h2{
+color:#ff6a00;
+text-align:center
+}
+
+.logo{text-align:center;margin-bottom:10px}
 .logo img{width:140px}
 
-.item{background:#1c1c1c;padding:14px;border-radius:10px;margin-bottom:14px}
-.item p{color:#ccc;font-size:14px;line-height:1.4}
+/* CARDS */
+.item{
+background:#1c1c1c;
+padding:14px;
+border-radius:10px;
+margin-bottom:14px
+}
 
+.item p{
+color:#ccc;
+font-size:14px;
+line-height:1.4
+}
+
+/* BOTÃO */
 button{
 width:100%;
 padding:12px;
@@ -64,9 +93,20 @@ border-radius:6px;
 border:none
 }
 
-.cart{background:#000;padding:14px;border-radius:10px}
-.cart-item{margin-bottom:10px;border-bottom:1px solid #333;padding-bottom:6px}
+/* CARRINHO */
+.cart{
+background:#000;
+padding:14px;
+border-radius:10px
+}
 
+.cart-item{
+margin-bottom:10px;
+border-bottom:1px solid #333;
+padding-bottom:6px
+}
+
+/* TOAST */
 .toast{
 position:fixed;
 bottom:20px;
@@ -80,6 +120,13 @@ font-weight:bold;
 display:none;
 z-index:999
 }
+
+/* BOTÃO INSTALAR */
+#installBtn{
+display:none;
+margin-bottom:15px;
+background:#00c853
+}
 </style>
 </head>
 
@@ -87,7 +134,7 @@ z-index:999
 
 <!-- SPLASH -->
 <div id="splash">
-  <img src="IMG_0558.png" alt="A Arte da Brasa">
+<img src="IMG_0558.png">
 </div>
 
 <div class="container">
@@ -96,95 +143,79 @@ z-index:999
 <img src="IMG_0558.png">
 </div>
 
+<button id="installBtn">📲 Instalar App</button>
+
 <h1>🔥 A Arte da Brasa</h1>
 
-<h2>🍔 Lanches Sexta e Sábado</h2>
+<!-- LANCHES -->
+
+<h2>🍔 Lanches</h2>
 
 <div class="item">
-<h3>🥩 Brasa Original (Boi)</h3>
-<p>
-Hambúrguer bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado.
-</p>
-<button onclick="addItem('🥩 Brasa Original (Boi)',29.9)">Adicionar</button>
+<h3>🥩 Brasa Original – R$ 29,90</h3>
+<p>Hambúrguer bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado.</p>
+<button onclick="addItem('🥩 Brasa Original',29.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🐷 Pig Defumado (Porco)</h3>
-<p>
-Burger suíno defumado, mussarela, cebola caramelizada e barbecue de goiabada.
-</p>
+<h3>🐷 Pig Defumado – R$ 26,90</h3>
+<p>Burger suíno defumado, mussarela, cebola caramelizada e barbecue de goiabada.</p>
 <button onclick="addItem('🐷 Pig Defumado',26.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🍗 Frango da Brasa</h3>
-<p>
-Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.
-</p>
+<h3>🍗 Frango da Brasa – R$ 24,90</h3>
+<p>Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
 <button onclick="addItem('🍗 Frango da Brasa',24.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>💪 Brasa Leve (Fit)</h3>
-<p>
-<strong>Zero pão!</strong> Burger de frango ou boi, queijo coalho grelhado, servido com salada, abobrinha na brasa e chimichurri.
-</p>
-<select id="fitProteina">
-<option value="Frango">Frango</option>
-<option value="Boi">Boi</option>
+<h3>💪 Brasa Leve (Fit) – R$ 27,90</h3>
+<p><b>Zero pão!</b> Burger de Frango ou Boi, queijo coalho grelhado, servido com salada, abobrinha na brasa e chimichurri.</p>
+
+<select id="fit">
+<option>Frango</option>
+<option>Boi</option>
 </select>
+
 <button onclick="addFit()">Adicionar</button>
 </div>
 
-<h2>📦 Boxes de Domingo</h2>
+<!-- BOXES -->
+
+<h2>📦 Boxes Domingo</h2>
 
 <div class="item">
-<h3>📦 Box Casal</h3>
-<p>
-2 pedaços cortados de fraldinha ou alcatra na parrilla<br>
-2 peças de sobrecoxa desossada e 2 gomos de linguiça artesanal<br>
-2 pães de alho cremosos
-</p>
-<button onclick="addItem('📦 Box Casal',79.9)">Adicionar</button>
+<h3>📦 Box – 2 pessoas – R$ 79,90</h3>
+<p>2 pedaços de fraldinha ou alcatra, 2 sobrecoxas desossadas, 2 linguiças artesanais e 2 pães de alho cremosos.</p>
+<button onclick="addItem('📦 Box 2 pessoas',79.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>📦 Box Família</h3>
-<p>
-4 pedaços cortados de fraldinha ou alcatra na parrilla<br>
-4 peças de sobrecoxa desossada e 4 gomos de linguiça artesanal<br>
-4 pães de alho cremosos
-</p>
-<button onclick="addItem('📦 Box Família',149.9)">Adicionar</button>
+<h3>📦 Box – 4 pessoas – R$ 149,90</h3>
+<p>4 pedaços de fraldinha ou alcatra, 4 sobrecoxas desossadas, 4 linguiças artesanais e 4 pães de alho cremosos.</p>
+<button onclick="addItem('📦 Box 4 pessoas',149.9)">Adicionar</button>
 </div>
+
+<!-- BEBIDAS -->
 
 <h2>🥤 Bebidas</h2>
 
 <div class="item">
-<h3>🥤 Refrigerante Lata</h3>
-<select id="marcaLata">
-<option>Coca-Cola</option>
-<option>Guaraná</option>
-</select>
-<select id="tipoLata">
-<option>Normal</option>
-<option>Zero</option>
-</select>
-<button onclick="addRefri('🥤 Refrigerante Lata',6,'marcaLata','tipoLata')">Adicionar</button>
+<h3>🥤 Lata – R$ 6,00</h3>
+<select id="m1"><option>Coca-Cola</option><option>Guaraná</option></select>
+<select id="t1"><option>Normal</option><option>Zero</option></select>
+<button onclick="addRefri('🥤 Lata',6,'m1','t1')">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🥤 Refrigerante 2L</h3>
-<select id="marca2L">
-<option>Coca-Cola</option>
-<option>Guaraná</option>
-</select>
-<select id="tipo2L">
-<option>Normal</option>
-<option>Zero</option>
-</select>
-<button onclick="addRefri('🥤 Refrigerante 2L',14,'marca2L','tipo2L')">Adicionar</button>
+<h3>🥤 2L – R$ 14,00</h3>
+<select id="m2"><option>Coca-Cola</option><option>Guaraná</option></select>
+<select id="t2"><option>Normal</option><option>Zero</option></select>
+<button onclick="addRefri('🥤 2L',14,'m2','t2')">Adicionar</button>
 </div>
+
+<!-- CARRINHO -->
 
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart"></div>
@@ -200,7 +231,7 @@ Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no p
 
 <textarea id="obs" placeholder="Observações"></textarea>
 
-<button onclick="finalizar()">Enviar Pedido</button>
+<button onclick="finalizar()" style="background:#00c853">Enviar Pedido</button>
 
 </div>
 
@@ -213,7 +244,7 @@ const toast=document.getElementById("toast");
 
 function showToast(){
 toast.style.display="block";
-setTimeout(()=>toast.style.display="none",1500);
+setTimeout(()=>toast.style.display="none",1200);
 }
 
 function addItem(nome,preco){
@@ -223,14 +254,14 @@ update();showToast();
 }
 
 function addFit(){
-let p=document.getElementById("fitProteina").value;
+let p=document.getElementById("fit").value;
 addItem(`💪 Brasa Leve (${p})`,27.9);
 }
 
 function addRefri(nome,preco,m,t){
 let marca=document.getElementById(m).value;
 let tipo=document.getElementById(t).value;
-addItem(`${nome} – ${marca} ${tipo}`,preco);
+addItem(`${nome} ${marca} ${tipo}`,preco);
 }
 
 function update(){
@@ -238,31 +269,44 @@ let html="",total=0;
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 total+=sub;
-html+=`
-<div class="cart-item">
-${i.qtd}x ${i.nome}<br>
-R$ ${i.preco.toFixed(2)} = <strong>R$ ${sub.toFixed(2)}</strong>
-</div>`;
+html+=`<div class="cart-item">${i.qtd}x ${i.nome}<br>R$ ${i.preco.toFixed(2)} = <b>R$ ${sub.toFixed(2)}</b></div>`;
 });
-html+=`<hr>🚚 Taxa: R$ 1,00<br><strong>Total: R$ ${(total+taxa).toFixed(2)}</strong>`;
+html+=`<hr>🚚 Taxa: R$ 1,00<br><b>Total: R$ ${(total+taxa).toFixed(2)}</b>`;
 cart.innerHTML=html;
 }
 
 function finalizar(){
-if(carrinho.length===0)return alert("Carrinho vazio");
-if(!nome.value||!endereco.value)return alert("Preencha nome e endereço");
+if(carrinho.length===0) return alert("Carrinho vazio!");
+if(!nome.value||!endereco.value) return alert("Preencha nome e endereço!");
 
-let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nome.value}\n📍 ${endereco.value}\n💳 ${pagamento.value}\n\n🍔 Itens:\n`;
+let msg=`🔥 PEDIDO - A ARTE DA BRASA\n\n👤 ${nome.value}\n📍 ${endereco.value}\n💳 ${pagamento.value}\n\n`;
 let total=0;
+
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 total+=sub;
-msg+=`• ${i.qtd}x ${i.nome}\nR$ ${i.preco.toFixed(2)} = R$ ${sub.toFixed(2)}\n`;
+msg+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n`;
 });
-msg+=`\n🚚 Taxa: R$ 1,00\n💰 *TOTAL: R$ ${(total+taxa).toFixed(2)}*`;
-if(obs.value)msg+=`\n📝 ${obs.value}`;
+
+msg+=`\nTaxa: R$ 1,00\nTOTAL: R$ ${(total+taxa).toFixed(2)}`;
+
+if(obs.value) msg+=`\nObs: ${obs.value}`;
 
 window.open(`https://wa.me/5543996795964?text=${encodeURIComponent(msg)}`);
+}
+
+/* BOTÃO INSTALAR */
+let deferredPrompt;
+const installBtn=document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt",(e)=>{
+e.preventDefault();
+deferredPrompt=e;
+installBtn.style.display="block";
+});
+
+installBtn.onclick=()=>{
+deferredPrompt.prompt();
 }
 </script>
 
