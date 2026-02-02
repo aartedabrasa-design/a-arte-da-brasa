@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 
-<!-- modo app / sem zoom -->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<!-- MODO APP (sem zoom / tela cheia) -->
+<meta name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 
@@ -43,13 +45,15 @@ font-size:14px;
 line-height:1.4
 }
 
+/* PREÇOS */
 .price{
 color:#ff6a00;
 font-weight:bold
 }
 
-.blur{
-filter:blur(6px)
+/* 🔥 BLUR GLOBAL (modo demo) */
+body.demo .price{
+filter:blur(6px);
 }
 
 /* BOTÃO */
@@ -135,7 +139,7 @@ z-index:999
 
 <div class="item">
 <h3>💪 Brasa Leve — <span class="price">R$ 27,90</span></h3>
-<p><b>Zero pão!</b> Burger de Frango ou Boi, queijo coalho grelhado, servido com salada, abobrinha na brasa e chimichurri.</p>
+<p><b>Zero pão!</b> Burger de Frango ou Boi, queijo coalho grelhado, salada, abobrinha na brasa e chimichurri.</p>
 <select id="fitProteina">
 <option>Frango</option>
 <option>Boi</option>
@@ -147,7 +151,7 @@ z-index:999
 <h2>📦 Boxes Domingo</h2>
 
 <div class="item">
-<h3>📦 Box — <span class="price">R$ 79,90</span></h3>
+<h3>📦 Box 2 pessoas — <span class="price">R$ 79,90</span></h3>
 <p>
 2 pedaços de fraldinha ou alcatra na parrilla<br>
 2 sobrecoxas desossadas + 2 linguiças artesanais<br>
@@ -157,7 +161,7 @@ z-index:999
 </div>
 
 <div class="item">
-<h3>📦 Box — <span class="price">R$ 149,90</span></h3>
+<h3>📦 Box 4 pessoas — <span class="price">R$ 149,90</span></h3>
 <p>
 4 pedaços de fraldinha ou alcatra na parrilla<br>
 4 sobrecoxas desossadas + 4 linguiças artesanais<br>
@@ -214,12 +218,16 @@ z-index:999
 
 </div>
 
-<div class="toast" id="toast">Item adicionado</div>
+<div class="toast" id="toast">Item adicionado ao carrinho</div>
 
 <script>
 
-/* 🔥 TRUE = preços desfocados */
+/* 🔥 TRUE = preços borrados */
 const DEMO_MODE = true;
+
+if(DEMO_MODE){
+document.body.classList.add("demo");
+}
 
 let carrinho=[];
 const taxa=1;
@@ -266,10 +274,6 @@ html+=`<hr>🚚 Taxa: <span class="price">R$ 1,00</span><br>
 <b>Total: <span class="price">R$ ${(total+taxa).toFixed(2)}</span></b>`;
 
 cart.innerHTML=html;
-
-if(DEMO_MODE){
-document.querySelectorAll(".price").forEach(p=>p.classList.add("blur"));
-}
 }
 
 function finalizar(){
@@ -293,7 +297,6 @@ if(obs.value) msg+=`\nObs: ${obs.value}`;
 
 window.open(`https://wa.me/5543996795964?text=${encodeURIComponent(msg)}`);
 }
-
 </script>
 
 </body>
