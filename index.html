@@ -3,12 +3,8 @@
 <head>
 <meta charset="UTF-8">
 
-<!-- MODO APP (sem zoom / tela cheia) -->
 <meta name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>A Arte da Brasa</title>
 
@@ -31,7 +27,6 @@ h1,h2{color:#ff6a00;text-align:center}
 .logo{text-align:center;margin-bottom:12px}
 .logo img{width:150px}
 
-/* CARDS */
 .item{
 background:#1c1c1c;
 padding:14px;
@@ -45,18 +40,16 @@ font-size:14px;
 line-height:1.4
 }
 
-/* PREÇOS */
 .price{
 color:#ff6a00;
 font-weight:bold
 }
 
-/* 🔥 BLUR GLOBAL (modo demo) */
+/* 🔥 BLUR GLOBAL PARA GRAVAÇÃO */
 body.demo .price{
 filter:blur(6px);
 }
 
-/* BOTÃO */
 button{
 width:100%;
 padding:12px;
@@ -76,7 +69,6 @@ border-radius:6px;
 border:none
 }
 
-/* CARRINHO */
 .cart{
 background:#000;
 padding:14px;
@@ -89,7 +81,6 @@ padding-bottom:6px;
 margin-bottom:6px
 }
 
-/* TOAST */
 .toast{
 position:fixed;
 bottom:20px;
@@ -100,8 +91,7 @@ color:#000;
 padding:10px 18px;
 border-radius:20px;
 font-weight:bold;
-display:none;
-z-index:999
+display:none
 }
 </style>
 </head>
@@ -120,61 +110,51 @@ z-index:999
 <h2>🍔 Lanches</h2>
 
 <div class="item">
-<h3>🥩 Brasa Original — <span class="price">R$ 29,90</span></h3>
+<h3>🥩 Brasa Original — <span class="price">R$ 32,90</span></h3>
 <p>Hambúrguer bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado.</p>
-<button onclick="addItem('🥩 Brasa Original',29.9)">Adicionar</button>
+<button onclick="addItem('🥩 Brasa Original',32.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🐷 Pig Defumado — <span class="price">R$ 26,90</span></h3>
+<h3>🐷 Pig Defumado — <span class="price">R$ 29,90</span></h3>
 <p>Burger suíno defumado, mussarela, cebola caramelizada e barbecue de goiabada.</p>
-<button onclick="addItem('🐷 Pig Defumado',26.9)">Adicionar</button>
+<button onclick="addItem('🐷 Pig Defumado',29.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🍗 Frango da Brasa — <span class="price">R$ 24,90</span></h3>
+<h3>🍗 Frango da Brasa — <span class="price">R$ 27,90</span></h3>
 <p>Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
-<button onclick="addItem('🍗 Frango da Brasa',24.9)">Adicionar</button>
-</div>
-
-<div class="item">
-<h3>💪 Brasa Leve — <span class="price">R$ 27,90</span></h3>
-<p><b>Zero pão!</b> Burger de Frango ou Boi, queijo coalho grelhado, salada, abobrinha na brasa e chimichurri.</p>
-<select id="fitProteina">
-<option>Frango</option>
-<option>Boi</option>
-</select>
-<button onclick="addFit()">Adicionar</button>
+<button onclick="addItem('🍗 Frango da Brasa',27.9)">Adicionar</button>
 </div>
 
 <!-- BOXES -->
 <h2>📦 Boxes Domingo</h2>
 
 <div class="item">
-<h3>📦 Box 2 pessoas — <span class="price">R$ 79,90</span></h3>
+<h3>📦 Box 2 pessoas — <span class="price">R$ 89,90</span></h3>
 <p>
 2 pedaços de fraldinha ou alcatra na parrilla<br>
 2 sobrecoxas desossadas + 2 linguiças artesanais<br>
 2 pães de alho cremosos
 </p>
-<button onclick="addItem('📦 Box 2 pessoas',79.9)">Adicionar</button>
+<button onclick="addItem('📦 Box 2 pessoas',89.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>📦 Box 4 pessoas — <span class="price">R$ 149,90</span></h3>
+<h3>📦 Box 4 pessoas — <span class="price">R$ 169,90</span></h3>
 <p>
 4 pedaços de fraldinha ou alcatra na parrilla<br>
 4 sobrecoxas desossadas + 4 linguiças artesanais<br>
 4 pães de alho cremosos
 </p>
-<button onclick="addItem('📦 Box 4 pessoas',149.9)">Adicionar</button>
+<button onclick="addItem('📦 Box 4 pessoas',169.9)">Adicionar</button>
 </div>
 
 <!-- BEBIDAS -->
 <h2>🥤 Bebidas</h2>
 
 <div class="item">
-<h3>🥤 Refrigerante Lata — <span class="price">R$ 6,00</span></h3>
+<h3>🥤 Refrigerante Lata — <span class="price">R$ 7,00</span></h3>
 <select id="marcaLata">
 <option>Coca-Cola</option>
 <option>Guaraná</option>
@@ -183,11 +163,11 @@ z-index:999
 <option>Normal</option>
 <option>Zero</option>
 </select>
-<button onclick="addRefri('🥤 Lata',6,'marcaLata','tipoLata')">Adicionar</button>
+<button onclick="addRefri('🥤 Lata',7,'marcaLata','tipoLata')">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🥤 Refrigerante 2L — <span class="price">R$ 14,00</span></h3>
+<h3>🥤 Refrigerante 2L — <span class="price">R$ 16,00</span></h3>
 <select id="marca2L">
 <option>Coca-Cola</option>
 <option>Guaraná</option>
@@ -196,7 +176,7 @@ z-index:999
 <option>Normal</option>
 <option>Zero</option>
 </select>
-<button onclick="addRefri('🥤 2L',14,'marca2L','tipo2L')">Adicionar</button>
+<button onclick="addRefri('🥤 2L',16,'marca2L','tipo2L')">Adicionar</button>
 </div>
 
 <!-- CARRINHO -->
@@ -222,8 +202,8 @@ z-index:999
 
 <script>
 
-/* 🔥 TRUE = preços borrados */
-const DEMO_MODE = true;
+/* TRUE = desfocar preços para gravação */
+const DEMO_MODE = false;
 
 if(DEMO_MODE){
 document.body.classList.add("demo");
@@ -243,11 +223,6 @@ let i=carrinho.find(x=>x.nome===nome);
 i?i.qtd++:carrinho.push({nome,preco,qtd:1});
 update();
 showToast();
-}
-
-function addFit(){
-let p=document.getElementById("fitProteina").value;
-addItem(`💪 Brasa Leve (${p})`,27.9);
 }
 
 function addRefri(nome,preco,m,t){
