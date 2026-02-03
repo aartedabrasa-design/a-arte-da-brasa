@@ -2,27 +2,31 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+
 <title>A Arte da Brasa</title>
 
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff6a00">
+<!-- MOBILE APP FEEL -->
+<meta name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-<!-- bloquear zoom (cara de app) -->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#111">
 
-<!-- ícones -->
 <link rel="icon" href="IMG_0558.png">
 <link rel="apple-touch-icon" href="IMG_0558.png">
+<link rel="manifest" href="manifest.json">
 
 <style>
 body{
 margin:0;
-font-family:Arial,Helvetica,sans-serif;
+font-family:Arial;
 background:#111;
 color:#fff;
--webkit-user-select:none;
-user-select:none;
+touch-action:manipulation;
+}
+
+/* impede zoom duplo toque */
+html,body{
+overscroll-behavior:none;
 }
 
 .container{
@@ -31,19 +35,34 @@ margin:auto;
 padding:16px;
 }
 
+.logo{
+text-align:center;
+margin-bottom:10px;
+}
+
+.logo img{
+width:150px;
+}
+
 h1,h2{
 color:#ff6a00;
 text-align:center;
 }
 
-.logo{
-text-align:center;
-margin-bottom:10px;
-}
-.logo img{
-width:130px;
+/* BOTÃO INSTALAR */
+#installBtn{
+display:none;
+width:100%;
+padding:12px;
+background:#ff6a00;
+color:#000;
+font-weight:bold;
+border:none;
+border-radius:10px;
+margin-bottom:16px;
 }
 
+/* ITENS */
 .item{
 background:#1c1c1c;
 padding:14px;
@@ -68,27 +87,31 @@ font-weight:bold;
 margin-top:8px;
 }
 
+/* FORM */
 select,input,textarea{
 width:100%;
-padding:10px;
+padding:12px;
 margin-top:6px;
-border-radius:6px;
+border-radius:8px;
 border:none;
+font-size:16px; /* evita zoom iOS */
 }
 
+/* CARRINHO */
 .cart{
 background:#000;
 padding:14px;
 border-radius:10px;
-margin-bottom:10px;
 }
 
 .cart-item{
+margin-bottom:10px;
 border-bottom:1px solid #333;
-padding:6px 0;
+padding-bottom:6px;
 font-size:14px;
 }
 
+/* TOAST */
 .toast{
 position:fixed;
 bottom:20px;
@@ -102,10 +125,6 @@ font-weight:bold;
 display:none;
 z-index:999;
 }
-
-.install-btn{
-margin-bottom:15px;
-}
 </style>
 </head>
 
@@ -117,90 +136,63 @@ margin-bottom:15px;
 <img src="IMG_0558.png">
 </div>
 
+<!-- BOTÃO INSTALAR (Android only) -->
+<button id="installBtn">📲 Instalar App</button>
+
 <h1>🔥 A Arte da Brasa</h1>
 
-<button class="install-btn" onclick="instalarApp()">📲 Instalar App</button>
-
-<!-- LANCHES -->
 <h2>🍔 Lanches</h2>
 
 <div class="item">
-<h3>🥩 Brasa Original</h3>
+<h3>🥩 Brasa Original — R$ 29,90</h3>
 <p>Hambúrguer bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado.</p>
-<button onclick="addItem('🥩 Brasa Original',32)">Adicionar</button>
+<button onclick="addItem('🥩 Brasa Original',29.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🐷 Pig Defumado</h3>
+<h3>🐷 Pig Defumado — R$ 26,90</h3>
 <p>Burger suíno defumado, mussarela, cebola caramelizada e barbecue de goiabada.</p>
-<button onclick="addItem('🐷 Pig Defumado',29)">Adicionar</button>
+<button onclick="addItem('🐷 Pig Defumado',26.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>🍗 Frango da Brasa</h3>
+<h3>🍗 Frango da Brasa — R$ 24,90</h3>
 <p>Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
-<button onclick="addItem('🍗 Frango da Brasa',27)">Adicionar</button>
+<button onclick="addItem('🍗 Frango da Brasa',24.9)">Adicionar</button>
 </div>
 
-
-<!-- BOXES -->
-<h2>📦 Boxes de Domingo</h2>
+<h2>📦 Boxes Domingo</h2>
 
 <div class="item">
-<h3>📦 Box</h3>
-<p>
-2 pedaços de Fraldinha ou Alcatra na parrilla<br>
-2 sobrecoxas desossadas + 2 linguiças artesanais<br>
-2 pães de alho cremosos
-</p>
-<button onclick="addItem('📦 Box Médio',89)">Adicionar</button>
+<h3>📦 Box Casal — R$ 79,90</h3>
+<p>2 pedaços de fraldinha ou alcatra + sobrecoxa desossada + linguiça artesanal + 2 pães de alho cremosos.</p>
+<button onclick="addItem('📦 Box Casal',79.9)">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>📦 Box Grande</h3>
-<p>
-4 pedaços de Fraldinha ou Alcatra na parrilla<br>
-4 sobrecoxas desossadas + 4 linguiças artesanais<br>
-4 pães de alho cremosos
-</p>
-<button onclick="addItem('📦 Box Grande',159)">Adicionar</button>
+<h3>📦 Box Família — R$ 149,90</h3>
+<p>4 pedaços de fraldinha ou alcatra + sobrecoxa desossada + linguiça artesanal + 4 pães de alho cremosos.</p>
+<button onclick="addItem('📦 Box Família',149.9)">Adicionar</button>
 </div>
 
-
-<!-- BEBIDAS -->
 <h2>🥤 Bebidas</h2>
 
 <div class="item">
-<h3>Refrigerante Lata</h3>
-<select id="marcaLata">
-<option>Coca-Cola</option>
-<option>Guaraná</option>
-</select>
-<select id="tipoLata">
-<option>Normal</option>
-<option>Zero</option>
-</select>
+<h3>🥤 Refrigerante Lata — R$ 6,00</h3>
+<select id="marcaLata"><option>Coca-Cola</option><option>Guaraná</option></select>
+<select id="tipoLata"><option>Normal</option><option>Zero</option></select>
 <button onclick="addRefri('🥤 Lata',6,'marcaLata','tipoLata')">Adicionar</button>
 </div>
 
 <div class="item">
-<h3>Refrigerante 2L</h3>
-<select id="marca2L">
-<option>Coca-Cola</option>
-<option>Guaraná</option>
-</select>
-<select id="tipo2L">
-<option>Normal</option>
-<option>Zero</option>
-</select>
+<h3>🥤 Refrigerante 2L — R$ 14,00</h3>
+<select id="marca2L"><option>Coca-Cola</option><option>Guaraná</option></select>
+<select id="tipo2L"><option>Normal</option><option>Zero</option></select>
 <button onclick="addRefri('🥤 2L',14,'marca2L','tipo2L')">Adicionar</button>
 </div>
 
-
-<!-- CARRINHO -->
 <h2>🛒 Carrinho</h2>
-
-<div class="cart" id="cart">Carrinho vazio</div>
+<div class="cart" id="cart"></div>
 
 <input id="nome" placeholder="Nome">
 <input id="endereco" placeholder="Endereço">
@@ -219,22 +211,16 @@ margin-bottom:15px;
 
 <div class="toast" id="toast">Item adicionado ao carrinho</div>
 
-
 <script>
 let carrinho=[];
 const taxa=1;
 const toast=document.getElementById("toast");
-let deferredPrompt=null;
 
-
-/* TOAST */
 function showToast(){
 toast.style.display="block";
-setTimeout(()=>toast.style.display="none",1500);
+setTimeout(()=>toast.style.display="none",1200);
 }
 
-
-/* ADD ITEM */
 function addItem(nome,preco){
 let i=carrinho.find(x=>x.nome===nome);
 i?i.qtd++:carrinho.push({nome,preco,qtd:1});
@@ -242,72 +228,59 @@ update();
 showToast();
 }
 
-
-/* REFRI */
 function addRefri(nome,preco,m,t){
 let marca=document.getElementById(m).value;
 let tipo=document.getElementById(t).value;
 addItem(`${nome} ${marca} ${tipo}`,preco);
 }
 
-
-/* UPDATE CART */
 function update(){
 let html="",total=0;
-
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 total+=sub;
-
-html+=`
-<div class="cart-item">
-${i.qtd}x ${i.nome}<br>
-R$ ${i.preco.toFixed(2)} = <b>R$ ${sub.toFixed(2)}</b>
-</div>`;
+html+=`<div class="cart-item">${i.qtd}x ${i.nome}<br>R$ ${i.preco.toFixed(2)} = <b>R$ ${sub.toFixed(2)}</b></div>`;
 });
-
-if(!carrinho.length) html="Carrinho vazio";
-
 html+=`<hr>🚚 Taxa: R$ 1,00<br><b>Total: R$ ${(total+taxa).toFixed(2)}</b>`;
 cart.innerHTML=html;
 }
 
-
-/* FINALIZAR */
 function finalizar(){
 if(carrinho.length===0) return alert("Carrinho vazio");
-if(!nome.value||!endereco.value) return alert("Preencha nome e endereço");
 
-let msg=`🔥 *PEDIDO – A ARTE DA BRASA*\n\n👤 ${nome.value}\n📍 ${endereco.value}\n💳 ${pagamento.value}\n\n🍔 Itens:\n`;
+let msg="🔥 *PEDIDO – A ARTE DA BRASA*\n\n";
+msg+=`👤 ${nome.value}\n📍 ${endereco.value}\n💳 ${pagamento.value}\n\n`;
+
 let total=0;
-
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 total+=sub;
-msg+=`• ${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n`;
+msg+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n`;
 });
 
-msg+=`\n🚚 Taxa: R$ 1,00\n💰 *TOTAL: R$ ${(total+taxa).toFixed(2)}*`;
+msg+=`\n🚚 Taxa: R$ 1,00\n💰 TOTAL: R$ ${(total+taxa).toFixed(2)}`;
 if(obs.value) msg+=`\n📝 ${obs.value}`;
 
 window.open(`https://wa.me/5543996795964?text=${encodeURIComponent(msg)}`);
 }
 
+/* ===== BOTÃO INSTALAR SOMENTE ANDROID ===== */
+const btn=document.getElementById("installBtn");
+let deferredPrompt;
 
-/* PWA */
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("service-worker.js");
-}
+const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent) || 
+            (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
 
-window.addEventListener('beforeinstallprompt', (e)=>{
+if(!isIOS){
+window.addEventListener('beforeinstallprompt',e=>{
 e.preventDefault();
 deferredPrompt=e;
+btn.style.display="block";
 });
 
-function instalarApp(){
-if(deferredPrompt){
+btn.onclick=()=>{
 deferredPrompt.prompt();
-}
+};
 }
 </script>
 
