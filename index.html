@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-
 <title>A Arte da Brasa</title>
 
 <meta name="viewport"
@@ -37,13 +36,8 @@ text-align:center;
 margin:18px 0;
 }
 
-.logo{
-text-align:center;
-margin-top:10px;
-}
-.logo img{
-width:140px;
-}
+.logo{text-align:center;margin-top:10px}
+.logo img{width:140px}
 
 .item{
 background:#1c1c1c;
@@ -134,49 +128,46 @@ margin-bottom:16px;
 
 <h2>🍔 Lanches Sexta e Sábado</h2>
 
-<!-- BOI -->
 <div class="item">
 <h3>🥩 Brasa Original</h3>
 <p>Hambúrguer bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado.</p>
-<button onclick="addItem('Brasa Original',34.9)">Adicionar</button>
+<button onclick="addItem('Brasa Original',32.9)">Adicionar • R$ 32,90</button>
 </div>
 
-<!-- PORCO -->
 <div class="item">
 <h3>🐷 Pig Defumado</h3>
 <p>Burger suíno defumado, mussarela, picles e barbecue de goiabada.</p>
-<button onclick="addItem('Pig Defumado',32.9)">Adicionar</button>
+<button onclick="addItem('Pig Defumado',29.9)">Adicionar • R$ 29,90</button>
 </div>
 
-<!-- FRANGO -->
 <div class="item">
 <h3>🍗 Frango da Brasa</h3>
 <p>Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
-<button onclick="addItem('Frango da Brasa',29.9)">Adicionar</button>
+<button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
 </div>
 
 <h2>📦 Boxes de Domingo</h2>
 
 <div class="item">
-<h3>📦 Box Parrilla 1</h3>
+<h3>📦 Box Parrilla 2 pessoas</h3>
 <p>
 2 pedaços de fraldinha ou alcatra<br>
 2 sobrecoxas desossadas<br>
 2 linguiças artesanais<br>
 2 pães de alho cremosos
 </p>
-<button onclick="addItem('Box Parrilla 2 pessoas',89.9)">Adicionar</button>
+<button onclick="addItem('Box Parrilla 2 pessoas',89.9)">Adicionar • R$ 89,90</button>
 </div>
 
 <div class="item">
-<h3>📦 Box Parrilla 2</h3>
+<h3>📦 Box Parrilla 4 pessoas</h3>
 <p>
 4 pedaços de fraldinha ou alcatra<br>
 4 sobrecoxas desossadas<br>
 4 linguiças artesanais<br>
 4 pães de alho cremosos
 </p>
-<button onclick="addItem('Box Parrilla 4 pessoas',169.9)">Adicionar</button>
+<button onclick="addItem('Box Parrilla 4 pessoas',169.9)">Adicionar • R$ 169,90</button>
 </div>
 
 <h2>🥤 Bebidas</h2>
@@ -191,7 +182,7 @@ margin-bottom:16px;
 <option>Normal</option>
 <option>Zero</option>
 </select>
-<button onclick="addRefri('Lata',7)">Adicionar</button>
+<button onclick="addRefri('Lata',7)">Adicionar • R$ 7,00</button>
 </div>
 
 <div class="item">
@@ -204,7 +195,7 @@ margin-bottom:16px;
 <option>Normal</option>
 <option>Zero</option>
 </select>
-<button onclick="addRefri('2L',15)">Adicionar</button>
+<button onclick="addRefri('2L',15)">Adicionar • R$ 15,00</button>
 </div>
 
 <h2>🛒 Carrinho</h2>
@@ -257,8 +248,7 @@ cartDiv.innerHTML="Seu carrinho está vazio";
 return;
 }
 
-let html="";
-let total=0;
+let html="",total=0;
 
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
@@ -271,7 +261,6 @@ R$ ${i.preco.toFixed(2)} = <strong>R$ ${sub.toFixed(2)}</strong>
 });
 
 html+=`<div class="total">🚚 Taxa: R$ 1,00<br>Total: R$ ${(total+taxa).toFixed(2)}</div>`;
-
 cartDiv.innerHTML=html;
 }
 
@@ -296,10 +285,9 @@ if(obs.value) msg+=`\nObs: ${obs.value}`;
 window.open(`https://wa.me/5543996795964?text=${encodeURIComponent(msg)}`);
 }
 
-/* PWA instalar apenas Android */
+/* botão instalar só Android */
 let deferredPrompt;
 const btn=document.getElementById("installBtn");
-
 const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
 
 window.addEventListener("beforeinstallprompt",e=>{
@@ -309,9 +297,7 @@ deferredPrompt=e;
 btn.style.display="block";
 });
 
-btn.onclick=async()=>{
-deferredPrompt.prompt();
-};
+btn.onclick=()=>deferredPrompt.prompt();
 </script>
 
 </body>
