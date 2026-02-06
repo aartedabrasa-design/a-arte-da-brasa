@@ -64,7 +64,7 @@ margin-top:8px;
 font-size:15px;
 }
 
-select,input,textarea{
+input,textarea,select{
 width:100%;
 padding:10px;
 margin-top:6px;
@@ -93,7 +93,7 @@ font-weight:bold;
 font-size:16px;
 }
 
-/* BOXES */
+/* BOX INFO */
 .box-info{
 background:#161616;
 border:1px solid #ff6a00;
@@ -108,7 +108,7 @@ text-align:center;
 color:#ff6a00;
 }
 
-/* EM BREVE destaque */
+/* EM BREVE */
 .em-breve{
 color:#ff6a00;
 font-size:22px;
@@ -116,6 +116,13 @@ font-weight:bold;
 text-align:center;
 margin-bottom:12px;
 letter-spacing:1px;
+}
+
+/* BOX BLOQUEADO */
+.box-disabled{
+opacity:0.45;
+filter:grayscale(40%);
+pointer-events:none;
 }
 
 .toast{
@@ -151,6 +158,8 @@ margin-bottom:16px;
 
 <button id="installBtn" class="install-btn">📲 Instalar App</button>
 
+
+<!-- Lanches -->
 <h2>🍔 Lanches Sexta e Sábado</h2>
 
 <div class="item">
@@ -172,10 +181,11 @@ margin-bottom:16px;
 </div>
 
 
+<!-- BOXES -->
 <h2>📦 Boxes de Domingo</h2>
 
 <div class="em-breve">
-🚧 EM BREVE
+⏳ EM BREVE
 </div>
 
 <div class="box-info">
@@ -183,24 +193,24 @@ margin-bottom:16px;
 Arroz branco • Maionese da casa • Farofa • Vinagrete
 </div>
 
-<div class="item">
-<h3>📦 Box Parrilla 2 pessoas</h3>
+<div class="item box-disabled">
+<h3>📦 Box Parrilla 1</h3>
 <p>
 2 carnes • 2 frangos • 2 linguiças • 2 pães de alho
 </p>
-<button onclick="addItem('Box Parrilla 2 pessoas',89.9)">Adicionar • R$ 89,90</button>
 </div>
 
-<div class="item">
-<h3>📦 Box Parrilla 4 pessoas</h3>
+<div class="item box-disabled">
+<h3>📦 Box Parrilla 2</h3>
 <p>
 4 carnes • 4 frangos • 4 linguiças • 4 pães de alho
 </p>
-<button onclick="addItem('Box Parrilla 4 pessoas',169.9)">Adicionar • R$ 169,90</button>
 </div>
 
 
+<!-- Carrinho -->
 <h2>🛒 Carrinho</h2>
+
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
 <input id="nome" placeholder="Nome">
