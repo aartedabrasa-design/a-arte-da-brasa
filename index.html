@@ -93,7 +93,6 @@ font-weight:bold;
 font-size:16px;
 }
 
-/* BOX INFO */
 .box-info{
 background:#161616;
 border:1px solid #ff6a00;
@@ -104,21 +103,14 @@ font-size:14px;
 text-align:center;
 }
 
-.box-info strong{
-color:#ff6a00;
-}
-
-/* EM BREVE */
 .em-breve{
 color:#ff6a00;
 font-size:22px;
 font-weight:bold;
 text-align:center;
 margin-bottom:12px;
-letter-spacing:1px;
 }
 
-/* BOX BLOQUEADO */
 .box-disabled{
 opacity:0.45;
 filter:grayscale(40%);
@@ -159,7 +151,7 @@ margin-bottom:16px;
 <button id="installBtn" class="install-btn">📲 Instalar App</button>
 
 
-<!-- Lanches -->
+<!-- LANCHES -->
 <h2>🍔 Lanches Sexta e Sábado</h2>
 
 <div class="item">
@@ -176,41 +168,33 @@ margin-bottom:16px;
 
 <div class="item">
 <h3>🍗 Frango da Brasa</h3>
-<p>Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
+<p>Burger de sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde.</p>
 <button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
 </div>
+
+
+<!-- ADICIONAIS NOVO -->
+<h2>➕ Adicionais</h2>
+
+<div class="item"><button onclick="addItem('Queijo extra',3)">+ Queijo • R$ 3,00</button></div>
+<div class="item"><button onclick="addItem('Bacon extra',4)">+ Bacon • R$ 4,00</button></div>
+<div class="item"><button onclick="addItem('Hambúrguer bovino 160g',8)">+ Carne bovina • R$ 8,00</button></div>
+<div class="item"><button onclick="addItem('Hambúrguer frango',7)">+ Carne frango • R$ 7,00</button></div>
+<div class="item"><button onclick="addItem('Hambúrguer suíno',7)">+ Carne suína • R$ 7,00</button></div>
+<div class="item"><button onclick="addItem('Cream cheese',3)">+ Cream cheese • R$ 3,00</button></div>
+<div class="item"><button onclick="addItem('Maionese da casa',2)">+ Maionese • R$ 2,00</button></div>
+<div class="item"><button onclick="addItem('Barbecue goiabada',2.5)">+ Barbecue • R$ 2,50</button></div>
+<div class="item"><button onclick="addItem('Picles',2)">+ Picles • R$ 2,00</button></div>
 
 
 <!-- BOXES -->
 <h2>📦 Boxes de Domingo</h2>
 
-<div class="em-breve">
-⏳ EM BREVE
-</div>
-
-<div class="box-info">
-<strong>TODOS OS BOXES ACOMPANHAM:</strong><br>
-Arroz branco • Maionese da casa • Farofa • Vinagrete
-</div>
-
-<div class="item box-disabled">
-<h3>📦 Box Parrilla 1</h3>
-<p>
-2 carnes • 2 frangos • 2 linguiças • 2 pães de alho
-</p>
-</div>
-
-<div class="item box-disabled">
-<h3>📦 Box Parrilla 2</h3>
-<p>
-4 carnes • 4 frangos • 4 linguiças • 4 pães de alho
-</p>
-</div>
+<div class="em-breve">⏳ EM BREVE</div>
 
 
-<!-- Carrinho -->
+<!-- CARRINHO -->
 <h2>🛒 Carrinho</h2>
-
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
 <input id="nome" placeholder="Nome">
@@ -230,9 +214,11 @@ Arroz branco • Maionese da casa • Farofa • Vinagrete
 
 <div class="toast" id="toast">Item adicionado ao carrinho</div>
 
+
 <script>
 let carrinho=[];
 const taxa=1;
+
 const toast=document.getElementById("toast");
 const cartDiv=document.getElementById("cart");
 
@@ -259,10 +245,11 @@ let html="",total=0;
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 total+=sub;
+
 html+=`
 <div class="cart-item">
 ${i.qtd}x ${i.nome}<br>
-R$ ${i.preco.toFixed(2)} = <strong>R$ ${sub.toFixed(2)}</strong>
+R$ ${sub.toFixed(2)}
 </div>`;
 });
 
@@ -272,9 +259,8 @@ cartDiv.innerHTML=html;
 
 function finalizar(){
 if(carrinho.length===0) return alert("Carrinho vazio!");
-if(!nome.value || !endereco.value) return alert("Preencha nome e endereço");
 
-let msg=`PEDIDO – A ARTE DA BRASA\n\n${nome.value}\n${endereco.value}\n${pagamento.value}\n\n`;
+let msg=`PEDIDO – A ARTE DA BRASA\n\n`;
 
 let total=0;
 
@@ -286,12 +272,10 @@ msg+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n`;
 
 msg+=`\nTaxa: R$ 1,00\nTOTAL: R$ ${(total+taxa).toFixed(2)}`;
 
-if(obs.value) msg+=`\nObs: ${obs.value}`;
-
 window.open(`https://wa.me/5543996795964?text=${encodeURIComponent(msg)}`);
 }
 
-/* botão instalar só Android */
+/* instalar só Android */
 let deferredPrompt;
 const btn=document.getElementById("installBtn");
 const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
