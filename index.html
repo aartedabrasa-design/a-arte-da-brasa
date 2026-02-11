@@ -30,15 +30,18 @@ margin:auto;
 padding:16px;
 }
 
+/* títulos */
 h1,h2{
 color:#ff6a00;
 text-align:center;
 margin:18px 0;
 }
 
+/* logo */
 .logo{text-align:center;margin-top:10px}
 .logo img{width:140px}
 
+/* cards */
 .item{
 background:#1c1c1c;
 padding:14px;
@@ -46,6 +49,7 @@ border-radius:10px;
 margin-bottom:14px;
 }
 
+/* botões */
 button{
 width:100%;
 padding:12px;
@@ -58,7 +62,10 @@ margin-top:8px;
 font-size:15px;
 }
 
-/* GRID ADICIONAIS */
+/* =========================
+   ADICIONAIS GRID
+========================= */
+
 .extras-grid{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -67,35 +74,19 @@ margin-bottom:14px;
 }
 
 .extra-btn{
-position:relative;
 font-size:14px;
 padding:10px;
 }
 
-/* PREÇO BLUR */
 .blur-price{
-font-size:12px;
-filter:blur(4px);
+filter:blur(5px);
 opacity:.6;
 margin-left:6px;
 }
 
-/* CONTADOR */
-.counter{
-display:flex;
-align-items:center;
-gap:8px;
-margin-top:4px;
-}
-
-.counter button{
-width:28px;
-height:28px;
-padding:0;
-font-size:16px;
-border-radius:6px;
-background:#ff6a00;
-}
+/* =========================
+   CARRINHO
+========================= */
 
 .cart{
 background:#000;
@@ -111,12 +102,27 @@ padding-bottom:6px;
 font-size:14px;
 }
 
+.counter{
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:6px;
+}
+
+.counter button{
+width:28px;
+height:28px;
+padding:0;
+font-size:16px;
+}
+
 .total{
 margin-top:10px;
 font-weight:bold;
 font-size:16px;
 }
 
+/* inputs */
 input,textarea,select{
 width:100%;
 padding:10px;
@@ -126,6 +132,7 @@ border:none;
 font-size:16px;
 }
 
+/* toast */
 .toast{
 position:fixed;
 bottom:25px;
@@ -139,7 +146,11 @@ font-weight:bold;
 display:none;
 }
 
-.install-btn{display:none;margin-bottom:16px}
+/* instalar */
+.install-btn{
+display:none;
+margin-bottom:16px;
+}
 </style>
 </head>
 
@@ -156,63 +167,85 @@ display:none;
 <button id="installBtn" class="install-btn">📲 Instalar App</button>
 
 
+<!-- =========================
+     LANCHES
+========================= -->
+
 <h2>🍔 Lanches</h2>
 
 <div class="item">
-<button onclick="addItem('Brasa Original',32.9)">Brasa Original • R$ 32,90</button>
-<button onclick="addItem('Pig Defumado',29.9)">Pig Defumado • R$ 29,90</button>
-<button onclick="addItem('Frango da Brasa',27.9)">Frango da Brasa • R$ 27,90</button>
+<h3>🥩 Brasa Original</h3>
+<button onclick="addItem('Brasa Original',32.9)">Adicionar • R$ 32,90</button>
 </div>
 
+<div class="item">
+<h3>🐷 Pig Defumado</h3>
+<button onclick="addItem('Pig Defumado',29.9)">Adicionar • R$ 29,90</button>
+</div>
+
+<div class="item">
+<h3>🍗 Frango da Brasa</h3>
+<button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
+</div>
+
+
+<!-- =========================
+     ADICIONAIS (NOVO)
+========================= -->
 
 <h2>➕ Adicionais</h2>
 
 <div class="extras-grid">
 
-<button class="extra-btn" onclick="addItem('Hambúrguer boi extra',8)">
-🥩 Boi <span class="blur-price">R$ 00</span>
+<button class="extra-btn" onclick="addItem('Hambúrguer boi',8)">
+Hambúrguer boi <span class="blur-price">R$ 00</span>
 </button>
 
-<button class="extra-btn" onclick="addItem('Hambúrguer porco extra',7)">
-🐷 Porco <span class="blur-price">R$ 00</span>
+<button class="extra-btn" onclick="addItem('Hambúrguer porco',7)">
+Hambúrguer porco <span class="blur-price">R$ 00</span>
 </button>
 
-<button class="extra-btn" onclick="addItem('Hambúrguer frango extra',7)">
-🍗 Frango <span class="blur-price">R$ 00</span>
+<button class="extra-btn" onclick="addItem('Hambúrguer frango',7)">
+Hambúrguer frango <span class="blur-price">R$ 00</span>
 </button>
 
 <button class="extra-btn" onclick="addItem('Bacon',4)">
-🥓 Bacon <span class="blur-price">R$ 00</span>
+Bacon <span class="blur-price">R$ 00</span>
 </button>
 
-<button class="extra-btn" onclick="addItem('Salada (alface + tomate)',2)">
-🥬 Salada <span class="blur-price">R$ 00</span>
+<button class="extra-btn" onclick="addItem('Salada (tomate e alface)',2)">
+Salada (tomate e alface) <span class="blur-price">R$ 00</span>
 </button>
 
 <button class="extra-btn" onclick="addItem('Picles',2)">
-🥒 Picles <span class="blur-price">R$ 00</span>
+Picles <span class="blur-price">R$ 00</span>
 </button>
 
-<button class="extra-btn" onclick="addItem('Mussarela',3)">
-🧀 Mussarela <span class="blur-price">R$ 00</span>
+<button class="extra-btn" onclick="addItem('Queijo mussarela',3)">
+Queijo mussarela <span class="blur-price">R$ 00</span>
 </button>
 
 <button class="extra-btn" onclick="addItem('Queijo prato',3)">
-🧀 Prato <span class="blur-price">R$ 00</span>
+Queijo prato <span class="blur-price">R$ 00</span>
 </button>
 
 <button class="extra-btn" onclick="addItem('Cream cheese',3)">
-🧀 Cream cheese <span class="blur-price">R$ 00</span>
+Cream cheese <span class="blur-price">R$ 00</span>
 </button>
 
 <button class="extra-btn" onclick="addItem('Barbecue de goiabada',3)">
-🍖 Barbecue goiabada <span class="blur-price">R$ 00</span>
+Barbecue de goiabada <span class="blur-price">R$ 00</span>
 </button>
 
 </div>
 
 
+<!-- =========================
+     CARRINHO
+========================= -->
+
 <h2>🛒 Carrinho</h2>
+
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
 <input id="nome" placeholder="Nome">
@@ -291,7 +324,7 @@ cartDiv.innerHTML=html;
 function finalizar(){
 if(!carrinho.length) return alert("Carrinho vazio");
 
-let msg="PEDIDO – A ARTE DA BRASA\n\n";
+let msg=`PEDIDO – A ARTE DA BRASA\n\n`;
 let total=0;
 
 carrinho.forEach(i=>{
