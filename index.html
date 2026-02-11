@@ -46,11 +46,6 @@ border-radius:10px;
 margin-bottom:14px;
 }
 
-.item p{
-color:#ccc;
-font-size:14px;
-}
-
 button{
 width:100%;
 padding:12px;
@@ -63,7 +58,7 @@ margin-top:8px;
 font-size:15px;
 }
 
-/* ADICIONAIS */
+/* GRID ADICIONAIS */
 .extras-grid{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -71,12 +66,21 @@ gap:10px;
 margin-bottom:14px;
 }
 
-.extras-grid button{
-padding:10px;
+.extra-btn{
+position:relative;
 font-size:14px;
+padding:10px;
 }
 
-/* CARRINHO CONTADOR */
+/* PREÇO BLUR */
+.blur-price{
+font-size:12px;
+filter:blur(4px);
+opacity:.6;
+margin-left:6px;
+}
+
+/* CONTADOR */
 .counter{
 display:flex;
 align-items:center;
@@ -122,18 +126,6 @@ border:none;
 font-size:16px;
 }
 
-.box-disabled{
-opacity:.45;
-pointer-events:none;
-}
-
-.em-breve{
-color:#ff6a00;
-font-size:20px;
-text-align:center;
-margin-bottom:12px;
-}
-
 .toast{
 position:fixed;
 bottom:25px;
@@ -167,32 +159,56 @@ display:none;
 <h2>🍔 Lanches</h2>
 
 <div class="item">
-<h3>🥩 Brasa Original</h3>
-<button onclick="addItem('Brasa Original',32.9)">Adicionar • R$ 32,90</button>
-</div>
-
-<div class="item">
-<h3>🐷 Pig Defumado</h3>
-<button onclick="addItem('Pig Defumado',29.9)">Adicionar • R$ 29,90</button>
-</div>
-
-<div class="item">
-<h3>🍗 Frango da Brasa</h3>
-<button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
+<button onclick="addItem('Brasa Original',32.9)">Brasa Original • R$ 32,90</button>
+<button onclick="addItem('Pig Defumado',29.9)">Pig Defumado • R$ 29,90</button>
+<button onclick="addItem('Frango da Brasa',27.9)">Frango da Brasa • R$ 27,90</button>
 </div>
 
 
 <h2>➕ Adicionais</h2>
 
 <div class="extras-grid">
-<button onclick="addItem('Queijo extra',3)">🧀 Queijo • 3</button>
-<button onclick="addItem('Bacon extra',4)">🥓 Bacon • 4</button>
-<button onclick="addItem('Carne boi 160g',8)">🥩 Carne • 8</button>
-<button onclick="addItem('Frango extra',7)">🍗 Frango • 7</button>
-<button onclick="addItem('Suíno extra',7)">🐷 Suíno • 7</button>
-<button onclick="addItem('Cream cheese',3)">🧀 Cream • 3</button>
-<button onclick="addItem('Maionese',2)">🥄 Maionese • 2</button>
-<button onclick="addItem('Picles',2)">🥒 Picles • 2</button>
+
+<button class="extra-btn" onclick="addItem('Hambúrguer boi extra',8)">
+🥩 Boi <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Hambúrguer porco extra',7)">
+🐷 Porco <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Hambúrguer frango extra',7)">
+🍗 Frango <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Bacon',4)">
+🥓 Bacon <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Salada (alface + tomate)',2)">
+🥬 Salada <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Picles',2)">
+🥒 Picles <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Mussarela',3)">
+🧀 Mussarela <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Queijo prato',3)">
+🧀 Prato <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Cream cheese',3)">
+🧀 Cream cheese <span class="blur-price">R$ 00</span>
+</button>
+
+<button class="extra-btn" onclick="addItem('Barbecue de goiabada',3)">
+🍖 Barbecue goiabada <span class="blur-price">R$ 00</span>
+</button>
+
 </div>
 
 
@@ -258,7 +274,7 @@ total+=sub;
 
 html+=`
 <div class="cart-item">
-<b>${i.nome}</b><br>
+<b>${i.nome}</b>
 <div class="counter">
 <button onclick="changeQtd('${i.nome}',-1)">−</button>
 ${i.qtd}
@@ -275,7 +291,7 @@ cartDiv.innerHTML=html;
 function finalizar(){
 if(!carrinho.length) return alert("Carrinho vazio");
 
-let msg=`PEDIDO – A ARTE DA BRASA\n\n`;
+let msg="PEDIDO – A ARTE DA BRASA\n\n";
 let total=0;
 
 carrinho.forEach(i=>{
