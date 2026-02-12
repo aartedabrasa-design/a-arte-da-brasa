@@ -60,29 +60,6 @@ font-weight:bold;
 margin-top:8px;
 }
 
-.em-breve{
-text-align:center;
-font-size:20px;
-font-weight:bold;
-color:#ff6a00;
-margin-bottom:12px;
-}
-
-.box-info{
-background:#151515;
-border:1px solid #ff6a00;
-border-radius:10px;
-padding:10px;
-text-align:center;
-font-size:14px;
-margin-bottom:14px;
-}
-
-.box-disabled{
-opacity:.45;
-pointer-events:none;
-}
-
 .builder{
 background:#151515;
 border:1px solid #ff6a00;
@@ -175,28 +152,8 @@ border:none;
 
 <div class="item">
 <h3>🍗 Frango da Brasa</h3>
-<p>Hambúrguer de sobrecoxa grelhada 160g, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
+<p>Hambúrguer de sobrecoxa 160g grelhado, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
 <button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
-</div>
-
-
-<!-- BOXES -->
-<h2>📦 Boxes de Domingo</h2>
-
-<div class="em-breve">⏳ EM BREVE</div>
-
-<div class="box-info">
-Arroz • Maionese • Farofa • Vinagrete • Sobremesa grátis
-</div>
-
-<div class="item box-disabled">
-<h3>📦 Box 1</h3>
-<p>Mix parrilla completo da casa</p>
-</div>
-
-<div class="item box-disabled">
-<h3>📦 Box 2</h3>
-<p>Mix parrilla família</p>
 </div>
 
 
@@ -206,13 +163,20 @@ Arroz • Maionese • Farofa • Vinagrete • Sobremesa grátis
 <div class="builder">
 
 <p style="text-align:center;color:#ccc;font-size:13px">
-Base pão + hambúrguer 160g: <b>R$ 26,90</b>
+Base do lanche: <b>R$ 18,90</b> + carne + extras
 </p>
 
 <h4>Pão</h4>
 <select id="pao">
-<option value="0">Gergelim</option>
-<option value="2">Brioche</option>
+<option value="0">Tradicional</option>
+<option value="2">Australiano (+2)</option>
+</select>
+
+<h4>Hambúrguer</h4>
+<select id="carne">
+<option value="14">Boi (+14)</option>
+<option value="12">Porco (+12)</option>
+<option value="11">Frango (+11)</option>
 </select>
 
 <h4>Ingredientes</h4>
@@ -228,16 +192,16 @@ Base pão + hambúrguer 160g: <b>R$ 26,90</b>
 </div>
 
 <div class="price-preview" id="preview">
-Preço estimado: R$ 26,90
+Preço estimado: R$ 18,90
 </div>
 
 <button onclick="addCustom()">Adicionar Lanche Personalizado</button>
+
 </div>
 
 
 <!-- CARRINHO -->
 <h2>🛒 Carrinho</h2>
-
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
 <input id="nome" placeholder="Nome">
@@ -251,7 +215,7 @@ Preço estimado: R$ 26,90
 <script>
 let carrinho=[];
 const taxa=1;
-const BASE=26.9;
+const BASE=18.9;
 
 const cartDiv=document.getElementById("cart");
 const preview=document.getElementById("preview");
@@ -300,7 +264,7 @@ cartDiv.innerHTML=html;
 
 /* builder */
 function calcular(){
-let total=BASE + Number(pao.value);
+let total = BASE + Number(pao.value) + Number(carne.value);
 
 document.querySelectorAll(".builder-grid input:checked")
 .forEach(c=> total+=Number(c.value));
@@ -312,8 +276,10 @@ document.querySelectorAll("select, .builder-grid input")
 .forEach(e=>e.addEventListener("change",calcular));
 
 function addCustom(){
-let total=BASE + Number(pao.value);
-let desc=[];
+let total = BASE + Number(pao.value) + Number(carne.value);
+
+let carneNome = carne.options[carne.selectedIndex].text;
+let desc=[carneNome];
 
 document.querySelectorAll(".builder-grid input:checked")
 .forEach(c=>{
