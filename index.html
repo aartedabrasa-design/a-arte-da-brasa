@@ -43,6 +43,13 @@ border-radius:10px;
 margin-bottom:14px;
 }
 
+.item p{
+color:#ccc;
+font-size:14px;
+line-height:1.4;
+margin:6px 0 10px;
+}
+
 button{
 width:100%;
 padding:12px;
@@ -52,6 +59,33 @@ border:none;
 border-radius:8px;
 font-weight:bold;
 margin-top:8px;
+}
+
+/* =========================
+   BOXES DOMINGO
+========================= */
+
+.em-breve{
+text-align:center;
+font-size:20px;
+font-weight:bold;
+color:#ff6a00;
+margin-bottom:12px;
+}
+
+.box-info{
+background:#151515;
+border:1px solid #ff6a00;
+border-radius:10px;
+padding:10px;
+text-align:center;
+font-size:14px;
+margin-bottom:14px;
+}
+
+.box-disabled{
+opacity:.45;
+pointer-events:none;
 }
 
 /* =========================
@@ -85,6 +119,7 @@ font-size:14px;
 text-align:center;
 margin-top:10px;
 font-weight:bold;
+color:#ff6a00;
 }
 
 /* =========================
@@ -141,6 +176,7 @@ border:none;
 
 <h1>🔥 A Arte da Brasa</h1>
 
+
 <!-- =========================
      LANCHES PADRÃO
 ========================= -->
@@ -149,17 +185,45 @@ border:none;
 
 <div class="item">
 <h3>🥩 Brasa Original</h3>
+<p>Hambúrguer bovino selado na brasa, queijo prato, bacon crocante e maionese de alho assado.</p>
 <button onclick="addItem('Brasa Original',32.9)">Adicionar • R$ 32,90</button>
 </div>
 
 <div class="item">
 <h3>🐷 Pig Defumado</h3>
+<p>Burger suíno defumado, mussarela, picles e barbecue de goiabada artesanal.</p>
 <button onclick="addItem('Pig Defumado',29.9)">Adicionar • R$ 29,90</button>
 </div>
 
 <div class="item">
 <h3>🍗 Frango da Brasa</h3>
+<p>Sobrecoxa grelhada, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
 <button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
+</div>
+
+
+<!-- =========================
+     BOXES DOMINGO
+========================= -->
+
+<h2>📦 Boxes de Domingo</h2>
+
+<div class="em-breve">⏳ EM BREVE</div>
+
+<div class="box-info">
+<strong>TODOS OS BOXES ACOMPANHAM:</strong><br>
+Arroz branco • Maionese da casa • Farofa • Vinagrete<br><br>
+🎁 <strong>Sobremesa grátis:</strong> Panqueca de doce de leite artesanal
+</div>
+
+<div class="item box-disabled">
+<h3>📦 Box Parrilla 2 pessoas</h3>
+<p>2 carnes • 2 frangos • 2 linguiças • 2 pães de alho</p>
+</div>
+
+<div class="item box-disabled">
+<h3>📦 Box Parrilla 4 pessoas</h3>
+<p>4 carnes • 4 frangos • 4 linguiças • 4 pães de alho</p>
 </div>
 
 
@@ -187,7 +251,6 @@ border:none;
 <h4>Ingredientes</h4>
 
 <div class="builder-grid">
-
 <label><input type="checkbox" value="4"> Bacon</label>
 <label><input type="checkbox" value="3"> Queijo mussarela</label>
 <label><input type="checkbox" value="3"> Queijo prato</label>
@@ -195,7 +258,6 @@ border:none;
 <label><input type="checkbox" value="2"> Salada</label>
 <label><input type="checkbox" value="2"> Picles</label>
 <label><input type="checkbox" value="3"> Barbecue goiabada</label>
-
 </div>
 
 <div class="price-preview" id="preview">
@@ -227,10 +289,7 @@ Preço estimado: R$ 0,00
 let carrinho=[];
 const taxa=1;
 const cartDiv=document.getElementById("cart");
-
-/* =========================
-   CARRINHO
-========================= */
+const preview=document.getElementById("preview");
 
 function addItem(nome,preco){
 let item=carrinho.find(i=>i.nome===nome);
@@ -273,15 +332,8 @@ html+=`<div class="total">Total: R$ ${(total+taxa).toFixed(2)}</div>`;
 cartDiv.innerHTML=html;
 }
 
-/* =========================
-   MONTE SEU LANCHE
-========================= */
-
 function calcular(){
-let total=0;
-
-total+=Number(pao.value);
-total+=Number(carne.value);
+let total=Number(pao.value)+Number(carne.value);
 
 document.querySelectorAll(".builder-grid input:checked")
 .forEach(c=> total+=Number(c.value));
@@ -293,13 +345,8 @@ document.querySelectorAll("select, .builder-grid input")
 .forEach(e=>e.addEventListener("change",calcular));
 
 function addCustom(){
-let total=0;
+let total=Number(pao.value)+Number(carne.value);
 let desc=[];
-
-total+=Number(pao.value);
-total+=Number(carne.value);
-
-desc.push("Carne");
 
 document.querySelectorAll(".builder-grid input:checked")
 .forEach(c=>{
@@ -309,10 +356,6 @@ desc.push(c.parentElement.innerText);
 
 addItem("Monte seu Lanche ("+desc.join(", ")+")", total);
 }
-
-/* =========================
-   FINALIZAR
-========================= */
 
 function finalizar(){
 let msg="PEDIDO – A ARTE DA BRASA\n\n";
