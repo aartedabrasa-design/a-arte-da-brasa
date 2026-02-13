@@ -85,6 +85,7 @@ text-align:center;
 margin-top:10px;
 font-weight:bold;
 color:#ff6a00;
+font-size:18px;
 }
 
 /* CARRINHO */
@@ -171,14 +172,14 @@ border:none;
 <h4>Pão</h4>
 <select id="pao">
 <option value="0">Pão de gergelim</option>
-<option value="2">Pão brioche</option>
+<option value="2">Pão brioche (+2)</option>
 </select>
 
 <h4>Hambúrguer</h4>
 <select id="carne">
-<option value="14"> Bovino 160g (+14)</option>
-<option value="12"> Suíno defumado 160g (+12)</option>
-<option value="11"> Frango sobrecoxa 160g (+11)</option>
+<option value="14">Bovino 160g (+14)</option>
+<option value="12">Suíno defumado 160g (+12)</option>
+<option value="11">Frango sobrecoxa 160g (+11)</option>
 </select>
 
 <h4>Molho base</h4>
@@ -240,7 +241,6 @@ if(item.qtd<=0) carrinho=carrinho.filter(i=>i.nome!==nome);
 update();
 }
 
-/* ====== AQUI FOI MELHORADO ====== */
 function update(){
 if(!carrinho.length){
 cartDiv.innerHTML="Seu carrinho está vazio";
@@ -275,6 +275,44 @@ html+=`
 
 cartDiv.innerHTML=html;
 }
+
+/* ===== MONTE SEU LANCHE ===== */
+
+function calcularPreview(){
+let total = BASE;
+
+total += Number(pao.value);
+total += Number(carne.value);
+total += Number(molho.value);
+
+document.querySelectorAll(".builder-grid input:checked")
+.forEach(e => total += Number(e.value));
+
+preview.innerText = "Preço: R$ " + total.toFixed(2);
+}
+
+function addCustom(){
+let total = BASE;
+let nome = "Monte seu Lanche: ";
+
+[pao, carne, molho].forEach(s=>{
+total += Number(s.value);
+if(s.value!=0) nome += s.options[s.selectedIndex].text + ", ";
+});
+
+document.querySelectorAll(".builder-grid input:checked")
+.forEach(e=>{
+total += Number(e.value);
+nome += e.parentElement.innerText + ", ";
+});
+
+addItem(nome.slice(0,-2), total);
+}
+
+document.querySelectorAll("#pao,#carne,#molho,.builder-grid input")
+.forEach(e=>e.addEventListener("change",calcularPreview));
+
+calcularPreview();
 </script>
 
 </body>
