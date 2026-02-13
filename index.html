@@ -142,80 +142,79 @@ border:none;
 <h1>🔥 A Arte da Brasa</h1>
 
 
-<!-- =========================
-     LANCHES PRONTOS
-========================= -->
+<!-- LANCHES PRONTOS -->
 
 <h2>🍔 Lanches</h2>
 
 <div class="item">
 <h3>🥩 Brasa Original</h3>
-<p>Hambúrguer bovino 160g selado na brasa, pão brioche, queijo prato, bacon crocante e maionese de alho assado.</p>
+<p>Hambúrguer bovino 160g, pão brioche, queijo prato, bacon e maionese de alho assado.</p>
 <button onclick="addItem('Brasa Original',32.9)">Adicionar • R$ 32,90</button>
 </div>
 
 <div class="item">
 <h3>🐷 Pig Defumado</h3>
-<p>Hambúrguer suíno defumado 160g no pão brioche, mussarela, picles e barbecue de goiabada artesanal.</p>
+<p>Hambúrguer suíno defumado 160g, pão brioche, mussarela, picles e barbecue de goiabada.</p>
 <button onclick="addItem('Pig Defumado',29.9)">Adicionar • R$ 29,90</button>
 </div>
 
 <div class="item">
 <h3>🍗 Frango da Brasa</h3>
-<p>Hambúrguer de sobrecoxa 160g grelhado, cream cheese, alface, tomate e maionese verde no pão de gergelim.</p>
+<p>Hambúrguer de sobrecoxa 160g, pão gergelim, cream cheese, alface, tomate e maionese verde.</p>
 <button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
 </div>
 
 
-<!-- =========================
-     MONTE SEU LANCHE
-========================= -->
+<!-- MONTE SEU -->
 
 <h2>🍔✨ Monte seu Lanche</h2>
 
 <div class="builder">
 
 <p style="text-align:center;color:#ccc;font-size:13px">
-Base do lanche: <b>R$ 18,90</b> + escolha sua carne + ingredientes
+Escolha pão, carne e ingredientes do seu jeito 👇
 </p>
 
 <h4>Pão</h4>
 <select id="pao">
-<option value="0">Pão tradicional</option>
-<option value="2">Pão australiano (+2)</option>
+<option value="0">Pão de gergelim</option>
+<option value="2">Pão brioche</option>
 </select>
 
 <h4>Hambúrguer</h4>
 <select id="carne">
-<option value="14">🐮 Hambúrguer bovino 160g (+14)</option>
-<option value="12">🐷 Hambúrguer suíno defumado (+12)</option>
-<option value="11">🍗 Hambúrguer de sobrecoxa grelhada (+11)</option>
+<option value="14">🐮 Bovino 160g (+14)</option>
+<option value="12">🐷 Suíno defumado 160g (+12)</option>
+<option value="11">🍗 Frango sobrecoxa 160g (+11)</option>
 </select>
 
-<h4>Ingredientes</h4>
+<h4>Molho base</h4>
+<select id="molho">
+<option value="2">Maionese verde (+2)</option>
+<option value="2">Maionese de alho assado (+2)</option>
+</select>
+
+<h4>Ingredientes extras</h4>
 
 <div class="builder-grid">
-<label><input type="checkbox" value="4"> Bacon crocante (+4)</label>
-<label><input type="checkbox" value="3"> Queijo mussarela (+3)</label>
+<label><input type="checkbox" value="4"> Bacon (+4)</label>
+<label><input type="checkbox" value="3"> Mussarela (+3)</label>
 <label><input type="checkbox" value="3"> Queijo prato (+3)</label>
-<label><input type="checkbox" value="3"> Cream cheese artesanal (+3)</label>
-<label><input type="checkbox" value="2"> Alface + tomate (+2)</label>
-<label><input type="checkbox" value="2"> Picles artesanal (+2)</label>
-<label><input type="checkbox" value="3"> Barbecue de goiabada (+3)</label>
+<label><input type="checkbox" value="3"> Cream cheese (+3)</label>
+<label><input type="checkbox" value="2"> Salada (alface+tomate) (+2)</label>
+<label><input type="checkbox" value="2"> Rúcula (+2)</label>
+<label><input type="checkbox" value="2"> Picles (+2)</label>
+<label><input type="checkbox" value="3"> Barbecue goiabada (+3)</label>
 </div>
 
 <div class="price-preview" id="preview">
-Preço estimado: R$ 18,90
+Preço: R$ 18,90
 </div>
 
 <button onclick="addCustom()">Adicionar Lanche Personalizado</button>
 
 </div>
 
-
-<!-- =========================
-     CARRINHO
-========================= -->
 
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart">Seu carrinho está vazio</div>
@@ -236,7 +235,6 @@ const BASE=18.9;
 const cartDiv=document.getElementById("cart");
 const preview=document.getElementById("preview");
 
-/* CARRINHO */
 function addItem(nome,preco){
 let item=carrinho.find(i=>i.nome===nome);
 item?item.qtd++:carrinho.push({nome,preco,qtd:1});
@@ -278,9 +276,11 @@ html+=`<div class="total">Total: R$ ${(total+taxa).toFixed(2)}</div>`;
 cartDiv.innerHTML=html;
 }
 
-/* MONTE SEU */
 function calcular(){
-let total = BASE + Number(pao.value) + Number(carne.value);
+let total = BASE +
+Number(pao.value) +
+Number(carne.value) +
+Number(molho.value);
 
 document.querySelectorAll(".builder-grid input:checked")
 .forEach(c=> total+=Number(c.value));
@@ -294,10 +294,16 @@ document.querySelectorAll("select, .builder-grid input")
 calcular();
 
 function addCustom(){
-let total = BASE + Number(pao.value) + Number(carne.value);
+let total = BASE +
+Number(pao.value) +
+Number(carne.value) +
+Number(molho.value);
 
-let carneNome = carne.options[carne.selectedIndex].text;
-let desc=[carneNome];
+let desc=[
+pao.options[pao.selectedIndex].text,
+carne.options[carne.selectedIndex].text,
+molho.options[molho.selectedIndex].text
+];
 
 document.querySelectorAll(".builder-grid input:checked")
 .forEach(c=>{
@@ -308,7 +314,6 @@ desc.push(c.parentElement.innerText);
 addItem("Monte seu Lanche ("+desc.join(", ")+")", total);
 }
 
-/* WHATSAPP */
 function finalizar(){
 let msg="PEDIDO – A ARTE DA BRASA\n\n";
 let total=0;
