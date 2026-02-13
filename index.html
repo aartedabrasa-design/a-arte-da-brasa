@@ -276,7 +276,7 @@ html+=`
 cartDiv.innerHTML=html;
 }
 
-/* ===== MONTE SEU LANCHE ===== */
+/* ===== MONTE SEU ===== */
 
 function calcularPreview(){
 let total = BASE;
@@ -290,6 +290,11 @@ document.querySelectorAll(".builder-grid input:checked")
 
 preview.innerText = "Preço: R$ " + total.toFixed(2);
 }
+
+document.querySelectorAll("#pao,#carne,#molho,.builder-grid input")
+.forEach(e=>e.addEventListener("change",calcularPreview));
+
+calcularPreview();
 
 function addCustom(){
 let total = BASE;
@@ -309,10 +314,42 @@ nome += e.parentElement.innerText + ", ";
 addItem(nome.slice(0,-2), total);
 }
 
-document.querySelectorAll("#pao,#carne,#molho,.builder-grid input")
-.forEach(e=>e.addEventListener("change",calcularPreview));
+/* ===== FINALIZAR WHATSAPP ===== */
 
-calcularPreview();
+function finalizar(){
+
+if(!carrinho.length){
+alert("Adicione itens ao carrinho primeiro 😉");
+return;
+}
+
+const telefone = "5543996795964";
+
+let nomeCliente = document.getElementById("nome").value || "Não informado";
+let endereco = document.getElementById("endereco").value || "Retirada";
+let obs = document.getElementById("obs").value || "-";
+
+let subtotal=0;
+let mensagem=" *Pedido - A Arte da Brasa*\n\n";
+
+carrinho.forEach(i=>{
+let sub=i.preco*i.qtd;
+subtotal+=sub;
+mensagem+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n`;
+});
+
+let total=subtotal+taxa;
+
+mensagem+=`\nSubtotal: R$ ${subtotal.toFixed(2)}`;
+mensagem+=`\nTaxa entrega: R$ ${taxa.toFixed(2)}`;
+mensagem+=`\n*Total: R$ ${total.toFixed(2)}*`;
+
+mensagem+=`\n\n Nome: ${nomeCliente}`;
+mensagem+=`\n Endereço: ${endereco}`;
+mensagem+=`\n Obs: ${obs}`;
+
+window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`,"_blank");
+}
 </script>
 
 </body>
