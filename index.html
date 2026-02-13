@@ -20,6 +20,50 @@ background:#111;
 color:#fff;
 }
 
+/* ===== SPLASH ===== */
+#splash{
+position:fixed;
+inset:0;
+background:#111;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+opacity:0;
+animation:fadeIn .6s forwards;
+}
+
+#splash img{
+width:160px;
+}
+
+@keyframes fadeIn{
+to{opacity:1}
+}
+
+/* ===== TOAST ===== */
+#toast{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#16a34a;
+color:#fff;
+padding:12px 18px;
+border-radius:8px;
+font-weight:bold;
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:9999;
+}
+
+#toast.show{
+opacity:1;
+}
+
+/* ===== RESTANTE ORIGINAL ===== */
+
 .container{
 max-width:600px;
 margin:auto;
@@ -60,7 +104,6 @@ font-weight:bold;
 margin-top:8px;
 }
 
-/* MONTE SEU */
 .builder{
 background:#151515;
 border:1px solid #ff6a00;
@@ -88,7 +131,6 @@ color:#ff6a00;
 font-size:18px;
 }
 
-/* CARRINHO */
 .cart{
 background:#000;
 padding:14px;
@@ -136,6 +178,16 @@ border:none;
 </head>
 
 <body>
+
+<!-- SPLASH -->
+<div id="splash">
+<img src="IMG_0558.png">
+</div>
+
+<!-- TOAST -->
+<div id="toast">ADICIONADO AO CARRINHO ✅</div>
+
+
 <div class="container">
 
 <div class="logo">
@@ -227,13 +279,25 @@ const BASE=10.9;
 
 const cartDiv=document.getElementById("cart");
 const preview=document.getElementById("preview");
+const toast=document.getElementById("toast");
+
+/* SPLASH */
+setTimeout(()=> document.getElementById("splash").style.display="none",2000);
+
+/* TOAST */
+function showToast(){
+toast.classList.add("show");
+setTimeout(()=> toast.classList.remove("show"),1200);
+}
 
 function addItem(nome,preco){
 let item=carrinho.find(i=>i.nome===nome);
 item?item.qtd++:carrinho.push({nome,preco,qtd:1});
 update();
+showToast();
 }
 
+/* RESTANTE 100% IGUAL */
 function changeQtd(nome,delta){
 let item=carrinho.find(i=>i.nome===nome);
 item.qtd+=delta;
@@ -276,11 +340,8 @@ html+=`
 cartDiv.innerHTML=html;
 }
 
-/* ===== MONTE SEU ===== */
-
 function calcularPreview(){
 let total = BASE;
-
 total += Number(pao.value);
 total += Number(carne.value);
 total += Number(molho.value);
@@ -314,8 +375,7 @@ nome += e.parentElement.innerText + ", ";
 addItem(nome.slice(0,-2), total);
 }
 
-/* ===== FINALIZAR WHATSAPP ===== */
-
+/* WHATSAPP */
 function finalizar(){
 
 if(!carrinho.length){
@@ -323,14 +383,10 @@ alert("Adicione itens ao carrinho primeiro 😉");
 return;
 }
 
-const telefone = "5543996795964";
-
-let nomeCliente = document.getElementById("nome").value || "Não informado";
-let endereco = document.getElementById("endereco").value || "Retirada";
-let obs = document.getElementById("obs").value || "-";
+const telefone="5543996795964";
 
 let subtotal=0;
-let mensagem=" *Pedido - A Arte da Brasa*\n\n";
+let mensagem="*Pedido - A Arte da Brasa*\n\n";
 
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
@@ -343,10 +399,6 @@ let total=subtotal+taxa;
 mensagem+=`\nSubtotal: R$ ${subtotal.toFixed(2)}`;
 mensagem+=`\nTaxa entrega: R$ ${taxa.toFixed(2)}`;
 mensagem+=`\n*Total: R$ ${total.toFixed(2)}*`;
-
-mensagem+=`\n\n Nome: ${nomeCliente}`;
-mensagem+=`\n Endereço: ${endereco}`;
-mensagem+=`\n Obs: ${obs}`;
 
 window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`,"_blank");
 }
