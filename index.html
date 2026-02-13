@@ -122,7 +122,7 @@ margin-top:10px;
 font-weight:bold;
 }
 
-input,select{
+input,select,textarea{
 width:100%;
 padding:10px;
 margin-top:6px;
@@ -140,7 +140,6 @@ border:none;
 </div>
 
 <h1>🔥 A Arte da Brasa</h1>
-
 
 <!-- LANCHES PRONTOS -->
 
@@ -216,11 +215,14 @@ Preço: R$ 10,90
 </div>
 
 
+<!-- CARRINHO -->
+
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
 <input id="nome" placeholder="Nome">
 <input id="endereco" placeholder="Endereço">
+<textarea id="obs" placeholder="Observações (sem cebola, ponto da carne, etc)"></textarea>
 
 <button onclick="finalizar()">Enviar Pedido</button>
 
@@ -230,7 +232,7 @@ Preço: R$ 10,90
 <script>
 let carrinho=[];
 const taxa=1;
-const BASE=18.9;
+const BASE=10.9;
 
 const cartDiv=document.getElementById("cart");
 const preview=document.getElementById("preview");
@@ -325,6 +327,9 @@ msg+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n`;
 });
 
 msg+=`\nTOTAL: R$ ${(total+taxa).toFixed(2)}`;
+
+const obs=document.getElementById("obs").value;
+if(obs) msg+=`\nOBS: ${obs}`;
 
 window.open(`https://wa.me/5543996795964?text=${encodeURIComponent(msg)}`);
 }
