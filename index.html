@@ -60,6 +60,7 @@ font-weight:bold;
 margin-top:8px;
 }
 
+/* MONTE SEU */
 .builder{
 background:#151515;
 border:1px solid #ff6a00;
@@ -79,6 +80,10 @@ grid-template-columns:1fr 1fr;
 gap:8px;
 }
 
+.builder label{
+font-size:14px;
+}
+
 .price-preview{
 text-align:center;
 margin-top:10px;
@@ -86,6 +91,7 @@ font-weight:bold;
 color:#ff6a00;
 }
 
+/* CARRINHO */
 .cart{
 background:#000;
 padding:14px;
@@ -135,7 +141,11 @@ border:none;
 
 <h1>🔥 A Arte da Brasa</h1>
 
-<!-- LANCHES -->
+
+<!-- =========================
+     LANCHES PRONTOS
+========================= -->
+
 <h2>🍔 Lanches</h2>
 
 <div class="item">
@@ -157,38 +167,41 @@ border:none;
 </div>
 
 
-<!-- MONTE SEU -->
+<!-- =========================
+     MONTE SEU LANCHE
+========================= -->
+
 <h2>🍔✨ Monte seu Lanche</h2>
 
 <div class="builder">
 
 <p style="text-align:center;color:#ccc;font-size:13px">
-Base do lanche: <b>R$ 18,90</b> + carne + extras
+Base do lanche: <b>R$ 18,90</b> + escolha sua carne + ingredientes
 </p>
 
 <h4>Pão</h4>
 <select id="pao">
-<option value="0">Tradicional</option>
-<option value="2">Australiano (+2)</option>
+<option value="0">Pão tradicional</option>
+<option value="2">Pão australiano (+2)</option>
 </select>
 
 <h4>Hambúrguer</h4>
 <select id="carne">
-<option value="14">Boi (+14)</option>
-<option value="12">Porco (+12)</option>
-<option value="11">Frango (+11)</option>
+<option value="14">🐮 Hambúrguer bovino 160g (+14)</option>
+<option value="12">🐷 Hambúrguer suíno defumado (+12)</option>
+<option value="11">🍗 Hambúrguer de sobrecoxa grelhada (+11)</option>
 </select>
 
 <h4>Ingredientes</h4>
 
 <div class="builder-grid">
-<label><input type="checkbox" value="4"> Bacon</label>
-<label><input type="checkbox" value="3"> Queijo mussarela</label>
-<label><input type="checkbox" value="3"> Queijo prato</label>
-<label><input type="checkbox" value="3"> Cream cheese</label>
-<label><input type="checkbox" value="2"> Salada</label>
-<label><input type="checkbox" value="2"> Picles</label>
-<label><input type="checkbox" value="3"> Barbecue goiabada</label>
+<label><input type="checkbox" value="4"> Bacon crocante (+4)</label>
+<label><input type="checkbox" value="3"> Queijo mussarela (+3)</label>
+<label><input type="checkbox" value="3"> Queijo prato (+3)</label>
+<label><input type="checkbox" value="3"> Cream cheese artesanal (+3)</label>
+<label><input type="checkbox" value="2"> Alface + tomate (+2)</label>
+<label><input type="checkbox" value="2"> Picles artesanal (+2)</label>
+<label><input type="checkbox" value="3"> Barbecue de goiabada (+3)</label>
 </div>
 
 <div class="price-preview" id="preview">
@@ -200,7 +213,10 @@ Preço estimado: R$ 18,90
 </div>
 
 
-<!-- CARRINHO -->
+<!-- =========================
+     CARRINHO
+========================= -->
+
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
@@ -220,7 +236,7 @@ const BASE=18.9;
 const cartDiv=document.getElementById("cart");
 const preview=document.getElementById("preview");
 
-/* carrinho */
+/* CARRINHO */
 function addItem(nome,preco){
 let item=carrinho.find(i=>i.nome===nome);
 item?item.qtd++:carrinho.push({nome,preco,qtd:1});
@@ -262,7 +278,7 @@ html+=`<div class="total">Total: R$ ${(total+taxa).toFixed(2)}</div>`;
 cartDiv.innerHTML=html;
 }
 
-/* builder */
+/* MONTE SEU */
 function calcular(){
 let total = BASE + Number(pao.value) + Number(carne.value);
 
@@ -274,6 +290,8 @@ preview.innerText="Preço estimado: R$ "+total.toFixed(2);
 
 document.querySelectorAll("select, .builder-grid input")
 .forEach(e=>e.addEventListener("change",calcular));
+
+calcular();
 
 function addCustom(){
 let total = BASE + Number(pao.value) + Number(carne.value);
@@ -290,7 +308,7 @@ desc.push(c.parentElement.innerText);
 addItem("Monte seu Lanche ("+desc.join(", ")+")", total);
 }
 
-/* whatsapp */
+/* WHATSAPP */
 function finalizar(){
 let msg="PEDIDO – A ARTE DA BRASA\n\n";
 let total=0;
