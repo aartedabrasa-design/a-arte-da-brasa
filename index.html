@@ -62,8 +62,6 @@ z-index:9999;
 opacity:1;
 }
 
-/* ===== RESTANTE ORIGINAL ===== */
-
 .container{
 max-width:600px;
 margin:auto;
@@ -179,14 +177,11 @@ border:none;
 
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
 <img src="IMG_0558.png">
 </div>
 
-<!-- TOAST -->
 <div id="toast">ADICIONADO AO CARRINHO ✅</div>
-
 
 <div class="container">
 
@@ -196,7 +191,7 @@ border:none;
 
 <h1>🔥 A Arte da Brasa</h1>
 
-<h2>🍔 Lanches</h2>
+<h2>🍔 Lanches Artesanais</h2>
 
 <div class="item">
 <h3>🥩 Brasa Original</h3>
@@ -216,15 +211,13 @@ border:none;
 <button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
 </div>
 
-
 <h2>🍔✨ Monte seu Lanche</h2>
 
 <div class="builder">
-
 <h4>Pão</h4>
 <select id="pao">
 <option value="0">Pão de gergelim</option>
-<option value="2">Pão brioche (+2)</option>
+<option value="2">Pão brioche</option>
 </select>
 
 <h4>Hambúrguer</h4>
@@ -256,9 +249,7 @@ border:none;
 
 <div class="price-preview" id="preview">Preço: R$ 10,90</div>
 <button onclick="addCustom()">Adicionar Lanche Personalizado</button>
-
 </div>
-
 
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart">Seu carrinho está vazio</div>
@@ -271,7 +262,6 @@ border:none;
 
 </div>
 
-
 <script>
 let carrinho=[];
 const taxa=1;
@@ -281,10 +271,8 @@ const cartDiv=document.getElementById("cart");
 const preview=document.getElementById("preview");
 const toast=document.getElementById("toast");
 
-/* SPLASH */
 setTimeout(()=> document.getElementById("splash").style.display="none",2000);
 
-/* TOAST */
 function showToast(){
 toast.classList.add("show");
 setTimeout(()=> toast.classList.remove("show"),1200);
@@ -297,7 +285,6 @@ update();
 showToast();
 }
 
-/* RESTANTE 100% IGUAL */
 function changeQtd(nome,delta){
 let item=carrinho.find(i=>i.nome===nome);
 item.qtd+=delta;
@@ -375,7 +362,7 @@ nome += e.parentElement.innerText + ", ";
 addItem(nome.slice(0,-2), total);
 }
 
-/* WHATSAPP */
+/* WHATSAPP (COM LINHA EM BRANCO ENTRE ITENS) */
 function finalizar(){
 
 if(!carrinho.length){
@@ -391,7 +378,7 @@ let mensagem="*Pedido - A Arte da Brasa*\n\n";
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 subtotal+=sub;
-mensagem+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n`;
+mensagem+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n\n`;
 });
 
 let total=subtotal+taxa;
