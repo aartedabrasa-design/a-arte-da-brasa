@@ -17,7 +17,7 @@ background:#16a34a;color:#fff;padding:12px 18px;border-radius:8px;
 font-weight:bold;opacity:0;pointer-events:none;transition:.3s;z-index:9999}
 #toast.show{opacity:1}
 .container{max-width:600px;margin:auto;padding:16px}
-h1,h2{color:#ff6a00;text-align:center;margin:18px 0}
+h1,h2,h3{color:#ff6a00;text-align:center;margin:18px 0}
 .logo{text-align:center}
 .logo img{width:140px}
 .item{background:#1c1c1c;padding:14px;border-radius:10px;margin-bottom:14px}
@@ -53,7 +53,7 @@ input,select,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 <img src="IMG_0558.png">
 </div>
 
-<h1>🔥 A Arte da Brasa</h1>
+<h1>🔥 A Arte da Brasa | Parrilla</h1>
 
 <h2>🍔 Lanches Artesanais</h2>
 
@@ -151,8 +151,19 @@ const BASE=10.9;
 const cartDiv=document.getElementById("cart");
 const preview=document.getElementById("preview");
 const toast=document.getElementById("toast");
+const pagamento=document.getElementById("pagamento");
+const troco=document.getElementById("troco");
 
 setTimeout(()=>document.getElementById("splash").style.display="none",2000);
+
+pagamento.addEventListener("change",()=>{
+if(pagamento.value==="Dinheiro"){
+troco.classList.remove("hidden");
+}else{
+troco.classList.add("hidden");
+troco.value="";
+}
+});
 
 function showToast(msg){
 toast.innerText=msg;
@@ -238,11 +249,11 @@ function finalizar(){
 if(!carrinho.length){alert("Adicione itens primeiro 😉");return;}
 const nome=document.getElementById("nome").value.trim();
 const endereco=document.getElementById("endereco").value.trim();
-const pagamento=document.getElementById("pagamento").value;
-const troco=document.getElementById("troco").value;
+const pagamentoValue=pagamento.value;
+const trocoValue=troco.value;
 const obs=document.getElementById("obs").value.trim();
 
-if(!nome||!endereco||!pagamento){
+if(!nome||!endereco||!pagamentoValue){
 alert("Preencha Nome, Endereço e Pagamento 😉");
 return;
 }
@@ -250,18 +261,18 @@ return;
 let subtotal=0;
 let msg="*Pedido - A Arte da Brasa*%0A%0A";
 msg+=`Nome: ${nome}%0AEndereço: ${endereco}%0A`;
-msg+=`Pagamento: ${pagamento}%0A`;
-if(pagamento==="Dinheiro" && troco) msg+=`Troco para: R$ ${troco}%0A`;
+msg+=`Pagamento: ${pagamentoValue}%0A`;
+if(pagamentoValue==="Dinheiro" && trocoValue) msg+=`Troco para: R$ ${trocoValue}%0A`;
 if(obs) msg+=`Obs: ${obs}%0A%0A`;
 
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 subtotal+=sub;
-msg+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}%0A`;
+msg+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}%0A%0A`;
 });
 
 let total=subtotal+taxa;
-msg+=`%0ASubtotal: R$ ${subtotal.toFixed(2)}%0A`;
+msg+=`Subtotal: R$ ${subtotal.toFixed(2)}%0A`;
 msg+=`Taxa: R$ ${taxa.toFixed(2)}%0A`;
 msg+=`Total: R$ ${total.toFixed(2)}`;
 
