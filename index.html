@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<title>A Arte da Brasa</title>
+<title>A Arte da Brasa|Parrilla</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -215,15 +215,18 @@ border:none;
 <h4>Pão</h4>
 <select id="pao">
 <option value="0">Pão de gergelim</option>
-<option value="2">Pão brioche (+2)</option>
+<option value="2">Pão brioche</option>
 </select>
 
 <h4>Hambúrguer</h4>
 <select id="carne">
-<option value="14">Bovino 160g (+14)</option>
+<option value="14">Bovino 160g (+14) </option>
 <option value="12">Suíno defumado 160g (+12)</option>
 <option value="11">Frango sobrecoxa 160g (+11)</option>
 </select>
+
+<h4>Quantidade de hambúrguer</h4>
+<input type="number" id="qtdCarne" value="1" min="1">
 
 <h4>Molho base</h4>
 <select id="molho">
@@ -252,10 +255,12 @@ border:none;
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
+<h2>📋 Dados do Cliente</h2>
+
 <input id="nome" placeholder="Nome">
 <input id="endereco" placeholder="Endereço">
 
-<h3>Forma de Pagamento</h3>
+<h3>💰Forma de Pagamento</h3>
 <select id="pagamento">
 <option value="">Selecione</option>
 <option value="Cartão">Cartão</option>
@@ -281,6 +286,7 @@ const preview=document.getElementById("preview");
 const toast=document.getElementById("toast");
 const pagamento=document.getElementById("pagamento");
 const troco=document.getElementById("troco");
+const qtdCarne=document.getElementById("qtdCarne");
 
 setTimeout(()=> document.getElementById("splash").style.display="none",2000);
 
@@ -350,26 +356,40 @@ cartDiv.innerHTML=html;
 
 function calcularPreview(){
 let total=BASE;
+let qtd=Number(qtdCarne.value)||1;
+
 total+=Number(pao.value);
-total+=Number(carne.value);
+total+=Number(carne.value)*qtd;
 total+=Number(molho.value);
+
 document.querySelectorAll(".builder-grid input:checked")
 .forEach(e=> total+=Number(e.value));
+
 preview.innerText="Preço: R$ "+total.toFixed(2);
 }
 
-document.querySelectorAll("#pao,#carne,#molho,.builder-grid input")
+document.querySelectorAll("#pao,#carne,#molho,#qtdCarne,.builder-grid input")
 .forEach(e=>e.addEventListener("change",calcularPreview));
 
 calcularPreview();
 
 function addCustom(){
 let total=BASE;
+let qtd=Number(qtdCarne.value)||1;
 let nome="Monte seu Lanche: ";
 
+total+=Number(pao.value);
+total+=Number(carne.value)*qtd;
+total+=Number(molho.value);
+
+if(qtd>1){
+nome+=qtd+"x ";
+}
+
 [pao,carne,molho].forEach(s=>{
-total+=Number(s.value);
-if(s.value!=0) nome+=s.options[s.selectedIndex].text+", ";
+if(s.value!=0){
+nome+=s.options[s.selectedIndex].text+", ";
+}
 });
 
 document.querySelectorAll(".builder-grid input:checked")
@@ -380,75 +400,3 @@ nome+=e.parentElement.innerText+", ";
 
 addItem(nome.slice(0,-2),total);
 }
-
-function finalizar(){
-
-if(!carrinho.length){
-alert("Adicione itens ao carrinho primeiro 😉");
-return;
-}
-
-const nome=document.getElementById("nome").value.trim();
-const endereco=document.getElementById("endereco").value.trim();
-const forma=pagamento.value;
-const trocoValor=troco.value.trim();
-const obs=document.getElementById("obs").value.trim();
-
-if(nome===""||endereco===""||forma===""){
-alert("Preencha Nome, Endereço e Forma de Pagamento 😉");
-return;
-}
-
-if(forma==="Dinheiro" && trocoValor===""){
-alert("Informe o troco 😉");
-return;
-}
-
-const telefone="5543996795964";
-
-let subtotal=0;
-let mensagem="*Pedido - A Arte da Brasa*\n\n";
-
-mensagem+=`👤 Nome: ${nome}\n`;
-mensagem+=`📍 Endereço: ${endereco}\n`;
-mensagem+=`💳 Pagamento: ${forma}\n`;
-
-if(forma==="Dinheiro"){
-mensagem+=`💰 Troco para: R$ ${trocoValor}\n`;
-}
-
-if(obs!==""){
-mensagem+=`📝 Obs: ${obs}\n`;
-}
-
-mensagem+="\n";
-
-carrinho.forEach(i=>{
-let sub=i.preco*i.qtd;
-subtotal+=sub;
-mensagem+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}\n\n`;
-});
-
-let total=subtotal+taxa;
-
-mensagem+=`\nSubtotal: R$ ${subtotal.toFixed(2)}`;
-mensagem+=`\nTaxa entrega: R$ ${taxa.toFixed(2)}`;
-mensagem+=`\n*Total: R$ ${total.toFixed(2)}*`;
-
-window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`,"_blank");
-
-carrinho=[];
-update();
-document.getElementById("nome").value="";
-document.getElementById("endereco").value="";
-document.getElementById("pagamento").value="";
-troco.value="";
-document.getElementById("obs").value="";
-troco.classList.add("hidden");
-
-showToast("PEDIDO ENVIADO COM SUCESSO 🚀");
-}
-</script>
-
-</body>
-</html>
