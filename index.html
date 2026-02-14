@@ -20,7 +20,6 @@ background:#111;
 color:#fff;
 }
 
-/* ===== SPLASH ===== */
 #splash{
 position:fixed;
 inset:0;
@@ -29,19 +28,13 @@ display:flex;
 justify-content:center;
 align-items:center;
 z-index:9999;
-opacity:0;
 animation:fadeIn .6s forwards;
 }
 
-#splash img{
-width:200px;
-}
+#splash img{width:200px}
 
-@keyframes fadeIn{
-to{opacity:1}
-}
+@keyframes fadeIn{to{opacity:1}}
 
-/* ===== TOAST ===== */
 #toast{
 position:fixed;
 bottom:20px;
@@ -58,9 +51,7 @@ transition:.3s;
 z-index:9999;
 }
 
-#toast.show{
-opacity:1;
-}
+#toast.show{opacity:1}
 
 .container{
 max-width:600px;
@@ -100,6 +91,11 @@ border:none;
 border-radius:8px;
 font-weight:bold;
 margin-top:8px;
+}
+
+button:disabled{
+background:#555;
+color:#999;
 }
 
 .builder{
@@ -172,6 +168,8 @@ margin-top:6px;
 border-radius:6px;
 border:none;
 }
+
+.hidden{display:none}
 </style>
 </head>
 
@@ -217,7 +215,7 @@ border:none;
 <h4>Pão</h4>
 <select id="pao">
 <option value="0">Pão de gergelim</option>
-<option value="2">Pão brioche</option>
+<option value="2">Pão brioche (+2)</option>
 </select>
 
 <h4>Hambúrguer</h4>
@@ -256,9 +254,20 @@ border:none;
 
 <input id="nome" placeholder="Nome">
 <input id="endereco" placeholder="Endereço">
+
+<h3>Forma de Pagamento</h3>
+<select id="pagamento">
+<option value="">Selecione</option>
+<option value="Cartão">Cartão</option>
+<option value="Pix">Pix</option>
+<option value="Dinheiro">Dinheiro</option>
+</select>
+
+<input id="troco" class="hidden" placeholder="Troco para quanto?">
+
 <textarea id="obs" placeholder="Observações"></textarea>
 
-<button onclick="finalizar()">Enviar Pedido</button>
+<button id="btnFinalizar" onclick="finalizar()">Enviar Pedido</button>
 
 </div>
 
@@ -270,12 +279,24 @@ const BASE=10.9;
 const cartDiv=document.getElementById("cart");
 const preview=document.getElementById("preview");
 const toast=document.getElementById("toast");
+const pagamento=document.getElementById("pagamento");
+const troco=document.getElementById("troco");
 
 setTimeout(()=> document.getElementById("splash").style.display="none",2000);
 
-function showToast(){
+pagamento.addEventListener("change",()=>{
+if(pagamento.value==="Dinheiro"){
+troco.classList.remove("hidden");
+}else{
+troco.classList.add("hidden");
+troco.value="";
+}
+});
+
+function showToast(msg="ADICIONADO AO CARRINHO ✅"){
+toast.innerText=msg;
 toast.classList.add("show");
-setTimeout(()=> toast.classList.remove("show"),1200);
+setTimeout(()=> toast.classList.remove("show"),1500);
 }
 
 function addItem(nome,preco){
@@ -316,7 +337,7 @@ ${i.qtd}
 </div>`;
 });
 
-let total = subtotal + taxa;
+let total=subtotal+taxa;
 
 html+=`
 <div class="taxa">Subtotal: R$ ${subtotal.toFixed(2)}</div>
@@ -328,15 +349,13 @@ cartDiv.innerHTML=html;
 }
 
 function calcularPreview(){
-let total = BASE;
-total += Number(pao.value);
-total += Number(carne.value);
-total += Number(molho.value);
-
+let total=BASE;
+total+=Number(pao.value);
+total+=Number(carne.value);
+total+=Number(molho.value);
 document.querySelectorAll(".builder-grid input:checked")
-.forEach(e => total += Number(e.value));
-
-preview.innerText = "Preço: R$ " + total.toFixed(2);
+.forEach(e=> total+=Number(e.value));
+preview.innerText="Preço: R$ "+total.toFixed(2);
 }
 
 document.querySelectorAll("#pao,#carne,#molho,.builder-grid input")
@@ -345,24 +364,23 @@ document.querySelectorAll("#pao,#carne,#molho,.builder-grid input")
 calcularPreview();
 
 function addCustom(){
-let total = BASE;
-let nome = "Monte seu Lanche: ";
+let total=BASE;
+let nome="Monte seu Lanche: ";
 
-[pao, carne, molho].forEach(s=>{
-total += Number(s.value);
-if(s.value!=0) nome += s.options[s.selectedIndex].text + ", ";
+[pao,carne,molho].forEach(s=>{
+total+=Number(s.value);
+if(s.value!=0) nome+=s.options[s.selectedIndex].text+", ";
 });
 
 document.querySelectorAll(".builder-grid input:checked")
 .forEach(e=>{
-total += Number(e.value);
-nome += e.parentElement.innerText + ", ";
+total+=Number(e.value);
+nome+=e.parentElement.innerText+", ";
 });
 
-addItem(nome.slice(0,-2), total);
+addItem(nome.slice(0,-2),total);
 }
 
-/* WHATSAPP (COM LINHA EM BRANCO ENTRE ITENS) */
 function finalizar(){
 
 if(!carrinho.length){
@@ -370,10 +388,40 @@ alert("Adicione itens ao carrinho primeiro 😉");
 return;
 }
 
+const nome=document.getElementById("nome").value.trim();
+const endereco=document.getElementById("endereco").value.trim();
+const forma=pagamento.value;
+const trocoValor=troco.value.trim();
+const obs=document.getElementById("obs").value.trim();
+
+if(nome===""||endereco===""||forma===""){
+alert("Preencha Nome, Endereço e Forma de Pagamento 😉");
+return;
+}
+
+if(forma==="Dinheiro" && trocoValor===""){
+alert("Informe o troco 😉");
+return;
+}
+
 const telefone="5543996795964";
 
 let subtotal=0;
 let mensagem="*Pedido - A Arte da Brasa*\n\n";
+
+mensagem+=`👤 Nome: ${nome}\n`;
+mensagem+=`📍 Endereço: ${endereco}\n`;
+mensagem+=`💳 Pagamento: ${forma}\n`;
+
+if(forma==="Dinheiro"){
+mensagem+=`💰 Troco para: R$ ${trocoValor}\n`;
+}
+
+if(obs!==""){
+mensagem+=`📝 Obs: ${obs}\n`;
+}
+
+mensagem+="\n";
 
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
@@ -388,6 +436,17 @@ mensagem+=`\nTaxa entrega: R$ ${taxa.toFixed(2)}`;
 mensagem+=`\n*Total: R$ ${total.toFixed(2)}*`;
 
 window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`,"_blank");
+
+carrinho=[];
+update();
+document.getElementById("nome").value="";
+document.getElementById("endereco").value="";
+document.getElementById("pagamento").value="";
+troco.value="";
+document.getElementById("obs").value="";
+troco.classList.add("hidden");
+
+showToast("PEDIDO ENVIADO COM SUCESSO 🚀");
 }
 </script>
 
