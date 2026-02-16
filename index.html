@@ -1,148 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8"/>
-<title>A Arte da Brasa | Parrilla</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#111"/>
-<link rel="icon" href="IMG_0558.png">
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#111;color:#fff}
-#splash{position:fixed;inset:0;background:#111;display:flex;justify-content:center;align-items:center;z-index:9999}
-#splash img{width:200px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-background:#16a34a;color:#fff;padding:12px 18px;border-radius:8px;
-font-weight:bold;opacity:0;pointer-events:none;transition:.3s;z-index:9999}
-#toast.show{opacity:1}
-.container{max-width:600px;margin:auto;padding:16px}
-h1,h2,h3{color:#ff6a00;text-align:center;margin:18px 0}
-.logo{text-align:center}
-.logo img{width:140px}
-.item{background:#1c1c1c;padding:14px;border-radius:10px;margin-bottom:14px}
-.item p{color:#ccc;font-size:14px;margin:6px 0 10px}
-button{width:100%;padding:12px;background:#ff6a00;color:#000;border:none;border-radius:8px;font-weight:bold;margin-top:8px}
-button:disabled{background:#555;color:#999}
-.builder{background:#151515;border:1px solid #ff6a00;border-radius:12px;padding:14px;margin-bottom:14px}
-.builder h4{margin:12px 0 6px;color:#ff6a00}
-.builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.price-preview{text-align:center;margin-top:10px;font-weight:bold;color:#ff6a00;font-size:18px}
-.cart{background:#000;padding:14px;border-radius:10px;margin-bottom:12px}
-.cart-item{border-bottom:1px solid #333;padding:8px 0}
-.counter{display:flex;gap:8px;align-items:center;margin-top:5px}
-.counter button{width:28px;height:28px;padding:0}
-.total{margin-top:10px;font-weight:bold}
-.taxa{color:#ccc;font-size:14px;margin-top:6px}
-input,select,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:none}
-.hidden{display:none}
-</style>
-</head>
-
-<body>
-
-<div id="splash">
-<img src="IMG_0558.png">
-</div>
-
-<div id="toast">ADICIONADO AO CARRINHO ✅</div>
-
-<div class="container">
-
-<div class="logo">
-<img src="IMG_0558.png">
-</div>
-
-<h1>🔥 A Arte da Brasa | Parrilla</h1>
-
-<h2>🍔 Lanches Artesanais</h2>
-
-<div class="item">
-<h3>🥩 Brasa Original</h3>
-<p>Hambúrguer bovino 160g, pão brioche, queijo prato, bacon e maionese de alho assado.</p>
-<button onclick="addItem('Brasa Original',32.9)">Adicionar • R$ 32,90</button>
-</div>
-
-<div class="item">
-<h3>🐷 Pig Defumado</h3>
-<p>Hambúrguer suíno defumado 160g, pão brioche, mussarela, picles e barbecue de goiabada.</p>
-<button onclick="addItem('Pig Defumado',29.9)">Adicionar • R$ 29,90</button>
-</div>
-
-<div class="item">
-<h3>🍗 Frango da Brasa</h3>
-<p>Hambúrguer de sobrecoxa 160g, pão gergelim, cream cheese, alface, tomate e maionese verde.</p>
-<button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
-</div>
-
-<h2>🍔✨ Monte seu Lanche</h2>
-
-<div class="builder">
-
-<h4>Pão</h4>
-<select id="pao">
-<option value="0">Pão de gergelim</option>
-<option value="2">Pão brioche</option>
-</select>
-
-<h4>Hambúrguer</h4>
-<select id="carne">
-<option value="14">Bovino 160g (+14)</option>
-<option value="12">Suíno defumado 160g (+12)</option>
-<option value="11">Frango sobrecoxa 160g (+11)</option>
-</select>
-
-<h4>Quantidade de hambúrguer</h4>
-<input type="number" id="qtdCarne" value="1" min="1">
-
-<h4>Molho base</h4>
-<select id="molho">
-<option value="0">Sem maionese</option>
-<option value="2">Maionese verde (+2)</option>
-<option value="2">Maionese alho assado (+2)</option>
-</select>
-
-<h4>Ingredientes extras</h4>
-
-<div class="builder-grid">
-<label><input type="checkbox" value="4"> Bacon (+4)</label>
-<label><input type="checkbox" value="2"> Mussarela (+2)</label>
-<label><input type="checkbox" value="3"> Queijo prato (+3)</label>
-<label><input type="checkbox" value="3"> Cream cheese (+3)</label>
-<label><input type="checkbox" value="2"> Salada (+2)</label>
-<label><input type="checkbox" value="2"> Rúcula (+2)</label>
-<label><input type="checkbox" value="2"> Picles (+2)</label>
-<label><input type="checkbox" value="3"> Barbecue goiabada (+3)</label>
-</div>
-
-<div class="price-preview" id="preview"></div>
-<button onclick="addCustom()">Adicionar Lanche Personalizado</button>
-
-</div>
-
-<h2>🛒 Carrinho</h2>
-<div class="cart" id="cart">Seu carrinho está vazio</div>
-
-<h2>📋 Dados do Cliente</h2>
-
-<input id="nome" placeholder="Nome">
-<input id="endereco" placeholder="Endereço">
-
-<h3>💰 Forma de Pagamento</h3>
-<select id="pagamento">
-<option value="">Selecione</option>
-<option value="Cartão">Cartão</option>
-<option value="Pix">Pix</option>
-<option value="Dinheiro">Dinheiro</option>
-</select>
-
-<input id="troco" class="hidden" placeholder="Troco para quanto?">
-<textarea id="obs" placeholder="Observações"></textarea>
-
-<button onclick="finalizar()">Enviar Pedido</button>
-
-</div>
-
 <script>
 let carrinho=[];
 const taxa=1;
@@ -245,8 +100,14 @@ nome+=e.parentElement.innerText+", ";
 addItem(nome.slice(0,-2),total);
 }
 
+/* 🔥 FUNÇÃO FINALIZAR AJUSTADA PARA 58MM */
+
 function finalizar(){
-if(!carrinho.length){alert("Adicione itens primeiro 😉");return;}
+if(!carrinho.length){
+alert("Adicione itens primeiro 😉");
+return;
+}
+
 const nome=document.getElementById("nome").value.trim();
 const endereco=document.getElementById("endereco").value.trim();
 const pagamentoValue=pagamento.value;
@@ -259,30 +120,60 @@ return;
 }
 
 let subtotal=0;
-let msg="*Pedido - A Arte da Brasa*%0A%0A";
-msg+=`Nome: ${nome}%0AEndereço: ${endereco}%0A`;
-msg+=`Pagamento: ${pagamentoValue}%0A`;
-if(pagamentoValue==="Dinheiro" && trocoValue) msg+=`Troco para: R$ ${trocoValue}%0A`;
-if(obs) msg+=`Obs: ${obs}%0A%0A`;
+let linhas=[];
+
+linhas.push("PEDIDO - A ARTE DA BRASA");
+linhas.push("");
+
+linhas.push("Cliente:");
+linhas.push(nome);
+linhas.push("");
+
+linhas.push("Endereço:");
+linhas.push(endereco);
+linhas.push("");
+
+linhas.push("Pagamento: " + pagamentoValue);
+
+if(pagamentoValue==="Dinheiro" && trocoValue){
+linhas.push("Troco para: R$ " + trocoValue);
+}
+
+if(obs){
+linhas.push("");
+linhas.push("Obs:");
+linhas.push(obs);
+}
+
+linhas.push("");
+linhas.push("------------------------------");
+linhas.push("ITENS:");
+linhas.push("");
 
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 subtotal+=sub;
-msg+=`${i.qtd}x ${i.nome} - R$ ${sub.toFixed(2)}%0A%0A`;
+
+linhas.push(i.qtd + "x " + i.nome);
+linhas.push("R$ " + sub.toFixed(2));
+linhas.push("");
 });
 
 let total=subtotal+taxa;
-msg+=`Subtotal: R$ ${subtotal.toFixed(2)}%0A`;
-msg+=`Taxa: R$ ${taxa.toFixed(2)}%0A`;
-msg+=`Total: R$ ${total.toFixed(2)}`;
 
-window.open("https://wa.me/5543996795964?text="+msg,"_blank");
+linhas.push("------------------------------");
+linhas.push("Subtotal: R$ " + subtotal.toFixed(2));
+linhas.push("Taxa: R$ " + taxa.toFixed(2));
+linhas.push("");
+linhas.push("TOTAL: R$ " + total.toFixed(2));
+linhas.push("------------------------------");
+
+let mensagem = linhas.join("\n");
+
+window.open("https://wa.me/5543996795964?text="+encodeURIComponent(mensagem),"_blank");
 
 carrinho=[];
 update();
 showToast("Pedido enviado com sucesso 🚀");
 }
 </script>
-
-</body>
-</html>
