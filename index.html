@@ -24,7 +24,8 @@ background:#111;
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:9999
+z-index:9999;
+transition:opacity .3s ease;
 }
 #splash img{width:200px}
 
@@ -105,36 +106,6 @@ z-index:1;
 button:active{transform:scale(.96)}
 button:disabled{background:#555;color:#999}
 button *{pointer-events:none}
-
-/* BUILDER */
-.builder{
-background:#151515;
-border:1px solid #ff6a00;
-border-radius:18px;
-padding:18px;
-margin-bottom:25px;
-}
-.builder h4{
-margin:14px 0 6px;
-color:#ff6a00;
-font-size:14px;
-}
-.builder-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-}
-.builder-grid label{
-font-size:13px;
-color:#ccc;
-}
-.price-preview{
-text-align:center;
-margin-top:14px;
-font-weight:bold;
-color:#ff6a00;
-font-size:20px;
-}
 
 /* CART */
 .cart{
@@ -275,7 +246,13 @@ const toast=document.getElementById("toast");
 const pagamento=document.getElementById("pagamento");
 const troco=document.getElementById("troco");
 
-setTimeout(()=>document.getElementById("splash").style.display="none",2000);
+/* SPLASH CORRIGIDO DEFINITIVO */
+setTimeout(()=>{
+const splash=document.getElementById("splash");
+splash.style.opacity="0";
+splash.style.pointerEvents="none";
+setTimeout(()=>{ splash.remove(); },300);
+},2000);
 
 pagamento.addEventListener("change",()=>{
 if(pagamento.value==="Dinheiro"){
@@ -310,6 +287,8 @@ if(item.qtd<=0) carrinho=carrinho.filter(i=>i.nome!==nome);
 update();
 }
 
+window.changeQtd=changeQtd;
+
 function update(){
 if(!carrinho.length){
 cartDiv.innerHTML="Seu carrinho está vazio";
@@ -334,8 +313,6 @@ html+=`<div class="taxa">Subtotal: R$ ${subtotal.toFixed(2)}</div>
 <div class="total">Total: R$ ${total.toFixed(2)}</div>`;
 cartDiv.innerHTML=html;
 }
-
-window.changeQtd=changeQtd;
 
 document.getElementById("btnFinalizar").addEventListener("click",function(){
 
