@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
-<title>A Arte da Brasa | Parrilla</title>
+<title>A Arte da Brasa</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#111"/>
 <link rel="icon" href="IMG_0558.png">
@@ -54,7 +54,6 @@ input,select,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 </div>
 
 <h1>🔥 A Arte da Brasa</h1>
-
 <h2>🍔 Lanches Artesanais</h2>
 
 <div class="item">
@@ -75,10 +74,21 @@ input,select,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 <button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
 </div>
 
+<div class="item">
+<h3>🍍 Brasa Tropical</h3>
+<p>Hambúrguer bovino 160g, maionese de alho, queijo prato, abacaxi caramelizado e rúcula no pão australiano.</p>
+<button onclick="addItem('Brasa Tropical',34.9)">Adicionar • R$ 34,90</button>
+</div>
+
+<div class="item">
+<h3>🐟 Brasa Fish</h3>
+<p>Filé de tilápia grelhado na parrilla, maionese verde, vinagrete cítrico e alface americana no pão brioche.</p>
+<button onclick="addItem('Brasa Fish',32.9)">Adicionar • R$ 32,90</button>
+</div>
+
 <h2>🍔✨ Monte seu Lanche</h2>
 
 <div class="builder">
-
 <h4>Pão</h4>
 <select id="pao">
 <option value="0">Pão de gergelim</option>
@@ -103,7 +113,6 @@ input,select,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 </select>
 
 <h4>Ingredientes extras</h4>
-
 <div class="builder-grid">
 <label><input type="checkbox" value="4"> Bacon (+4)</label>
 <label><input type="checkbox" value="2"> Mussarela (+2)</label>
@@ -117,14 +126,12 @@ input,select,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;b
 
 <div class="price-preview" id="preview"></div>
 <button onclick="addCustom()">Adicionar Lanche Personalizado</button>
-
 </div>
 
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
 <h2>📋 Dados do Cliente</h2>
-
 <input id="nome" placeholder="Nome">
 <input id="endereco" placeholder="Endereço">
 
@@ -249,7 +256,6 @@ addItem(nome.slice(0,-2),total);
 }
 
 window.finalizar=function(){
-
 if(!carrinho.length){
 alert("Adicione itens primeiro 😉");
 return;
