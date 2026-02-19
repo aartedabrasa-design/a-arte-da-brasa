@@ -8,182 +8,33 @@
 <link rel="icon" href="IMG_0558.png">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-font-family:'Segoe UI',Arial,sans-serif;
-background:#0f0f0f;
-color:#fff;
-}
-
-/* SPLASH */
-#splash{
-position:fixed;
-inset:0;
-background:#111;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-transition:opacity .3s ease;
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#111;color:#fff}
+#splash{position:fixed;inset:0;background:#111;display:flex;justify-content:center;align-items:center;z-index:9999}
 #splash img{width:200px}
-
-/* TOAST CORRIGIDO iOS */
-#toast{
-position:fixed;
-bottom:25px;
-left:50%;
-translate:-50% 0;
-background:#16a34a;
-color:#fff;
-padding:14px 24px;
-border-radius:30px;
-font-weight:bold;
-opacity:0;
-transition:opacity .3s;
-z-index:9999;
-pointer-events:none;
-}
-#toast.show{
-opacity:1;
-pointer-events:none;
-}
-
-/* HEADER */
-.header{
-position:sticky;
-top:0;
-background:linear-gradient(180deg,#1a0000,#0f0f0f);
-padding:20px 16px 16px;
-text-align:center;
-box-shadow:0 6px 25px rgba(0,0,0,0.7);
-z-index:1000;
-}
-.header img{width:90px;margin-bottom:6px}
-.header h1{font-size:18px}
-.header p{font-size:12px;color:#ff6a00;margin-top:4px}
-
-.container{
-max-width:600px;
-margin:auto;
-padding:20px 16px 80px;
-}
-
-/* CARDS */
-.item{
-background:#1b1b1b;
-border-radius:18px;
-padding:18px;
-margin-bottom:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.6);
-}
-.item h3{
-color:#ff6a00;
-margin-bottom:8px;
-}
-.item p{
-color:#ccc;
-font-size:14px;
-margin-bottom:14px;
-}
-
-button{
-width:100%;
-padding:14px;
-background:linear-gradient(45deg,#ff0000,#ff6a00);
-color:#fff;
-border:none;
-border-radius:30px;
-font-weight:bold;
-cursor:pointer;
-transition:.2s;
-}
-button:active{transform:scale(.96)}
-button *{pointer-events:none}
-
-/* BUILDER */
-.builder{
-background:#151515;
-border:1px solid #ff6a00;
-border-radius:18px;
-padding:18px;
-margin-bottom:25px;
-}
-.builder h4{
-margin:14px 0 6px;
-color:#ff6a00;
-font-size:14px;
-}
-.builder-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-}
-.builder-grid label{
-font-size:13px;
-color:#ccc;
-}
-.price-preview{
-text-align:center;
-margin-top:14px;
-font-weight:bold;
-color:#ff6a00;
-font-size:20px;
-}
-
-/* CART */
-.cart{
-background:#000;
-padding:18px;
-border-radius:18px;
-margin-bottom:20px;
-box-shadow:0 8px 25px rgba(0,0,0,0.6);
-}
-.cart-item{
-border-bottom:1px solid #333;
-padding:10px 0;
-}
-.counter{
-display:flex;
-gap:8px;
-align-items:center;
-margin-top:6px;
-}
-.counter button{
-width:30px;
-height:30px;
-border-radius:8px;
-padding:0;
-}
-.total{
-margin-top:12px;
-font-weight:bold;
-font-size:20px;
-}
-.taxa{
-color:#ccc;
-font-size:14px;
-margin-top:6px;
-}
-
-input,select,textarea{
-width:100%;
-padding:12px;
-margin-top:8px;
-border-radius:12px;
-border:none;
-background:#1c1c1c;
-color:#fff;
-}
-textarea{resize:none}
-
-h2{
-margin:35px 0 16px;
-color:#ff6a00;
-text-align:center;
-}
-
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+background:#16a34a;color:#fff;padding:12px 18px;border-radius:8px;
+font-weight:bold;opacity:0;pointer-events:none;transition:.3s;z-index:9999}
+#toast.show{opacity:1}
+.container{max-width:600px;margin:auto;padding:16px}
+h1,h2,h3{color:#ff6a00;text-align:center;margin:18px 0}
+.logo{text-align:center}
+.logo img{width:140px}
+.item{background:#1c1c1c;padding:14px;border-radius:10px;margin-bottom:14px}
+.item p{color:#ccc;font-size:14px;margin:6px 0 10px}
+button{width:100%;padding:12px;background:#ff6a00;color:#000;border:none;border-radius:8px;font-weight:bold;margin-top:8px}
+button:disabled{background:#555;color:#999}
+.builder{background:#151515;border:1px solid #ff6a00;border-radius:12px;padding:14px;margin-bottom:14px}
+.builder h4{margin:12px 0 6px;color:#ff6a00}
+.builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.price-preview{text-align:center;margin-top:10px;font-weight:bold;color:#ff6a00;font-size:18px}
+.cart{background:#000;padding:14px;border-radius:10px;margin-bottom:12px}
+.cart-item{border-bottom:1px solid #333;padding:8px 0}
+.counter{display:flex;gap:8px;align-items:center;margin-top:5px}
+.counter button{width:28px;height:28px;padding:0}
+.total{margin-top:10px;font-weight:bold}
+.taxa{color:#ccc;font-size:14px;margin-top:6px}
+input,select,textarea{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:none}
 .hidden{display:none}
 </style>
 </head>
@@ -194,75 +45,108 @@ text-align:center;
 <img src="IMG_0558.png">
 </div>
 
-<div id="toast">Adicionado ao carrinho ✅</div>
-
-<div class="header">
-<img src="IMG_0558.png">
-<h1>A ARTE DA BRASA</h1>
-<p>Parrilla Artesanal</p>
-</div>
+<div id="toast">ADICIONADO AO CARRINHO ✅</div>
 
 <div class="container">
 
+<div class="logo">
+<img src="IMG_0558.png">
+</div>
+
+<h1>🔥 Intensidade, suculência e brasa</h1>
 <h2>🍔 Lanches Artesanais</h2>
 
 <div class="item">
-<h3>Brasa Original</h3>
-<p>Hambúrguer bovino 160g, pão brioche, queijo prato, bacon e maionese.</p>
-<button class="add-btn" data-nome="Brasa Original" data-preco="32.9">Adicionar • R$ 32,90</button>
+<h3>🥩 Brasa Original</h3>
+<p>Hambúrguer bovino 160g, pão brioche, queijo prato, bacon e maionese de alho assado.</p>
+<button onclick="addItem('Brasa Original',32.9)">Adicionar • R$ 32,90</button>
 </div>
 
 <div class="item">
-<h3>Brasa Tropical</h3>
-<p>160g bovino, maionese de alho, queijo prato, abacaxi caramelizado e rúcula no pão australiano.</p>
-<button class="add-btn" data-nome="Brasa Tropical" data-preco="34.9">Adicionar • R$ 34,90</button>
+<h3>🐷 Pig Defumado</h3>
+<p>Hambúrguer suíno defumado 160g, pão brioche, mussarela, picles e barbecue de goiabada.</p>
+<button onclick="addItem('Pig Defumado',29.9)">Adicionar • R$ 29,90</button>
 </div>
 
 <div class="item">
-<h3>Brasa Fish</h3>
-<p>Filé de tilápia grelhado, maionese verde, vinagrete cítrico e alface no brioche.</p>
-<button class="add-btn" data-nome="Brasa Fish" data-preco="32.9">Adicionar • R$ 32,90</button>
+<h3>🍗 Frango da Brasa</h3>
+<p>Hambúrguer de sobrecoxa 160g, pão gergelim, cream cheese, alface, tomate e maionese verde.</p>
+<button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
 </div>
 
-<h2>🔥 Monte Seu Lanche</h2>
+<div class="item">
+<h3>🍍 Brasa Tropical</h3>
+<p>Hambúrguer bovino 160g, maionese de alho, queijo prato, abacaxi caramelizado e rúcula no pão australiano.</p>
+<button onclick="addItem('Brasa Tropical',34.9)">Adicionar • R$ 34,90</button>
+</div>
+
+<div class="item">
+<h3>🐟 Brasa Fish</h3>
+<p>Filé de tilápia grelhado na parrilla, maionese verde, vinagrete cítrico e alface americana no pão brioche.</p>
+<button onclick="addItem('Brasa Fish',32.9)">Adicionar • R$ 32,90</button>
+</div>
+
+<h2>🍔✨ Monte seu Lanche</h2>
 
 <div class="builder">
-<h4>Proteína (obrigatório)</h4>
-<select id="proteina">
-<option value="">Selecione</option>
-<option value="Bovino 160g" data-preco="18">Bovino 160g</option>
-<option value="Frango 160g" data-preco="16">Frango 160g</option>
-<option value="Tilápia" data-preco="17">Tilápia</option>
+<h4>Pão</h4>
+<select id="pao">
+<option value="0">Pão de gergelim</option>
+<option value="2">Pão brioche</option>
 </select>
 
-<h4>Adicionais (+3 cada)</h4>
+<h4>Hambúrguer</h4>
+<select id="carne">
+<option value="14">Bovino 160g (+14)</option>
+<option value="12">Suíno defumado 160g (+12)</option>
+<option value="11">Frango sobrecoxa 160g (+11)</option>
+</select>
+
+<h4>Quantidade de hambúrguer</h4>
+<input type="number" id="qtdCarne" value="1" min="1">
+
+<h4>Molho base</h4>
+<select id="molho">
+<option value="0">Sem maionese</option>
+<option value="2">Maionese verde (+2)</option>
+<option value="2">Maionese alho assado (+2)</option>
+</select>
+
+<h4>Ingredientes extras</h4>
 <div class="builder-grid">
-<label><input type="checkbox" value="Queijo"> Queijo</label>
-<label><input type="checkbox" value="Bacon"> Bacon</label>
-<label><input type="checkbox" value="Abacaxi"> Abacaxi</label>
-<label><input type="checkbox" value="Rúcula"> Rúcula</label>
+<label><input type="checkbox" value="4"> Bacon (+4)</label>
+<label><input type="checkbox" value="2"> Mussarela (+2)</label>
+<label><input type="checkbox" value="3"> Queijo prato (+3)</label>
+<label><input type="checkbox" value="3"> Cream cheese (+3)</label>
+<label><input type="checkbox" value="2"> Salada (+2)</label>
+<label><input type="checkbox" value="2"> Rúcula (+2)</label>
+<label><input type="checkbox" value="2"> Picles (+2)</label>
+<label><input type="checkbox" value="3"> Barbecue goiabada (+3)</label>
 </div>
 
-<div class="price-preview" id="builderPrice">R$ 0,00</div>
-<button id="addCustom">Adicionar ao Carrinho</button>
+<div class="price-preview" id="preview"></div>
+<button onclick="addCustom()">Adicionar Lanche Personalizado</button>
 </div>
 
 <h2>🛒 Carrinho</h2>
 <div class="cart" id="cart">Seu carrinho está vazio</div>
 
-<h2>📋 Dados</h2>
+<h2>📋 Dados do Cliente</h2>
 <input id="nome" placeholder="Nome">
 <input id="endereco" placeholder="Endereço">
+
+<h3>💰 Forma de Pagamento</h3>
 <select id="pagamento">
-<option value="">Pagamento</option>
+<option value="">Selecione</option>
 <option value="Cartão">Cartão</option>
 <option value="Pix">Pix</option>
 <option value="Dinheiro">Dinheiro</option>
 </select>
+
 <input id="troco" class="hidden" placeholder="Troco para quanto?">
 <textarea id="obs" placeholder="Observações"></textarea>
 
-<button id="btnFinalizar">Enviar Pedido</button>
+<button onclick="finalizar()">Enviar Pedido</button>
 
 </div>
 
@@ -271,77 +155,44 @@ document.addEventListener("DOMContentLoaded", function(){
 
 let carrinho=[];
 const taxa=1;
+const BASE=10.9;
 
 const cartDiv=document.getElementById("cart");
+const preview=document.getElementById("preview");
 const toast=document.getElementById("toast");
+const pagamento=document.getElementById("pagamento");
+const troco=document.getElementById("troco");
 
-/* SPLASH REMOÇÃO REAL */
-setTimeout(()=>{
-const splash=document.getElementById("splash");
-splash.style.opacity="0";
-splash.style.pointerEvents="none";
-setTimeout(()=> splash.remove(),300);
-},1500);
+setTimeout(()=>document.getElementById("splash").style.display="none",2000);
 
-/* TOAST */
+pagamento.addEventListener("change",()=>{
+if(pagamento.value==="Dinheiro"){
+troco.classList.remove("hidden");
+}else{
+troco.classList.add("hidden");
+troco.value="";
+}
+});
+
 function showToast(msg){
 toast.innerText=msg;
 toast.classList.add("show");
 setTimeout(()=>toast.classList.remove("show"),1500);
 }
 
-/* ADICIONAR NORMAL */
-document.querySelectorAll(".add-btn").forEach(btn=>{
-btn.addEventListener("click",function(){
-let nome=this.dataset.nome;
-let preco=parseFloat(this.dataset.preco);
+window.addItem=function(nome,preco){
 let item=carrinho.find(i=>i.nome===nome);
 item?item.qtd++:carrinho.push({nome,preco,qtd:1});
 update();
 showToast("Adicionado ao carrinho ✅");
-});
-});
-
-/* BUILDER */
-const proteina=document.getElementById("proteina");
-const adicionais=document.querySelectorAll(".builder-grid input");
-const builderPrice=document.getElementById("builderPrice");
-
-function updateBuilder(){
-let preco=0;
-if(proteina.value){
-preco+=parseFloat(proteina.selectedOptions[0].dataset.preco);
-}
-adicionais.forEach(c=>{
-if(c.checked) preco+=3;
-});
-builderPrice.innerText="R$ "+preco.toFixed(2);
-return preco;
 }
 
-proteina.addEventListener("change",updateBuilder);
-adicionais.forEach(c=>c.addEventListener("change",updateBuilder));
-
-document.getElementById("addCustom").addEventListener("click",()=>{
-if(!proteina.value){
-alert("Escolha uma proteína 😉");
-return;
-}
-let nome="Monte Seu Lanche - "+proteina.value;
-let preco=updateBuilder();
-carrinho.push({nome,preco,qtd:1});
-update();
-showToast("Personalizado adicionado 🔥");
-});
-
-/* CARRINHO */
-function changeQtd(nome,delta){
+window.changeQtd=function(nome,delta){
 let item=carrinho.find(i=>i.nome===nome);
 item.qtd+=delta;
 if(item.qtd<=0) carrinho=carrinho.filter(i=>i.nome!==nome);
 update();
 }
-window.changeQtd=changeQtd;
 
 function update(){
 if(!carrinho.length){
@@ -368,40 +219,95 @@ html+=`<div class="taxa">Subtotal: R$ ${subtotal.toFixed(2)}</div>
 cartDiv.innerHTML=html;
 }
 
-/* FINALIZAR */
-document.getElementById("btnFinalizar").addEventListener("click",function(){
+function calcularPreview(){
+let total=BASE;
+let qtd=Number(document.getElementById("qtdCarne").value)||1;
+total+=Number(document.getElementById("pao").value);
+total+=Number(document.getElementById("carne").value)*qtd;
+total+=Number(document.getElementById("molho").value);
+document.querySelectorAll(".builder-grid input:checked")
+.forEach(e=>total+=Number(e.value));
+preview.innerText="Preço: R$ "+total.toFixed(2);
+}
 
+document.querySelectorAll("#pao,#carne,#molho,#qtdCarne,.builder-grid input")
+.forEach(e=>e.addEventListener("change",calcularPreview));
+
+calcularPreview();
+
+window.addCustom=function(){
+let total=BASE;
+let qtd=Number(document.getElementById("qtdCarne").value)||1;
+let nome="Monte seu Lanche: ";
+total+=Number(document.getElementById("pao").value);
+total+=Number(document.getElementById("carne").value)*qtd;
+total+=Number(document.getElementById("molho").value);
+if(qtd>1) nome+=qtd+"x ";
+["pao","carne","molho"].forEach(id=>{
+let s=document.getElementById(id);
+if(s.value!=0) nome+=s.options[s.selectedIndex].text+", ";
+});
+document.querySelectorAll(".builder-grid input:checked")
+.forEach(e=>{
+total+=Number(e.value);
+nome+=e.parentElement.innerText+", ";
+});
+addItem(nome.slice(0,-2),total);
+}
+
+window.finalizar=function(){
 if(!carrinho.length){
-alert("Adicione itens 😉");
+alert("Adicione itens primeiro 😉");
 return;
 }
 
-let nome=document.getElementById("nome").value.trim();
-let endereco=document.getElementById("endereco").value.trim();
-let pagamento=document.getElementById("pagamento").value;
-let troco=document.getElementById("troco").value;
-let obs=document.getElementById("obs").value.trim();
+const nome=document.getElementById("nome").value.trim();
+const endereco=document.getElementById("endereco").value.trim();
+const pagamentoValue=pagamento.value;
+const trocoValue=troco.value;
+const obs=document.getElementById("obs").value.trim();
 
-if(!nome||!endereco||!pagamento){
-alert("Preencha os dados 😉");
+if(!nome||!endereco||!pagamentoValue){
+alert("Preencha Nome, Endereço e Pagamento 😉");
 return;
 }
 
 let subtotal=0;
 let linhas=[];
+
 linhas.push("PEDIDO - A ARTE DA BRASA");
-linhas.push("Cliente: "+nome);
-linhas.push("Endereço: "+endereco);
-linhas.push("Pagamento: "+pagamento);
+linhas.push("");
+linhas.push("Cliente: " + nome);
+linhas.push("Endereço: " + endereco);
+linhas.push("Pagamento: " + pagamentoValue);
+
+if(pagamentoValue==="Dinheiro" && trocoValue){
+linhas.push("Troco para: R$ " + trocoValue);
+}
+
+if(obs){
+linhas.push("Obs: " + obs);
+}
+
+linhas.push("");
+linhas.push("------------------------------");
+linhas.push("");
 
 carrinho.forEach(i=>{
 let sub=i.preco*i.qtd;
 subtotal+=sub;
-linhas.push(i.qtd+"x "+i.nome+" - R$ "+sub.toFixed(2));
+linhas.push(i.qtd + "x " + i.nome);
+linhas.push("R$ " + sub.toFixed(2));
+linhas.push("");
 });
 
 let total=subtotal+taxa;
-linhas.push("Total: R$ "+total.toFixed(2));
+
+linhas.push("------------------------------");
+linhas.push("Subtotal: R$ " + subtotal.toFixed(2));
+linhas.push("Taxa: R$ " + taxa.toFixed(2));
+linhas.push("TOTAL: R$ " + total.toFixed(2));
+linhas.push("------------------------------");
 
 let mensagem=linhas.join("\n");
 
@@ -409,9 +315,8 @@ window.open("https://wa.me/5543996795964?text="+encodeURIComponent(mensagem),"_b
 
 carrinho=[];
 update();
-showToast("Pedido enviado 🚀");
-
-});
+showToast("Pedido enviado com sucesso 🚀");
+}
 
 });
 </script>
