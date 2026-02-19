@@ -11,210 +11,180 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:'Segoe UI',Arial,sans-serif;
-  background:#0f0f0f;
-  color:#fff;
+font-family:'Segoe UI',Arial,sans-serif;
+background:#0f0f0f;
+color:#fff;
 }
 
 /* SPLASH */
 #splash{
-  position:fixed;inset:0;
-  background:#111;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
+position:fixed;
+inset:0;
+background:#111;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999
 }
 #splash img{width:200px}
 
 /* TOAST */
 #toast{
-  position:fixed;
-  bottom:90px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#16a34a;
-  color:#fff;
-  padding:10px 16px;
-  border-radius:20px;
-  font-weight:bold;
-  opacity:0;
-  transition:.3s;
-  z-index:9999;
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#16a34a;
+color:#fff;
+padding:12px 20px;
+border-radius:25px;
+font-weight:bold;
+opacity:0;
+transition:.3s;
+z-index:9999
 }
 #toast.show{opacity:1}
 
 /* HEADER APP */
 .header{
-  position:fixed;
-  top:0;
-  width:100%;
-  background:linear-gradient(180deg,#1a0000,#0f0f0f);
-  padding:18px 16px 14px;
-  text-align:center;
-  z-index:1000;
-  box-shadow:0 4px 20px rgba(0,0,0,0.6);
+position:sticky;
+top:0;
+background:linear-gradient(180deg,#1a0000,#0f0f0f);
+padding:20px 16px 16px;
+text-align:center;
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+z-index:1000;
 }
 .header img{width:90px;margin-bottom:6px}
 .header h1{font-size:18px;letter-spacing:1px}
 .header p{font-size:12px;color:#ff6a00;margin-top:4px}
 
-/* CONTAINER */
 .container{
-  max-width:600px;
-  margin:auto;
-  padding:120px 16px 100px;
+max-width:600px;
+margin:auto;
+padding:20px 16px 60px;
 }
 
-/* CARD LANCHE */
-.card{
-  background:#1b1b1b;
-  border-radius:18px;
-  margin-bottom:16px;
-  display:flex;
-  overflow:hidden;
-  box-shadow:0 6px 20px rgba(0,0,0,0.5);
+/* CARDS ESTILO APP */
+.item{
+background:#1b1b1b;
+border-radius:18px;
+padding:16px;
+margin-bottom:18px;
+box-shadow:0 8px 25px rgba(0,0,0,0.5);
+transition:.2s;
 }
-.card-content{
-  padding:14px;
-  flex:1;
+.item:hover{transform:scale(1.01)}
+
+.item h3{
+color:#ff6a00;
+margin-bottom:6px;
+font-size:18px;
 }
-.card-content h3{
-  font-size:16px;
-  margin-bottom:6px;
-  color:#ff6a00;
+
+.item p{
+color:#ccc;
+font-size:14px;
+margin-bottom:12px;
 }
-.card-content p{
-  font-size:13px;
-  color:#ccc;
-  margin-bottom:10px;
+
+button{
+width:100%;
+padding:12px;
+background:linear-gradient(45deg,#ff0000,#ff6a00);
+color:#fff;
+border:none;
+border-radius:30px;
+font-weight:bold;
+cursor:pointer;
+transition:.2s;
 }
-.price-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.price{
-  font-weight:bold;
-  font-size:15px;
-  color:#ff6a00;
-}
-.add-btn{
-  background:linear-gradient(45deg,#ff0000,#ff6a00);
-  border:none;
-  padding:8px 14px;
-  border-radius:20px;
-  color:#fff;
-  font-size:13px;
-  cursor:pointer;
-}
+
+button:active{transform:scale(.97)}
+button:disabled{background:#555;color:#999}
 
 /* BUILDER */
 .builder{
-  background:#151515;
-  border:1px solid #ff6a00;
-  border-radius:16px;
-  padding:14px;
-  margin:20px 0;
+background:#151515;
+border:1px solid #ff6a00;
+border-radius:18px;
+padding:16px;
+margin-bottom:20px;
 }
 .builder h4{
-  margin:12px 0 6px;
-  color:#ff6a00;
+margin:14px 0 6px;
+color:#ff6a00;
+font-size:14px;
 }
 .builder-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+}
+.builder-grid label{
+font-size:13px;
+color:#ccc;
 }
 .price-preview{
-  text-align:center;
-  margin-top:12px;
-  font-weight:bold;
-  font-size:18px;
-  color:#ff6a00;
+text-align:center;
+margin-top:14px;
+font-weight:bold;
+color:#ff6a00;
+font-size:18px;
 }
 
 /* CART */
 .cart{
-  background:#000;
-  padding:14px;
-  border-radius:12px;
-  margin-bottom:14px;
+background:#000;
+padding:16px;
+border-radius:18px;
+margin-bottom:20px;
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
 }
 .cart-item{
-  border-bottom:1px solid #333;
-  padding:8px 0;
+border-bottom:1px solid #333;
+padding:10px 0;
 }
 .counter{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin-top:5px;
+display:flex;
+gap:8px;
+align-items:center;
+margin-top:6px;
 }
 .counter button{
-  width:28px;
-  height:28px;
-  padding:0;
-  border:none;
-  background:#ff6a00;
-  border-radius:6px;
-  font-weight:bold;
+width:30px;
+height:30px;
+border-radius:8px;
+padding:0;
 }
-.total{margin-top:10px;font-weight:bold}
-.taxa{color:#ccc;font-size:14px;margin-top:6px}
+.total{
+margin-top:12px;
+font-weight:bold;
+font-size:18px;
+}
+.taxa{
+color:#ccc;
+font-size:14px;
+margin-top:6px;
+}
 
-/* INPUTS */
+/* FORM */
 input,select,textarea{
-  width:100%;
-  padding:10px;
-  margin-top:6px;
-  border-radius:8px;
-  border:none;
+width:100%;
+padding:12px;
+margin-top:8px;
+border-radius:10px;
+border:none;
+font-size:14px;
+}
+textarea{resize:none}
+
+h2{
+margin:30px 0 12px;
+color:#ff6a00;
+text-align:center;
 }
 
-/* BOTÃO FINAL */
-button.finalizar{
-  width:100%;
-  padding:14px;
-  background:linear-gradient(45deg,#ff0000,#ff6a00);
-  border:none;
-  border-radius:12px;
-  font-weight:bold;
-  margin-top:12px;
-  color:#fff;
-}
-
-/* CARRINHO FLUTUANTE */
-.cart-btn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:linear-gradient(45deg,#ff0000,#ff6a00);
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:22px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.6);
-  cursor:pointer;
-}
-.cart-count{
-  position:absolute;
-  top:-5px;
-  right:-5px;
-  background:#fff;
-  color:#000;
-  font-size:12px;
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-}
 .hidden{display:none}
 </style>
 </head>
@@ -225,7 +195,7 @@ button.finalizar{
 <img src="IMG_0558.png">
 </div>
 
-<div id="toast">Adicionado ✅</div>
+<div id="toast">ADICIONADO AO CARRINHO ✅</div>
 
 <div class="header">
 <img src="IMG_0558.png">
@@ -236,60 +206,3 @@ button.finalizar{
 <div class="container">
 
 <!-- Lanches -->
-<div class="card">
-<div class="card-content">
-<h3>Brasa Original</h3>
-<p>Hambúrguer bovino 160g, pão brioche, queijo prato, bacon e maionese de alho assado.</p>
-<div class="price-row">
-<span class="price">R$ 32,90</span>
-<button class="add-btn" onclick="addItem('Brasa Original',32.9)">Adicionar</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="card-content">
-<h3>Pig Defumado</h3>
-<p>Hambúrguer suíno defumado 160g, pão brioche, mussarela, picles e barbecue de goiabada.</p>
-<div class="price-row">
-<span class="price">R$ 29,90</span>
-<button class="add-btn" onclick="addItem('Pig Defumado',29.9)">Adicionar</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="card-content">
-<h3>Frango da Brasa</h3>
-<p>Hambúrguer de sobrecoxa 160g, pão gergelim, cream cheese, alface, tomate e maionese verde.</p>
-<div class="price-row">
-<span class="price">R$ 27,90</span>
-<button class="add-btn" onclick="addItem('Frango da Brasa',27.9)">Adicionar</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="card-content">
-<h3>Brasa Tropical</h3>
-<p>Hambúrguer bovino 160g, maionese de alho, queijo prato, abacaxi caramelizado e rúcula no pão australiano.</p>
-<div class="price-row">
-<span class="price">R$ 34,90</span>
-<button class="add-btn" onclick="addItem('Brasa Tropical',34.9)">Adicionar</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="card-content">
-<h3>Brasa Fish</h3>
-<p>Filé de tilápia grelhado na parrilla, maionese verde, vinagrete cítrico e alface americana no pão brioche.</p>
-<div class="price-row">
-<span class="price">R$ 32,90</span>
-<button class="add-btn" onclick="addItem('Brasa Fish',32.9)">Adicionar</button>
-</div>
-</div>
-</div>
-
-<!-- BUILDER E RESTANTE DO SCRIPT -->
-<!-- MANTIVE 100% SUA LÓGICA ORIGINAL A PARTIR DAQUI -->
