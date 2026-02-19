@@ -31,13 +31,13 @@ z-index:9999
 /* TOAST */
 #toast{
 position:fixed;
-bottom:20px;
+bottom:25px;
 left:50%;
 transform:translateX(-50%);
 background:#16a34a;
 color:#fff;
-padding:12px 20px;
-border-radius:25px;
+padding:14px 24px;
+border-radius:30px;
 font-weight:bold;
 opacity:0;
 transition:.3s;
@@ -45,14 +45,14 @@ z-index:9999
 }
 #toast.show{opacity:1}
 
-/* HEADER APP */
+/* HEADER PREMIUM */
 .header{
 position:sticky;
 top:0;
 background:linear-gradient(180deg,#1a0000,#0f0f0f);
 padding:20px 16px 16px;
 text-align:center;
-box-shadow:0 6px 20px rgba(0,0,0,0.6);
+box-shadow:0 6px 25px rgba(0,0,0,0.7);
 z-index:1000;
 }
 .header img{width:90px;margin-bottom:6px}
@@ -65,32 +65,32 @@ margin:auto;
 padding:20px 16px 60px;
 }
 
-/* CARDS ESTILO APP */
+/* CARDS PREMIUM */
 .item{
 background:#1b1b1b;
 border-radius:18px;
-padding:16px;
-margin-bottom:18px;
-box-shadow:0 8px 25px rgba(0,0,0,0.5);
+padding:18px;
+margin-bottom:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
 transition:.2s;
 }
 .item:hover{transform:scale(1.01)}
 
 .item h3{
 color:#ff6a00;
-margin-bottom:6px;
+margin-bottom:8px;
 font-size:18px;
 }
 
 .item p{
 color:#ccc;
 font-size:14px;
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 button{
 width:100%;
-padding:12px;
+padding:14px;
 background:linear-gradient(45deg,#ff0000,#ff6a00);
 color:#fff;
 border:none;
@@ -100,7 +100,7 @@ cursor:pointer;
 transition:.2s;
 }
 
-button:active{transform:scale(.97)}
+button:active{transform:scale(.96)}
 button:disabled{background:#555;color:#999}
 
 /* BUILDER */
@@ -108,8 +108,8 @@ button:disabled{background:#555;color:#999}
 background:#151515;
 border:1px solid #ff6a00;
 border-radius:18px;
-padding:16px;
-margin-bottom:20px;
+padding:18px;
+margin-bottom:25px;
 }
 .builder h4{
 margin:14px 0 6px;
@@ -130,16 +130,16 @@ text-align:center;
 margin-top:14px;
 font-weight:bold;
 color:#ff6a00;
-font-size:18px;
+font-size:20px;
 }
 
 /* CART */
 .cart{
 background:#000;
-padding:16px;
+padding:18px;
 border-radius:18px;
 margin-bottom:20px;
-box-shadow:0 6px 20px rgba(0,0,0,0.6);
+box-shadow:0 8px 25px rgba(0,0,0,0.6);
 }
 .cart-item{
 border-bottom:1px solid #333;
@@ -160,7 +160,7 @@ padding:0;
 .total{
 margin-top:12px;
 font-weight:bold;
-font-size:18px;
+font-size:20px;
 }
 .taxa{
 color:#ccc;
@@ -173,14 +173,16 @@ input,select,textarea{
 width:100%;
 padding:12px;
 margin-top:8px;
-border-radius:10px;
+border-radius:12px;
 border:none;
 font-size:14px;
+background:#1c1c1c;
+color:#fff;
 }
 textarea{resize:none}
 
 h2{
-margin:30px 0 12px;
+margin:35px 0 16px;
 color:#ff6a00;
 text-align:center;
 }
@@ -205,4 +207,272 @@ text-align:center;
 
 <div class="container">
 
-<!-- Lanches -->
+<h2>🍔 Lanches Artesanais</h2>
+
+<div class="item">
+<h3>🥩 Brasa Original</h3>
+<p>Hambúrguer bovino 160g, pão brioche, queijo prato, bacon e maionese de alho assado.</p>
+<button onclick="addItem('Brasa Original',32.9)">Adicionar • R$ 32,90</button>
+</div>
+
+<div class="item">
+<h3>🐷 Pig Defumado</h3>
+<p>Hambúrguer suíno defumado 160g, pão brioche, mussarela, picles e barbecue de goiabada.</p>
+<button onclick="addItem('Pig Defumado',29.9)">Adicionar • R$ 29,90</button>
+</div>
+
+<div class="item">
+<h3>🍗 Frango da Brasa</h3>
+<p>Hambúrguer de sobrecoxa 160g, pão gergelim, cream cheese, alface, tomate e maionese verde.</p>
+<button onclick="addItem('Frango da Brasa',27.9)">Adicionar • R$ 27,90</button>
+</div>
+
+<div class="item">
+<h3>🍍 Brasa Tropical</h3>
+<p>Hambúrguer bovino 160g, maionese de alho, queijo prato, abacaxi caramelizado e rúcula no pão australiano.</p>
+<button onclick="addItem('Brasa Tropical',34.9)">Adicionar • R$ 34,90</button>
+</div>
+
+<div class="item">
+<h3>🐟 Brasa Fish</h3>
+<p>Filé de tilápia grelhado na parrilla, maionese verde, vinagrete cítrico e alface americana no pão brioche.</p>
+<button onclick="addItem('Brasa Fish',32.9)">Adicionar • R$ 32,90</button>
+</div>
+
+<h2>🍔✨ Monte seu Lanche</h2>
+
+<div class="builder">
+<h4>Pão</h4>
+<select id="pao">
+<option value="0">Pão de gergelim</option>
+<option value="2">Pão brioche (+2)</option>
+</select>
+
+<h4>Hambúrguer</h4>
+<select id="carne">
+<option value="14">Bovino 160g (+14)</option>
+<option value="12">Suíno defumado 160g (+12)</option>
+<option value="11">Frango sobrecoxa 160g (+11)</option>
+</select>
+
+<h4>Quantidade de hambúrguer</h4>
+<input type="number" id="qtdCarne" value="1" min="1">
+
+<h4>Molho base</h4>
+<select id="molho">
+<option value="0">Sem maionese</option>
+<option value="2">Maionese verde (+2)</option>
+<option value="2">Maionese alho assado (+2)</option>
+</select>
+
+<h4>Ingredientes extras</h4>
+<div class="builder-grid">
+<label><input type="checkbox" value="4"> Bacon (+4)</label>
+<label><input type="checkbox" value="2"> Mussarela (+2)</label>
+<label><input type="checkbox" value="3"> Queijo prato (+3)</label>
+<label><input type="checkbox" value="3"> Cream cheese (+3)</label>
+<label><input type="checkbox" value="2"> Salada (+2)</label>
+<label><input type="checkbox" value="2"> Rúcula (+2)</label>
+<label><input type="checkbox" value="2"> Picles (+2)</label>
+<label><input type="checkbox" value="3"> Barbecue goiabada (+3)</label>
+</div>
+
+<div class="price-preview" id="preview"></div>
+<button onclick="addCustom()">Adicionar Lanche Personalizado</button>
+</div>
+
+<h2>🛒 Carrinho</h2>
+<div class="cart" id="cart">Seu carrinho está vazio</div>
+
+<h2>📋 Dados do Cliente</h2>
+<input id="nome" placeholder="Nome">
+<input id="endereco" placeholder="Endereço">
+
+<h3>💰 Forma de Pagamento</h3>
+<select id="pagamento">
+<option value="">Selecione</option>
+<option value="Cartão">Cartão</option>
+<option value="Pix">Pix</option>
+<option value="Dinheiro">Dinheiro</option>
+</select>
+
+<input id="troco" class="hidden" placeholder="Troco para quanto?">
+<textarea id="obs" placeholder="Observações"></textarea>
+
+<button onclick="finalizar()">Enviar Pedido</button>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+let carrinho=[];
+const taxa=1;
+const BASE=10.9;
+
+const cartDiv=document.getElementById("cart");
+const preview=document.getElementById("preview");
+const toast=document.getElementById("toast");
+const pagamento=document.getElementById("pagamento");
+const troco=document.getElementById("troco");
+
+setTimeout(()=>document.getElementById("splash").style.display="none",2000);
+
+pagamento.addEventListener("change",()=>{
+if(pagamento.value==="Dinheiro"){
+troco.classList.remove("hidden");
+}else{
+troco.classList.add("hidden");
+troco.value="";
+}
+});
+
+function showToast(msg){
+toast.innerText=msg;
+toast.classList.add("show");
+setTimeout(()=>toast.classList.remove("show"),1500);
+}
+
+window.addItem=function(nome,preco){
+let item=carrinho.find(i=>i.nome===nome);
+item?item.qtd++:carrinho.push({nome,preco,qtd:1});
+update();
+showToast("Adicionado ao carrinho ✅");
+}
+
+window.changeQtd=function(nome,delta){
+let item=carrinho.find(i=>i.nome===nome);
+item.qtd+=delta;
+if(item.qtd<=0) carrinho=carrinho.filter(i=>i.nome!==nome);
+update();
+}
+
+function update(){
+if(!carrinho.length){
+cartDiv.innerHTML="Seu carrinho está vazio";
+return;
+}
+let subtotal=0,html="";
+carrinho.forEach(i=>{
+let sub=i.preco*i.qtd;
+subtotal+=sub;
+html+=`<div class="cart-item">
+<b>${i.nome}</b>
+<div class="counter">
+<button onclick="changeQtd('${i.nome}',-1)">−</button>
+${i.qtd}
+<button onclick="changeQtd('${i.nome}',1)">+</button>
+ | R$ ${sub.toFixed(2)}
+</div></div>`;
+});
+let total=subtotal+taxa;
+html+=`<div class="taxa">Subtotal: R$ ${subtotal.toFixed(2)}</div>
+<div class="taxa">Taxa: R$ ${taxa.toFixed(2)}</div>
+<div class="total">Total: R$ ${total.toFixed(2)}</div>`;
+cartDiv.innerHTML=html;
+}
+
+function calcularPreview(){
+let total=BASE;
+let qtd=Number(document.getElementById("qtdCarne").value)||1;
+total+=Number(document.getElementById("pao").value);
+total+=Number(document.getElementById("carne").value)*qtd;
+total+=Number(document.getElementById("molho").value);
+document.querySelectorAll(".builder-grid input:checked")
+.forEach(e=>total+=Number(e.value));
+preview.innerText="Preço: R$ "+total.toFixed(2);
+}
+
+document.querySelectorAll("#pao,#carne,#molho,#qtdCarne,.builder-grid input")
+.forEach(e=>e.addEventListener("change",calcularPreview));
+
+calcularPreview();
+
+window.addCustom=function(){
+let total=BASE;
+let qtd=Number(document.getElementById("qtdCarne").value)||1;
+let nome="Monte seu Lanche: ";
+total+=Number(document.getElementById("pao").value);
+total+=Number(document.getElementById("carne").value)*qtd;
+total+=Number(document.getElementById("molho").value);
+if(qtd>1) nome+=qtd+"x ";
+["pao","carne","molho"].forEach(id=>{
+let s=document.getElementById(id);
+if(s.value!=0) nome+=s.options[s.selectedIndex].text+", ";
+});
+document.querySelectorAll(".builder-grid input:checked")
+.forEach(e=>{
+total+=Number(e.value);
+nome+=e.parentElement.innerText+", ";
+});
+addItem(nome.slice(0,-2),total);
+}
+
+window.finalizar=function(){
+if(!carrinho.length){
+alert("Adicione itens primeiro 😉");
+return;
+}
+
+const nome=document.getElementById("nome").value.trim();
+const endereco=document.getElementById("endereco").value.trim();
+const pagamentoValue=pagamento.value;
+const trocoValue=troco.value;
+const obs=document.getElementById("obs").value.trim();
+
+if(!nome||!endereco||!pagamentoValue){
+alert("Preencha Nome, Endereço e Pagamento 😉");
+return;
+}
+
+let subtotal=0;
+let linhas=[];
+
+linhas.push("PEDIDO - A ARTE DA BRASA");
+linhas.push("");
+linhas.push("Cliente: " + nome);
+linhas.push("Endereço: " + endereco);
+linhas.push("Pagamento: " + pagamentoValue);
+
+if(pagamentoValue==="Dinheiro" && trocoValue){
+linhas.push("Troco para: R$ " + trocoValue);
+}
+
+if(obs){
+linhas.push("Obs: " + obs);
+}
+
+linhas.push("");
+linhas.push("------------------------------");
+linhas.push("");
+
+carrinho.forEach(i=>{
+let sub=i.preco*i.qtd;
+subtotal+=sub;
+linhas.push(i.qtd + "x " + i.nome);
+linhas.push("R$ " + sub.toFixed(2));
+linhas.push("");
+});
+
+let total=subtotal+taxa;
+
+linhas.push("------------------------------");
+linhas.push("Subtotal: R$ " + subtotal.toFixed(2));
+linhas.push("Taxa: R$ " + taxa.toFixed(2));
+linhas.push("TOTAL: R$ " + total.toFixed(2));
+linhas.push("------------------------------");
+
+let mensagem=linhas.join("\n");
+
+window.open("https://wa.me/5543996795964?text="+encodeURIComponent(mensagem),"_blank");
+
+carrinho=[];
+update();
+showToast("Pedido enviado com sucesso 🚀");
+}
+
+});
+</script>
+
+</body>
+</html>
