@@ -10,12 +10,36 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial;background:#111;color:#fff}
-#splash{position:fixed;inset:0;background:#111;display:flex;justify-content:center;align-items:center;z-index:9999}
+
+#splash{
+position:fixed;
+inset:0;
+background:#111;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+transition:opacity .3s ease;
+}
 #splash img{width:200px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-background:#16a34a;color:#fff;padding:12px 18px;border-radius:8px;
-font-weight:bold;opacity:0;pointer-events:none;transition:.3s;z-index:9999}
+
+#toast{
+position:fixed;
+bottom:20px;
+left:50%;
+translate:-50% 0;
+background:#16a34a;
+color:#fff;
+padding:12px 18px;
+border-radius:8px;
+font-weight:bold;
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:9999
+}
 #toast.show{opacity:1}
+
 .container{max-width:600px;margin:auto;padding:16px}
 h1,h2,h3{color:#ff6a00;text-align:center;margin:18px 0}
 .logo{text-align:center}
@@ -163,7 +187,13 @@ const toast=document.getElementById("toast");
 const pagamento=document.getElementById("pagamento");
 const troco=document.getElementById("troco");
 
-setTimeout(()=>document.getElementById("splash").style.display="none",2000);
+/* Splash corrigido */
+setTimeout(()=>{
+const splash=document.getElementById("splash");
+splash.style.opacity="0";
+splash.style.pointerEvents="none";
+setTimeout(()=> splash.remove(),300);
+},1500);
 
 pagamento.addEventListener("change",()=>{
 if(pagamento.value==="Dinheiro"){
@@ -256,6 +286,7 @@ addItem(nome.slice(0,-2),total);
 }
 
 window.finalizar=function(){
+
 if(!carrinho.length){
 alert("Adicione itens primeiro 😉");
 return;
@@ -290,7 +321,7 @@ linhas.push("Obs: " + obs);
 }
 
 linhas.push("");
-linhas.push("------------------------------");
+linhas.push("================================");
 linhas.push("");
 
 carrinho.forEach(i=>{
@@ -303,13 +334,14 @@ linhas.push("");
 
 let total=subtotal+taxa;
 
-linhas.push("------------------------------");
+linhas.push("================================");
 linhas.push("Subtotal: R$ " + subtotal.toFixed(2));
 linhas.push("Taxa: R$ " + taxa.toFixed(2));
 linhas.push("TOTAL: R$ " + total.toFixed(2));
-linhas.push("------------------------------");
+linhas.push("================================");
 
-let mensagem=linhas.join("\n");
+/* CORREÇÃO IMPRESSORA TÉRMICA */
+let mensagem = linhas.join("\r\n") + "\r\n\r\n\r\n\r\n";
 
 window.open("https://wa.me/5543996795964?text="+encodeURIComponent(mensagem),"_blank");
 
